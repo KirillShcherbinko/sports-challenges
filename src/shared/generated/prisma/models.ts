@@ -9,4 +9,12 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Profile'
+export type * from './models/Challenge'
+export type * from './models/DailyTask'
+export type * from './models/ProfileChallenge'
+export type * from './models/TaskCompletion'
+export type * from './models/ChallengeLike'
+export type * from './models/ChallengeComment'
+export type * from './models/Achievement'
+export type * from './models/ProfileAchievement'
 export type * from './commonInputTypes'

@@ -9,7 +9,38 @@
 * 🟢 You can import this file directly.
 */
 
+export const FitnessLevel = {
+  beginner: 'beginner',
+  intermediate: 'intermediate',
+  advanced: 'advanced'
+} as const
+
+export type FitnessLevel = (typeof FitnessLevel)[keyof typeof FitnessLevel]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const ChallengeDifficulty = {
+  easy: 'easy',
+  medium: 'medium',
+  hard: 'hard'
+} as const
+
+export type ChallengeDifficulty = (typeof ChallengeDifficulty)[keyof typeof ChallengeDifficulty]
+
+
+export const ChallengeCategory = {
+  strength: 'strength',
+  cardio: 'cardio',
+  flexibility: 'flexibility',
+  endurance: 'endurance'
+} as const
+
+export type ChallengeCategory = (typeof ChallengeCategory)[keyof typeof ChallengeCategory]
+
+
+export const ProfileChallengeStatus = {
+  active: 'active',
+  completed: 'completed',
+  abandoned: 'abandoned'
+} as const
+
+export type ProfileChallengeStatus = (typeof ProfileChallengeStatus)[keyof typeof ProfileChallengeStatus]

@@ -51,7 +51,15 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Profile: 'Profile'
+  Profile: 'Profile',
+  Challenge: 'Challenge',
+  DailyTask: 'DailyTask',
+  ProfileChallenge: 'ProfileChallenge',
+  TaskCompletion: 'TaskCompletion',
+  ChallengeLike: 'ChallengeLike',
+  ChallengeComment: 'ChallengeComment',
+  Achievement: 'Achievement',
+  ProfileAchievement: 'ProfileAchievement'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -72,13 +80,124 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const ProfileScalarFieldEnum = {
   id: 'id',
-  email: 'email',
   username: 'username',
   avatarUrl: 'avatarUrl',
-  createdAt: 'createdAt'
+  fitnessLevel: 'fitnessLevel',
+  preferences: 'preferences',
+  bio: 'bio',
+  streakCount: 'streakCount',
+  totalCompletedTasks: 'totalCompletedTasks',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
+export const ChallengeScalarFieldEnum = {
+  id: 'id',
+  creatorId: 'creatorId',
+  title: 'title',
+  description: 'description',
+  coverImageUrl: 'coverImageUrl',
+  category: 'category',
+  difficulty: 'difficulty',
+  durationDays: 'durationDays',
+  isPublished: 'isPublished',
+  likesCount: 'likesCount',
+  participantsCount: 'participantsCount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChallengeScalarFieldEnum = (typeof ChallengeScalarFieldEnum)[keyof typeof ChallengeScalarFieldEnum]
+
+
+export const DailyTaskScalarFieldEnum = {
+  id: 'id',
+  challengeId: 'challengeId',
+  dayNumber: 'dayNumber',
+  title: 'title',
+  description: 'description',
+  exerciseType: 'exerciseType',
+  targetValue: 'targetValue',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DailyTaskScalarFieldEnum = (typeof DailyTaskScalarFieldEnum)[keyof typeof DailyTaskScalarFieldEnum]
+
+
+export const ProfileChallengeScalarFieldEnum = {
+  id: 'id',
+  profileId: 'profileId',
+  challengeId: 'challengeId',
+  status: 'status',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  currentDay: 'currentDay',
+  lastActivityAt: 'lastActivityAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProfileChallengeScalarFieldEnum = (typeof ProfileChallengeScalarFieldEnum)[keyof typeof ProfileChallengeScalarFieldEnum]
+
+
+export const TaskCompletionScalarFieldEnum = {
+  id: 'id',
+  profileChallengeId: 'profileChallengeId',
+  dailyTaskId: 'dailyTaskId',
+  isCompleted: 'isCompleted',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type TaskCompletionScalarFieldEnum = (typeof TaskCompletionScalarFieldEnum)[keyof typeof TaskCompletionScalarFieldEnum]
+
+
+export const ChallengeLikeScalarFieldEnum = {
+  id: 'id',
+  profileId: 'profileId',
+  challengeId: 'challengeId',
+  createdAt: 'createdAt'
+} as const
+
+export type ChallengeLikeScalarFieldEnum = (typeof ChallengeLikeScalarFieldEnum)[keyof typeof ChallengeLikeScalarFieldEnum]
+
+
+export const ChallengeCommentScalarFieldEnum = {
+  id: 'id',
+  challengeId: 'challengeId',
+  profileId: 'profileId',
+  parentCommentId: 'parentCommentId',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChallengeCommentScalarFieldEnum = (typeof ChallengeCommentScalarFieldEnum)[keyof typeof ChallengeCommentScalarFieldEnum]
+
+
+export const AchievementScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  iconUrl: 'iconUrl',
+  createdAt: 'createdAt'
+} as const
+
+export type AchievementScalarFieldEnum = (typeof AchievementScalarFieldEnum)[keyof typeof AchievementScalarFieldEnum]
+
+
+export const ProfileAchievementScalarFieldEnum = {
+  id: 'id',
+  profileId: 'profileId',
+  achievementId: 'achievementId',
+  earnedAt: 'earnedAt'
+} as const
+
+export type ProfileAchievementScalarFieldEnum = (typeof ProfileAchievementScalarFieldEnum)[keyof typeof ProfileAchievementScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -89,12 +208,29 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 export const NullsOrder = {

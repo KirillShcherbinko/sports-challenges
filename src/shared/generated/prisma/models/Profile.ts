@@ -20,58 +20,106 @@ export type ProfileModel = runtime.Types.Result.DefaultSelection<Prisma.$Profile
 
 export type AggregateProfile = {
   _count: ProfileCountAggregateOutputType | null
+  _avg: ProfileAvgAggregateOutputType | null
+  _sum: ProfileSumAggregateOutputType | null
   _min: ProfileMinAggregateOutputType | null
   _max: ProfileMaxAggregateOutputType | null
 }
 
+export type ProfileAvgAggregateOutputType = {
+  streakCount: number | null
+  totalCompletedTasks: number | null
+}
+
+export type ProfileSumAggregateOutputType = {
+  streakCount: number | null
+  totalCompletedTasks: number | null
+}
+
 export type ProfileMinAggregateOutputType = {
   id: string | null
-  email: string | null
   username: string | null
   avatarUrl: string | null
+  fitnessLevel: $Enums.FitnessLevel | null
+  bio: string | null
+  streakCount: number | null
+  totalCompletedTasks: number | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type ProfileMaxAggregateOutputType = {
   id: string | null
-  email: string | null
   username: string | null
   avatarUrl: string | null
+  fitnessLevel: $Enums.FitnessLevel | null
+  bio: string | null
+  streakCount: number | null
+  totalCompletedTasks: number | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type ProfileCountAggregateOutputType = {
   id: number
-  email: number
   username: number
   avatarUrl: number
+  fitnessLevel: number
+  preferences: number
+  bio: number
+  streakCount: number
+  totalCompletedTasks: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
 
+export type ProfileAvgAggregateInputType = {
+  streakCount?: true
+  totalCompletedTasks?: true
+}
+
+export type ProfileSumAggregateInputType = {
+  streakCount?: true
+  totalCompletedTasks?: true
+}
+
 export type ProfileMinAggregateInputType = {
   id?: true
-  email?: true
   username?: true
   avatarUrl?: true
+  fitnessLevel?: true
+  bio?: true
+  streakCount?: true
+  totalCompletedTasks?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type ProfileMaxAggregateInputType = {
   id?: true
-  email?: true
   username?: true
   avatarUrl?: true
+  fitnessLevel?: true
+  bio?: true
+  streakCount?: true
+  totalCompletedTasks?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type ProfileCountAggregateInputType = {
   id?: true
-  email?: true
   username?: true
   avatarUrl?: true
+  fitnessLevel?: true
+  preferences?: true
+  bio?: true
+  streakCount?: true
+  totalCompletedTasks?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -113,6 +161,18 @@ export type ProfileAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ProfileAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ProfileSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProfileMinAggregateInputType
@@ -143,17 +203,26 @@ export type ProfileGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: ProfileCountAggregateInputType | true
+  _avg?: ProfileAvgAggregateInputType
+  _sum?: ProfileSumAggregateInputType
   _min?: ProfileMinAggregateInputType
   _max?: ProfileMaxAggregateInputType
 }
 
 export type ProfileGroupByOutputType = {
   id: string
-  email: string
-  username: string | null
+  username: string
   avatarUrl: string | null
+  fitnessLevel: $Enums.FitnessLevel | null
+  preferences: runtime.JsonValue | null
+  bio: string | null
+  streakCount: number
+  totalCompletedTasks: number
   createdAt: Date
+  updatedAt: Date
   _count: ProfileCountAggregateOutputType | null
+  _avg: ProfileAvgAggregateOutputType | null
+  _sum: ProfileSumAggregateOutputType | null
   _min: ProfileMinAggregateOutputType | null
   _max: ProfileMaxAggregateOutputType | null
 }
@@ -178,40 +247,77 @@ export type ProfileWhereInput = {
   OR?: Prisma.ProfileWhereInput[]
   NOT?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[]
   id?: Prisma.UuidFilter<"Profile"> | string
-  email?: Prisma.StringFilter<"Profile"> | string
-  username?: Prisma.StringNullableFilter<"Profile"> | string | null
+  username?: Prisma.StringFilter<"Profile"> | string
   avatarUrl?: Prisma.StringNullableFilter<"Profile"> | string | null
+  fitnessLevel?: Prisma.EnumFitnessLevelNullableFilter<"Profile"> | $Enums.FitnessLevel | null
+  preferences?: Prisma.JsonNullableFilter<"Profile">
+  bio?: Prisma.StringNullableFilter<"Profile"> | string | null
+  streakCount?: Prisma.IntFilter<"Profile"> | number
+  totalCompletedTasks?: Prisma.IntFilter<"Profile"> | number
   createdAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
+  challenges?: Prisma.ChallengeListRelationFilter
+  profileChallenges?: Prisma.ProfileChallengeListRelationFilter
+  challengeLikes?: Prisma.ChallengeLikeListRelationFilter
+  challengeComments?: Prisma.ChallengeCommentListRelationFilter
+  achievements?: Prisma.ProfileAchievementListRelationFilter
 }
 
 export type ProfileOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  username?: Prisma.SortOrderInput | Prisma.SortOrder
+  username?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fitnessLevel?: Prisma.SortOrderInput | Prisma.SortOrder
+  preferences?: Prisma.SortOrderInput | Prisma.SortOrder
+  bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  streakCount?: Prisma.SortOrder
+  totalCompletedTasks?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  challenges?: Prisma.ChallengeOrderByRelationAggregateInput
+  profileChallenges?: Prisma.ProfileChallengeOrderByRelationAggregateInput
+  challengeLikes?: Prisma.ChallengeLikeOrderByRelationAggregateInput
+  challengeComments?: Prisma.ChallengeCommentOrderByRelationAggregateInput
+  achievements?: Prisma.ProfileAchievementOrderByRelationAggregateInput
 }
 
 export type ProfileWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  email?: string
+  username?: string
   AND?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[]
   OR?: Prisma.ProfileWhereInput[]
   NOT?: Prisma.ProfileWhereInput | Prisma.ProfileWhereInput[]
-  username?: Prisma.StringNullableFilter<"Profile"> | string | null
   avatarUrl?: Prisma.StringNullableFilter<"Profile"> | string | null
+  fitnessLevel?: Prisma.EnumFitnessLevelNullableFilter<"Profile"> | $Enums.FitnessLevel | null
+  preferences?: Prisma.JsonNullableFilter<"Profile">
+  bio?: Prisma.StringNullableFilter<"Profile"> | string | null
+  streakCount?: Prisma.IntFilter<"Profile"> | number
+  totalCompletedTasks?: Prisma.IntFilter<"Profile"> | number
   createdAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
-}, "id" | "email">
+  updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
+  challenges?: Prisma.ChallengeListRelationFilter
+  profileChallenges?: Prisma.ProfileChallengeListRelationFilter
+  challengeLikes?: Prisma.ChallengeLikeListRelationFilter
+  challengeComments?: Prisma.ChallengeCommentListRelationFilter
+  achievements?: Prisma.ProfileAchievementListRelationFilter
+}, "id" | "username">
 
 export type ProfileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  username?: Prisma.SortOrderInput | Prisma.SortOrder
+  username?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fitnessLevel?: Prisma.SortOrderInput | Prisma.SortOrder
+  preferences?: Prisma.SortOrderInput | Prisma.SortOrder
+  bio?: Prisma.SortOrderInput | Prisma.SortOrder
+  streakCount?: Prisma.SortOrder
+  totalCompletedTasks?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProfileCountOrderByAggregateInput
+  _avg?: Prisma.ProfileAvgOrderByAggregateInput
   _max?: Prisma.ProfileMaxOrderByAggregateInput
   _min?: Prisma.ProfileMinOrderByAggregateInput
+  _sum?: Prisma.ProfileSumOrderByAggregateInput
 }
 
 export type ProfileScalarWhereWithAggregatesInput = {
@@ -219,90 +325,178 @@ export type ProfileScalarWhereWithAggregatesInput = {
   OR?: Prisma.ProfileScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProfileScalarWhereWithAggregatesInput | Prisma.ProfileScalarWhereWithAggregatesInput[]
   id?: Prisma.UuidWithAggregatesFilter<"Profile"> | string
-  email?: Prisma.StringWithAggregatesFilter<"Profile"> | string
-  username?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
+  username?: Prisma.StringWithAggregatesFilter<"Profile"> | string
   avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
+  fitnessLevel?: Prisma.EnumFitnessLevelNullableWithAggregatesFilter<"Profile"> | $Enums.FitnessLevel | null
+  preferences?: Prisma.JsonNullableWithAggregatesFilter<"Profile">
+  bio?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
+  streakCount?: Prisma.IntWithAggregatesFilter<"Profile"> | number
+  totalCompletedTasks?: Prisma.IntWithAggregatesFilter<"Profile"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Profile"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Profile"> | Date | string
 }
 
 export type ProfileCreateInput = {
   id: string
-  email: string
-  username?: string | null
+  username: string
   avatarUrl?: string | null
+  fitnessLevel?: $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  streakCount?: number
+  totalCompletedTasks?: number
   createdAt?: Date | string
+  updatedAt?: Date | string
+  challenges?: Prisma.ChallengeCreateNestedManyWithoutCreatorInput
+  profileChallenges?: Prisma.ProfileChallengeCreateNestedManyWithoutProfileInput
+  challengeLikes?: Prisma.ChallengeLikeCreateNestedManyWithoutProfileInput
+  challengeComments?: Prisma.ChallengeCommentCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.ProfileAchievementCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileUncheckedCreateInput = {
   id: string
-  email: string
-  username?: string | null
+  username: string
   avatarUrl?: string | null
+  fitnessLevel?: $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  streakCount?: number
+  totalCompletedTasks?: number
   createdAt?: Date | string
+  updatedAt?: Date | string
+  challenges?: Prisma.ChallengeUncheckedCreateNestedManyWithoutCreatorInput
+  profileChallenges?: Prisma.ProfileChallengeUncheckedCreateNestedManyWithoutProfileInput
+  challengeLikes?: Prisma.ChallengeLikeUncheckedCreateNestedManyWithoutProfileInput
+  challengeComments?: Prisma.ChallengeCommentUncheckedCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.ProfileAchievementUncheckedCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fitnessLevel?: Prisma.NullableEnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  streakCount?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  challenges?: Prisma.ChallengeUpdateManyWithoutCreatorNestedInput
+  profileChallenges?: Prisma.ProfileChallengeUpdateManyWithoutProfileNestedInput
+  challengeLikes?: Prisma.ChallengeLikeUpdateManyWithoutProfileNestedInput
+  challengeComments?: Prisma.ChallengeCommentUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.ProfileAchievementUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fitnessLevel?: Prisma.NullableEnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  streakCount?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  challenges?: Prisma.ChallengeUncheckedUpdateManyWithoutCreatorNestedInput
+  profileChallenges?: Prisma.ProfileChallengeUncheckedUpdateManyWithoutProfileNestedInput
+  challengeLikes?: Prisma.ChallengeLikeUncheckedUpdateManyWithoutProfileNestedInput
+  challengeComments?: Prisma.ChallengeCommentUncheckedUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.ProfileAchievementUncheckedUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileCreateManyInput = {
   id: string
-  email: string
-  username?: string | null
+  username: string
   avatarUrl?: string | null
+  fitnessLevel?: $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  streakCount?: number
+  totalCompletedTasks?: number
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type ProfileUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fitnessLevel?: Prisma.NullableEnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  streakCount?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ProfileUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  username?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  username?: Prisma.StringFieldUpdateOperationsInput | string
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fitnessLevel?: Prisma.NullableEnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  streakCount?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   username?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  fitnessLevel?: Prisma.SortOrder
+  preferences?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  streakCount?: Prisma.SortOrder
+  totalCompletedTasks?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+}
+
+export type ProfileAvgOrderByAggregateInput = {
+  streakCount?: Prisma.SortOrder
+  totalCompletedTasks?: Prisma.SortOrder
 }
 
 export type ProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   username?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  fitnessLevel?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  streakCount?: Prisma.SortOrder
+  totalCompletedTasks?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type ProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   username?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
+  fitnessLevel?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  streakCount?: Prisma.SortOrder
+  totalCompletedTasks?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+}
+
+export type ProfileSumOrderByAggregateInput = {
+  streakCount?: Prisma.SortOrder
+  totalCompletedTasks?: Prisma.SortOrder
+}
+
+export type ProfileScalarRelationFilter = {
+  is?: Prisma.ProfileWhereInput
+  isNot?: Prisma.ProfileWhereInput
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -313,55 +507,669 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
+export type NullableEnumFitnessLevelFieldUpdateOperationsInput = {
+  set?: $Enums.FitnessLevel | null
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type ProfileCreateNestedOneWithoutChallengesInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutChallengesInput, Prisma.ProfileUncheckedCreateWithoutChallengesInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutChallengesInput
+  connect?: Prisma.ProfileWhereUniqueInput
+}
+
+export type ProfileUpdateOneRequiredWithoutChallengesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutChallengesInput, Prisma.ProfileUncheckedCreateWithoutChallengesInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutChallengesInput
+  upsert?: Prisma.ProfileUpsertWithoutChallengesInput
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutChallengesInput, Prisma.ProfileUpdateWithoutChallengesInput>, Prisma.ProfileUncheckedUpdateWithoutChallengesInput>
+}
+
+export type ProfileCreateNestedOneWithoutProfileChallengesInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutProfileChallengesInput, Prisma.ProfileUncheckedCreateWithoutProfileChallengesInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutProfileChallengesInput
+  connect?: Prisma.ProfileWhereUniqueInput
+}
+
+export type ProfileUpdateOneRequiredWithoutProfileChallengesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutProfileChallengesInput, Prisma.ProfileUncheckedCreateWithoutProfileChallengesInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutProfileChallengesInput
+  upsert?: Prisma.ProfileUpsertWithoutProfileChallengesInput
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutProfileChallengesInput, Prisma.ProfileUpdateWithoutProfileChallengesInput>, Prisma.ProfileUncheckedUpdateWithoutProfileChallengesInput>
+}
+
+export type ProfileCreateNestedOneWithoutChallengeLikesInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutChallengeLikesInput, Prisma.ProfileUncheckedCreateWithoutChallengeLikesInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutChallengeLikesInput
+  connect?: Prisma.ProfileWhereUniqueInput
+}
+
+export type ProfileUpdateOneRequiredWithoutChallengeLikesNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutChallengeLikesInput, Prisma.ProfileUncheckedCreateWithoutChallengeLikesInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutChallengeLikesInput
+  upsert?: Prisma.ProfileUpsertWithoutChallengeLikesInput
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutChallengeLikesInput, Prisma.ProfileUpdateWithoutChallengeLikesInput>, Prisma.ProfileUncheckedUpdateWithoutChallengeLikesInput>
+}
+
+export type ProfileCreateNestedOneWithoutChallengeCommentsInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutChallengeCommentsInput, Prisma.ProfileUncheckedCreateWithoutChallengeCommentsInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutChallengeCommentsInput
+  connect?: Prisma.ProfileWhereUniqueInput
+}
+
+export type ProfileUpdateOneRequiredWithoutChallengeCommentsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutChallengeCommentsInput, Prisma.ProfileUncheckedCreateWithoutChallengeCommentsInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutChallengeCommentsInput
+  upsert?: Prisma.ProfileUpsertWithoutChallengeCommentsInput
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutChallengeCommentsInput, Prisma.ProfileUpdateWithoutChallengeCommentsInput>, Prisma.ProfileUncheckedUpdateWithoutChallengeCommentsInput>
+}
+
+export type ProfileCreateNestedOneWithoutAchievementsInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutAchievementsInput, Prisma.ProfileUncheckedCreateWithoutAchievementsInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutAchievementsInput
+  connect?: Prisma.ProfileWhereUniqueInput
+}
+
+export type ProfileUpdateOneRequiredWithoutAchievementsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutAchievementsInput, Prisma.ProfileUncheckedCreateWithoutAchievementsInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutAchievementsInput
+  upsert?: Prisma.ProfileUpsertWithoutAchievementsInput
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutAchievementsInput, Prisma.ProfileUpdateWithoutAchievementsInput>, Prisma.ProfileUncheckedUpdateWithoutAchievementsInput>
+}
+
+export type ProfileCreateWithoutChallengesInput = {
+  id: string
+  username: string
+  avatarUrl?: string | null
+  fitnessLevel?: $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  streakCount?: number
+  totalCompletedTasks?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profileChallenges?: Prisma.ProfileChallengeCreateNestedManyWithoutProfileInput
+  challengeLikes?: Prisma.ChallengeLikeCreateNestedManyWithoutProfileInput
+  challengeComments?: Prisma.ChallengeCommentCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.ProfileAchievementCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileUncheckedCreateWithoutChallengesInput = {
+  id: string
+  username: string
+  avatarUrl?: string | null
+  fitnessLevel?: $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  streakCount?: number
+  totalCompletedTasks?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profileChallenges?: Prisma.ProfileChallengeUncheckedCreateNestedManyWithoutProfileInput
+  challengeLikes?: Prisma.ChallengeLikeUncheckedCreateNestedManyWithoutProfileInput
+  challengeComments?: Prisma.ChallengeCommentUncheckedCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.ProfileAchievementUncheckedCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileCreateOrConnectWithoutChallengesInput = {
+  where: Prisma.ProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutChallengesInput, Prisma.ProfileUncheckedCreateWithoutChallengesInput>
+}
+
+export type ProfileUpsertWithoutChallengesInput = {
+  update: Prisma.XOR<Prisma.ProfileUpdateWithoutChallengesInput, Prisma.ProfileUncheckedUpdateWithoutChallengesInput>
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutChallengesInput, Prisma.ProfileUncheckedCreateWithoutChallengesInput>
+  where?: Prisma.ProfileWhereInput
+}
+
+export type ProfileUpdateToOneWithWhereWithoutChallengesInput = {
+  where?: Prisma.ProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfileUpdateWithoutChallengesInput, Prisma.ProfileUncheckedUpdateWithoutChallengesInput>
+}
+
+export type ProfileUpdateWithoutChallengesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fitnessLevel?: Prisma.NullableEnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  streakCount?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profileChallenges?: Prisma.ProfileChallengeUpdateManyWithoutProfileNestedInput
+  challengeLikes?: Prisma.ChallengeLikeUpdateManyWithoutProfileNestedInput
+  challengeComments?: Prisma.ChallengeCommentUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.ProfileAchievementUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileUncheckedUpdateWithoutChallengesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fitnessLevel?: Prisma.NullableEnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  streakCount?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profileChallenges?: Prisma.ProfileChallengeUncheckedUpdateManyWithoutProfileNestedInput
+  challengeLikes?: Prisma.ChallengeLikeUncheckedUpdateManyWithoutProfileNestedInput
+  challengeComments?: Prisma.ChallengeCommentUncheckedUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.ProfileAchievementUncheckedUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileCreateWithoutProfileChallengesInput = {
+  id: string
+  username: string
+  avatarUrl?: string | null
+  fitnessLevel?: $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  streakCount?: number
+  totalCompletedTasks?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  challenges?: Prisma.ChallengeCreateNestedManyWithoutCreatorInput
+  challengeLikes?: Prisma.ChallengeLikeCreateNestedManyWithoutProfileInput
+  challengeComments?: Prisma.ChallengeCommentCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.ProfileAchievementCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileUncheckedCreateWithoutProfileChallengesInput = {
+  id: string
+  username: string
+  avatarUrl?: string | null
+  fitnessLevel?: $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  streakCount?: number
+  totalCompletedTasks?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  challenges?: Prisma.ChallengeUncheckedCreateNestedManyWithoutCreatorInput
+  challengeLikes?: Prisma.ChallengeLikeUncheckedCreateNestedManyWithoutProfileInput
+  challengeComments?: Prisma.ChallengeCommentUncheckedCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.ProfileAchievementUncheckedCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileCreateOrConnectWithoutProfileChallengesInput = {
+  where: Prisma.ProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutProfileChallengesInput, Prisma.ProfileUncheckedCreateWithoutProfileChallengesInput>
+}
+
+export type ProfileUpsertWithoutProfileChallengesInput = {
+  update: Prisma.XOR<Prisma.ProfileUpdateWithoutProfileChallengesInput, Prisma.ProfileUncheckedUpdateWithoutProfileChallengesInput>
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutProfileChallengesInput, Prisma.ProfileUncheckedCreateWithoutProfileChallengesInput>
+  where?: Prisma.ProfileWhereInput
+}
+
+export type ProfileUpdateToOneWithWhereWithoutProfileChallengesInput = {
+  where?: Prisma.ProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfileUpdateWithoutProfileChallengesInput, Prisma.ProfileUncheckedUpdateWithoutProfileChallengesInput>
+}
+
+export type ProfileUpdateWithoutProfileChallengesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fitnessLevel?: Prisma.NullableEnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  streakCount?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  challenges?: Prisma.ChallengeUpdateManyWithoutCreatorNestedInput
+  challengeLikes?: Prisma.ChallengeLikeUpdateManyWithoutProfileNestedInput
+  challengeComments?: Prisma.ChallengeCommentUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.ProfileAchievementUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileUncheckedUpdateWithoutProfileChallengesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fitnessLevel?: Prisma.NullableEnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  streakCount?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  challenges?: Prisma.ChallengeUncheckedUpdateManyWithoutCreatorNestedInput
+  challengeLikes?: Prisma.ChallengeLikeUncheckedUpdateManyWithoutProfileNestedInput
+  challengeComments?: Prisma.ChallengeCommentUncheckedUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.ProfileAchievementUncheckedUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileCreateWithoutChallengeLikesInput = {
+  id: string
+  username: string
+  avatarUrl?: string | null
+  fitnessLevel?: $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  streakCount?: number
+  totalCompletedTasks?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  challenges?: Prisma.ChallengeCreateNestedManyWithoutCreatorInput
+  profileChallenges?: Prisma.ProfileChallengeCreateNestedManyWithoutProfileInput
+  challengeComments?: Prisma.ChallengeCommentCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.ProfileAchievementCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileUncheckedCreateWithoutChallengeLikesInput = {
+  id: string
+  username: string
+  avatarUrl?: string | null
+  fitnessLevel?: $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  streakCount?: number
+  totalCompletedTasks?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  challenges?: Prisma.ChallengeUncheckedCreateNestedManyWithoutCreatorInput
+  profileChallenges?: Prisma.ProfileChallengeUncheckedCreateNestedManyWithoutProfileInput
+  challengeComments?: Prisma.ChallengeCommentUncheckedCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.ProfileAchievementUncheckedCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileCreateOrConnectWithoutChallengeLikesInput = {
+  where: Prisma.ProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutChallengeLikesInput, Prisma.ProfileUncheckedCreateWithoutChallengeLikesInput>
+}
+
+export type ProfileUpsertWithoutChallengeLikesInput = {
+  update: Prisma.XOR<Prisma.ProfileUpdateWithoutChallengeLikesInput, Prisma.ProfileUncheckedUpdateWithoutChallengeLikesInput>
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutChallengeLikesInput, Prisma.ProfileUncheckedCreateWithoutChallengeLikesInput>
+  where?: Prisma.ProfileWhereInput
+}
+
+export type ProfileUpdateToOneWithWhereWithoutChallengeLikesInput = {
+  where?: Prisma.ProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfileUpdateWithoutChallengeLikesInput, Prisma.ProfileUncheckedUpdateWithoutChallengeLikesInput>
+}
+
+export type ProfileUpdateWithoutChallengeLikesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fitnessLevel?: Prisma.NullableEnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  streakCount?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  challenges?: Prisma.ChallengeUpdateManyWithoutCreatorNestedInput
+  profileChallenges?: Prisma.ProfileChallengeUpdateManyWithoutProfileNestedInput
+  challengeComments?: Prisma.ChallengeCommentUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.ProfileAchievementUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileUncheckedUpdateWithoutChallengeLikesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fitnessLevel?: Prisma.NullableEnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  streakCount?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  challenges?: Prisma.ChallengeUncheckedUpdateManyWithoutCreatorNestedInput
+  profileChallenges?: Prisma.ProfileChallengeUncheckedUpdateManyWithoutProfileNestedInput
+  challengeComments?: Prisma.ChallengeCommentUncheckedUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.ProfileAchievementUncheckedUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileCreateWithoutChallengeCommentsInput = {
+  id: string
+  username: string
+  avatarUrl?: string | null
+  fitnessLevel?: $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  streakCount?: number
+  totalCompletedTasks?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  challenges?: Prisma.ChallengeCreateNestedManyWithoutCreatorInput
+  profileChallenges?: Prisma.ProfileChallengeCreateNestedManyWithoutProfileInput
+  challengeLikes?: Prisma.ChallengeLikeCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.ProfileAchievementCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileUncheckedCreateWithoutChallengeCommentsInput = {
+  id: string
+  username: string
+  avatarUrl?: string | null
+  fitnessLevel?: $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  streakCount?: number
+  totalCompletedTasks?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  challenges?: Prisma.ChallengeUncheckedCreateNestedManyWithoutCreatorInput
+  profileChallenges?: Prisma.ProfileChallengeUncheckedCreateNestedManyWithoutProfileInput
+  challengeLikes?: Prisma.ChallengeLikeUncheckedCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.ProfileAchievementUncheckedCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileCreateOrConnectWithoutChallengeCommentsInput = {
+  where: Prisma.ProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutChallengeCommentsInput, Prisma.ProfileUncheckedCreateWithoutChallengeCommentsInput>
+}
+
+export type ProfileUpsertWithoutChallengeCommentsInput = {
+  update: Prisma.XOR<Prisma.ProfileUpdateWithoutChallengeCommentsInput, Prisma.ProfileUncheckedUpdateWithoutChallengeCommentsInput>
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutChallengeCommentsInput, Prisma.ProfileUncheckedCreateWithoutChallengeCommentsInput>
+  where?: Prisma.ProfileWhereInput
+}
+
+export type ProfileUpdateToOneWithWhereWithoutChallengeCommentsInput = {
+  where?: Prisma.ProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfileUpdateWithoutChallengeCommentsInput, Prisma.ProfileUncheckedUpdateWithoutChallengeCommentsInput>
+}
+
+export type ProfileUpdateWithoutChallengeCommentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fitnessLevel?: Prisma.NullableEnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  streakCount?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  challenges?: Prisma.ChallengeUpdateManyWithoutCreatorNestedInput
+  profileChallenges?: Prisma.ProfileChallengeUpdateManyWithoutProfileNestedInput
+  challengeLikes?: Prisma.ChallengeLikeUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.ProfileAchievementUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileUncheckedUpdateWithoutChallengeCommentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fitnessLevel?: Prisma.NullableEnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  streakCount?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  challenges?: Prisma.ChallengeUncheckedUpdateManyWithoutCreatorNestedInput
+  profileChallenges?: Prisma.ProfileChallengeUncheckedUpdateManyWithoutProfileNestedInput
+  challengeLikes?: Prisma.ChallengeLikeUncheckedUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.ProfileAchievementUncheckedUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileCreateWithoutAchievementsInput = {
+  id: string
+  username: string
+  avatarUrl?: string | null
+  fitnessLevel?: $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  streakCount?: number
+  totalCompletedTasks?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  challenges?: Prisma.ChallengeCreateNestedManyWithoutCreatorInput
+  profileChallenges?: Prisma.ProfileChallengeCreateNestedManyWithoutProfileInput
+  challengeLikes?: Prisma.ChallengeLikeCreateNestedManyWithoutProfileInput
+  challengeComments?: Prisma.ChallengeCommentCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileUncheckedCreateWithoutAchievementsInput = {
+  id: string
+  username: string
+  avatarUrl?: string | null
+  fitnessLevel?: $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: string | null
+  streakCount?: number
+  totalCompletedTasks?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  challenges?: Prisma.ChallengeUncheckedCreateNestedManyWithoutCreatorInput
+  profileChallenges?: Prisma.ProfileChallengeUncheckedCreateNestedManyWithoutProfileInput
+  challengeLikes?: Prisma.ChallengeLikeUncheckedCreateNestedManyWithoutProfileInput
+  challengeComments?: Prisma.ChallengeCommentUncheckedCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileCreateOrConnectWithoutAchievementsInput = {
+  where: Prisma.ProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutAchievementsInput, Prisma.ProfileUncheckedCreateWithoutAchievementsInput>
+}
+
+export type ProfileUpsertWithoutAchievementsInput = {
+  update: Prisma.XOR<Prisma.ProfileUpdateWithoutAchievementsInput, Prisma.ProfileUncheckedUpdateWithoutAchievementsInput>
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutAchievementsInput, Prisma.ProfileUncheckedCreateWithoutAchievementsInput>
+  where?: Prisma.ProfileWhereInput
+}
+
+export type ProfileUpdateToOneWithWhereWithoutAchievementsInput = {
+  where?: Prisma.ProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfileUpdateWithoutAchievementsInput, Prisma.ProfileUncheckedUpdateWithoutAchievementsInput>
+}
+
+export type ProfileUpdateWithoutAchievementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fitnessLevel?: Prisma.NullableEnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  streakCount?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  challenges?: Prisma.ChallengeUpdateManyWithoutCreatorNestedInput
+  profileChallenges?: Prisma.ProfileChallengeUpdateManyWithoutProfileNestedInput
+  challengeLikes?: Prisma.ChallengeLikeUpdateManyWithoutProfileNestedInput
+  challengeComments?: Prisma.ChallengeCommentUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileUncheckedUpdateWithoutAchievementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fitnessLevel?: Prisma.NullableEnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel | null
+  preferences?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  streakCount?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  challenges?: Prisma.ChallengeUncheckedUpdateManyWithoutCreatorNestedInput
+  profileChallenges?: Prisma.ProfileChallengeUncheckedUpdateManyWithoutProfileNestedInput
+  challengeLikes?: Prisma.ChallengeLikeUncheckedUpdateManyWithoutProfileNestedInput
+  challengeComments?: Prisma.ChallengeCommentUncheckedUpdateManyWithoutProfileNestedInput
+}
+
+
+/**
+ * Count Type ProfileCountOutputType
+ */
+
+export type ProfileCountOutputType = {
+  challenges: number
+  profileChallenges: number
+  challengeLikes: number
+  challengeComments: number
+  achievements: number
+}
+
+export type ProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  challenges?: boolean | ProfileCountOutputTypeCountChallengesArgs
+  profileChallenges?: boolean | ProfileCountOutputTypeCountProfileChallengesArgs
+  challengeLikes?: boolean | ProfileCountOutputTypeCountChallengeLikesArgs
+  challengeComments?: boolean | ProfileCountOutputTypeCountChallengeCommentsArgs
+  achievements?: boolean | ProfileCountOutputTypeCountAchievementsArgs
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProfileCountOutputType
+   */
+  select?: Prisma.ProfileCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeCountChallengesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChallengeWhereInput
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeCountProfileChallengesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProfileChallengeWhereInput
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeCountChallengeLikesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChallengeLikeWhereInput
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeCountChallengeCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChallengeCommentWhereInput
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeCountAchievementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProfileAchievementWhereInput
+}
 
 
 export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  email?: boolean
   username?: boolean
   avatarUrl?: boolean
+  fitnessLevel?: boolean
+  preferences?: boolean
+  bio?: boolean
+  streakCount?: boolean
+  totalCompletedTasks?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
+  challenges?: boolean | Prisma.Profile$challengesArgs<ExtArgs>
+  profileChallenges?: boolean | Prisma.Profile$profileChallengesArgs<ExtArgs>
+  challengeLikes?: boolean | Prisma.Profile$challengeLikesArgs<ExtArgs>
+  challengeComments?: boolean | Prisma.Profile$challengeCommentsArgs<ExtArgs>
+  achievements?: boolean | Prisma.Profile$achievementsArgs<ExtArgs>
+  _count?: boolean | Prisma.ProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["profile"]>
 
 export type ProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  email?: boolean
   username?: boolean
   avatarUrl?: boolean
+  fitnessLevel?: boolean
+  preferences?: boolean
+  bio?: boolean
+  streakCount?: boolean
+  totalCompletedTasks?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["profile"]>
 
 export type ProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  email?: boolean
   username?: boolean
   avatarUrl?: boolean
+  fitnessLevel?: boolean
+  preferences?: boolean
+  bio?: boolean
+  streakCount?: boolean
+  totalCompletedTasks?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }, ExtArgs["result"]["profile"]>
 
 export type ProfileSelectScalar = {
   id?: boolean
-  email?: boolean
   username?: boolean
   avatarUrl?: boolean
+  fitnessLevel?: boolean
+  preferences?: boolean
+  bio?: boolean
+  streakCount?: boolean
+  totalCompletedTasks?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "username" | "avatarUrl" | "createdAt", ExtArgs["result"]["profile"]>
+export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "avatarUrl" | "fitnessLevel" | "preferences" | "bio" | "streakCount" | "totalCompletedTasks" | "createdAt" | "updatedAt", ExtArgs["result"]["profile"]>
+export type ProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  challenges?: boolean | Prisma.Profile$challengesArgs<ExtArgs>
+  profileChallenges?: boolean | Prisma.Profile$profileChallengesArgs<ExtArgs>
+  challengeLikes?: boolean | Prisma.Profile$challengeLikesArgs<ExtArgs>
+  challengeComments?: boolean | Prisma.Profile$challengeCommentsArgs<ExtArgs>
+  achievements?: boolean | Prisma.Profile$achievementsArgs<ExtArgs>
+  _count?: boolean | Prisma.ProfileCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type ProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ProfileIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $ProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Profile"
-  objects: {}
+  objects: {
+    challenges: Prisma.$ChallengePayload<ExtArgs>[]
+    profileChallenges: Prisma.$ProfileChallengePayload<ExtArgs>[]
+    challengeLikes: Prisma.$ChallengeLikePayload<ExtArgs>[]
+    challengeComments: Prisma.$ChallengeCommentPayload<ExtArgs>[]
+    achievements: Prisma.$ProfileAchievementPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    email: string
-    username: string | null
+    username: string
     avatarUrl: string | null
+    fitnessLevel: $Enums.FitnessLevel | null
+    preferences: runtime.JsonValue | null
+    bio: string | null
+    streakCount: number
+    totalCompletedTasks: number
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["profile"]>
   composites: {}
 }
@@ -756,6 +1564,11 @@ readonly fields: ProfileFieldRefs;
  */
 export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  challenges<T extends Prisma.Profile$challengesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$challengesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  profileChallenges<T extends Prisma.Profile$profileChallengesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$profileChallengesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProfileChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  challengeLikes<T extends Prisma.Profile$challengeLikesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$challengeLikesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChallengeLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  challengeComments<T extends Prisma.Profile$challengeCommentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$challengeCommentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChallengeCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  achievements<T extends Prisma.Profile$achievementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$achievementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProfileAchievementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -786,10 +1599,15 @@ export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface ProfileFieldRefs {
   readonly id: Prisma.FieldRef<"Profile", 'String'>
-  readonly email: Prisma.FieldRef<"Profile", 'String'>
   readonly username: Prisma.FieldRef<"Profile", 'String'>
   readonly avatarUrl: Prisma.FieldRef<"Profile", 'String'>
+  readonly fitnessLevel: Prisma.FieldRef<"Profile", 'FitnessLevel'>
+  readonly preferences: Prisma.FieldRef<"Profile", 'Json'>
+  readonly bio: Prisma.FieldRef<"Profile", 'String'>
+  readonly streakCount: Prisma.FieldRef<"Profile", 'Int'>
+  readonly totalCompletedTasks: Prisma.FieldRef<"Profile", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Profile", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Profile", 'DateTime'>
 }
     
 
@@ -806,6 +1624,10 @@ export type ProfileFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the Profile
    */
   omit?: Prisma.ProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfileInclude<ExtArgs> | null
   /**
    * Filter, which Profile to fetch.
    */
@@ -825,6 +1647,10 @@ export type ProfileFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.ProfileOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfileInclude<ExtArgs> | null
+  /**
    * Filter, which Profile to fetch.
    */
   where: Prisma.ProfileWhereUniqueInput
@@ -842,6 +1668,10 @@ export type ProfileFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the Profile
    */
   omit?: Prisma.ProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfileInclude<ExtArgs> | null
   /**
    * Filter, which Profile to fetch.
    */
@@ -891,6 +1721,10 @@ export type ProfileFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions
    */
   omit?: Prisma.ProfileOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfileInclude<ExtArgs> | null
+  /**
    * Filter, which Profile to fetch.
    */
   where?: Prisma.ProfileWhereInput
@@ -938,6 +1772,10 @@ export type ProfileFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Omit specific fields from the Profile
    */
   omit?: Prisma.ProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfileInclude<ExtArgs> | null
   /**
    * Filter, which Profiles to fetch.
    */
@@ -987,6 +1825,10 @@ export type ProfileCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.ProfileOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfileInclude<ExtArgs> | null
+  /**
    * The data needed to create a Profile.
    */
   data: Prisma.XOR<Prisma.ProfileCreateInput, Prisma.ProfileUncheckedCreateInput>
@@ -1034,6 +1876,10 @@ export type ProfileUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the Profile
    */
   omit?: Prisma.ProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfileInclude<ExtArgs> | null
   /**
    * The data needed to update a Profile.
    */
@@ -1101,6 +1947,10 @@ export type ProfileUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.ProfileOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfileInclude<ExtArgs> | null
+  /**
    * The filter to search for the Profile to update in case it exists.
    */
   where: Prisma.ProfileWhereUniqueInput
@@ -1127,6 +1977,10 @@ export type ProfileDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    */
   omit?: Prisma.ProfileOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfileInclude<ExtArgs> | null
+  /**
    * Filter which Profile to delete.
    */
   where: Prisma.ProfileWhereUniqueInput
@@ -1147,6 +2001,126 @@ export type ProfileDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Profile.challenges
+ */
+export type Profile$challengesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Challenge
+   */
+  select?: Prisma.ChallengeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Challenge
+   */
+  omit?: Prisma.ChallengeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChallengeInclude<ExtArgs> | null
+  where?: Prisma.ChallengeWhereInput
+  orderBy?: Prisma.ChallengeOrderByWithRelationInput | Prisma.ChallengeOrderByWithRelationInput[]
+  cursor?: Prisma.ChallengeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChallengeScalarFieldEnum | Prisma.ChallengeScalarFieldEnum[]
+}
+
+/**
+ * Profile.profileChallenges
+ */
+export type Profile$profileChallengesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProfileChallenge
+   */
+  select?: Prisma.ProfileChallengeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProfileChallenge
+   */
+  omit?: Prisma.ProfileChallengeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfileChallengeInclude<ExtArgs> | null
+  where?: Prisma.ProfileChallengeWhereInput
+  orderBy?: Prisma.ProfileChallengeOrderByWithRelationInput | Prisma.ProfileChallengeOrderByWithRelationInput[]
+  cursor?: Prisma.ProfileChallengeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProfileChallengeScalarFieldEnum | Prisma.ProfileChallengeScalarFieldEnum[]
+}
+
+/**
+ * Profile.challengeLikes
+ */
+export type Profile$challengeLikesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChallengeLike
+   */
+  select?: Prisma.ChallengeLikeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChallengeLike
+   */
+  omit?: Prisma.ChallengeLikeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChallengeLikeInclude<ExtArgs> | null
+  where?: Prisma.ChallengeLikeWhereInput
+  orderBy?: Prisma.ChallengeLikeOrderByWithRelationInput | Prisma.ChallengeLikeOrderByWithRelationInput[]
+  cursor?: Prisma.ChallengeLikeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChallengeLikeScalarFieldEnum | Prisma.ChallengeLikeScalarFieldEnum[]
+}
+
+/**
+ * Profile.challengeComments
+ */
+export type Profile$challengeCommentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChallengeComment
+   */
+  select?: Prisma.ChallengeCommentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChallengeComment
+   */
+  omit?: Prisma.ChallengeCommentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChallengeCommentInclude<ExtArgs> | null
+  where?: Prisma.ChallengeCommentWhereInput
+  orderBy?: Prisma.ChallengeCommentOrderByWithRelationInput | Prisma.ChallengeCommentOrderByWithRelationInput[]
+  cursor?: Prisma.ChallengeCommentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChallengeCommentScalarFieldEnum | Prisma.ChallengeCommentScalarFieldEnum[]
+}
+
+/**
+ * Profile.achievements
+ */
+export type Profile$achievementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProfileAchievement
+   */
+  select?: Prisma.ProfileAchievementSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProfileAchievement
+   */
+  omit?: Prisma.ProfileAchievementOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfileAchievementInclude<ExtArgs> | null
+  where?: Prisma.ProfileAchievementWhereInput
+  orderBy?: Prisma.ProfileAchievementOrderByWithRelationInput | Prisma.ProfileAchievementOrderByWithRelationInput[]
+  cursor?: Prisma.ProfileAchievementWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProfileAchievementScalarFieldEnum | Prisma.ProfileAchievementScalarFieldEnum[]
+}
+
+/**
  * Profile without action
  */
 export type ProfileDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1158,4 +2132,8 @@ export type ProfileDefaultArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Omit specific fields from the Profile
    */
   omit?: Prisma.ProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfileInclude<ExtArgs> | null
 }

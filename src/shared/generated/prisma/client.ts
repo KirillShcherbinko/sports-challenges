@@ -46,3 +46,43 @@ export { Prisma }
  * 
  */
 export type Profile = Prisma.ProfileModel
+/**
+ * Model Challenge
+ * 
+ */
+export type Challenge = Prisma.ChallengeModel
+/**
+ * Model DailyTask
+ * 
+ */
+export type DailyTask = Prisma.DailyTaskModel
+/**
+ * Model ProfileChallenge
+ * 
+ */
+export type ProfileChallenge = Prisma.ProfileChallengeModel
+/**
+ * Model TaskCompletion
+ * 
+ */
+export type TaskCompletion = Prisma.TaskCompletionModel
+/**
+ * Model ChallengeLike
+ * 
+ */
+export type ChallengeLike = Prisma.ChallengeLikeModel
+/**
+ * Model ChallengeComment
+ * 
+ */
+export type ChallengeComment = Prisma.ChallengeCommentModel
+/**
+ * Model Achievement
+ * 
+ */
+export type Achievement = Prisma.AchievementModel
+/**
+ * Model ProfileAchievement
+ * 
+ */
+export type ProfileAchievement = Prisma.ProfileAchievementModel
