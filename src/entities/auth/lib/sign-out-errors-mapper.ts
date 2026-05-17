@@ -2,9 +2,7 @@ import type { AuthError } from '@supabase/supabase-js';
 
 import type { TErrorFields } from '@/shared';
 
-export const mapSignOutErrors = (
-  error: AuthError | null
-): TErrorFields<null> | null => {
+export const mapSignOutErrors = (error: AuthError | null): TErrorFields<null> | null => {
   if (!error) {
     return null;
   }

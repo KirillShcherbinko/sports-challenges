@@ -18,7 +18,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="ru" {...mantineHtmlProps}>
       <head>
-        <ColorSchemeScript defaultColorScheme="light" />
+        <ColorSchemeScript defaultColorScheme="dark" />
       </head>
       <body className={inter.className}>
         <ThemeProvider>

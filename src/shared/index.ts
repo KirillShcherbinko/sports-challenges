@@ -6,3 +6,4 @@ export { handleFormActionErrors } from './forms/form-actions-handler';
 export type { TActionState, TErrorFields } from './forms/types';
 export { EFormActionStatus, EErrorCode } from './forms/enums';
 export type { TResult } from './model/types';
+export { ERoutes } from './routes/enums';
