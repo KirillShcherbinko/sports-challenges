@@ -3,7 +3,8 @@
 import { mapSignUpErrors, signUpSchema } from '@/entities/auth';
 import type { TSignUpSchema } from '@/entities/auth';
 import { profileRepository } from '@/entities/profile';
-import { createServer, EFormActionStatus, type TActionState } from '@/shared';
+import { EFormActionStatus, type TActionState } from '@/shared';
+import { createServer } from '@/shared/lib/supabase/server';
 
 export const signUpAction = async (formValues: TSignUpSchema): Promise<TActionState<TSignUpSchema>> => {
   // Серверная валидация
@@ -17,7 +18,13 @@ export const signUpAction = async (formValues: TSignUpSchema): Promise<TActionSt
 
   // Проверка на уникальность имени пользователя
   const isExistingUsername = await profileRepository.getProfileByUsername(validatedData.data.username);
-  if (isExistingUsername.success) {
+  if (!isExistingUsername.success) {
+    return {
+      status: EFormActionStatus.Error,
+      errors: { root: 'Пользователь не найден' },
+    };
+  }
+  if (isExistingUsername.data) {
     return {
       status: EFormActionStatus.Error,
       errors: { fields: [{ field: 'username', message: 'Пользователь с таким именем уже существует' }] },

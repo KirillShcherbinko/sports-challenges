@@ -43,6 +43,15 @@ export const DARK_THEME = createTheme({
         shadow: 'sm',
       },
     },
+    PasswordInput: {
+      styles: {
+        visibilityToggle: {
+          transition: 'background-color 150ms ease, color 150ms ease',
+          borderRadius: '50%',
+          '--ai-hover': 'var(--mantine-color-dark-6)',
+        },
+      },
+    },
     Notification: NOTIFICATION_THEME,
   },
 });

@@ -5,24 +5,43 @@ import { signOutAction } from '../actions/sign-out';
 import { handleFormActionErrors, EFormActionStatus } from '@/shared';
 import { useRouter } from 'next/navigation';
 import { IconLogout } from '@tabler/icons-react';
+import { useState, useTransition } from 'react';
 
 export const SignOutButton = () => {
   const router = useRouter();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isPending, startTransition] = useTransition();
+
   const handleSignOut = async () => {
+    setIsLoading(true);
+
     const state = await signOutAction();
+
     handleFormActionErrors({ state });
 
     if (state.status === EFormActionStatus.Success && state.redirect) {
-      router.push(state.redirect);
+      const redirect = state.redirect;
+
+      startTransition(() => {
+        router.push(redirect);
+      });
+
+      return;
     }
+
+    setIsLoading(false);
   };
 
   return (
     <Button
       color="red"
+      maw={250}
+      w="100%"
+      loading={isPending || isLoading}
+      disabled={isPending || isLoading}
       onClick={handleSignOut}
-      rightSection={<IconLogout color="var(--mantine-color-dark-1)" size={32} />}
+      rightSection={!isPending && <IconLogout color="var(--mantine-color-dark-1)" size={24} />}
     >
       Выйти
     </Button>

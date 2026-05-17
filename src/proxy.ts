@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-
-import { createServer, ERoutes } from '@/shared';
+import { ERoutes } from '@/shared';
+import { createServer } from '@/shared/lib/supabase/server';
 import { isAuthRoute } from './app/lib/is-auth-route';
 import { isGuestRoute } from './app/lib/is-guest-route';
 

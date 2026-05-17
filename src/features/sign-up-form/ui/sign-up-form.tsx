@@ -8,11 +8,13 @@ import { Stack, TextInput, PasswordInput, Button } from '@mantine/core';
 import { handleFormActionErrors, EFormActionStatus } from '@/shared';
 import { useRouter } from 'next/navigation';
 import { signUpAction } from '../actions/sign-up';
+import { useTransition } from 'react';
 
 export const SignUpForm = () => {
   const { schema, defaultValues, fields } = SIGN_UP_DATA;
 
   const router = useRouter();
+  const [isPendeing, startTransition] = useTransition();
 
   const { formState, handleSubmit, register, setError } = useForm<TSignUpSchema>({
     resolver: zodResolver(schema),
@@ -25,17 +27,21 @@ export const SignUpForm = () => {
     handleFormActionErrors({ state, setError });
 
     if (state.status === EFormActionStatus.Success && state.redirect) {
-      router.push(state.redirect);
+      const redirect = state.redirect;
+
+      startTransition(() => {
+        router.push(redirect);
+      });
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack>
+      <Stack gap="sm">
         <TextInput error={formState.errors.username?.message} {...fields.username} {...register('username')} />
         <TextInput error={formState.errors.email?.message} {...fields.email} {...register('email')} />
         <PasswordInput error={formState.errors.password?.message} {...fields.password} {...register('password')} />
-        <Button type="submit" loading={formState.isSubmitting}>
+        <Button type="submit" loading={formState.isSubmitting || isPendeing}>
           Зарегистрироваться
         </Button>
       </Stack>

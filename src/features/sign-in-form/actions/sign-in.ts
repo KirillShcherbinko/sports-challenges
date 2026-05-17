@@ -2,7 +2,8 @@
 
 import { mapSignInErrors, signInSchema } from '@/entities/auth';
 import type { TSignInSchema } from '@/entities/auth';
-import { createServer, EFormActionStatus, type TActionState } from '@/shared';
+import { EFormActionStatus, type TActionState } from '@/shared';
+import { createServer } from '@/shared/lib/supabase/server';
 
 export const signInAction = async (formValues: TSignInSchema): Promise<TActionState<TSignInSchema>> => {
   const validatedData = signInSchema.safeParse(formValues);

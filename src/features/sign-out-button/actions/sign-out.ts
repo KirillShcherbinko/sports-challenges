@@ -1,9 +1,7 @@
 'use server';
 
-import { createServer } from '@/shared';
-
+import { createServer } from '@/shared/lib/supabase/server';
 import { EFormActionStatus, type TActionState } from '@/shared';
-
 import { mapSignOutErrors } from '@/entities/auth';
 
 export const signOutAction = async (): Promise<TActionState<Record<string, never>>> => {

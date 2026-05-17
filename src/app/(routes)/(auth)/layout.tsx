@@ -1,5 +1,6 @@
+import { AuthLayout } from '@/widgets/auth-layout';
 import type { PropsWithChildren } from 'react';
 
 export default function AuthGroupLayout({ children }: PropsWithChildren) {
-  return <div>{children}</div>;
+  return <AuthLayout>{children}</AuthLayout>;
 }

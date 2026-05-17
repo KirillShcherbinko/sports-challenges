@@ -1,3 +1,5 @@
-export default function SignUpPage() {
-  return <div>Зарегистироваться</div>;
+import { SignUpPage } from "@/views/sign-up-page";
+
+export default function SignUpRoute() {
+  return <SignUpPage />;
 }

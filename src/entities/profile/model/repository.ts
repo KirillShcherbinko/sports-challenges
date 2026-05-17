@@ -1,9 +1,9 @@
-import { prisma } from '@/shared';
 import type { Profile } from '@/shared/generated/prisma/client';
 import type { ProfileCreateInput, ProfileUpdateInput } from '@/shared/generated/prisma/models';
 import type { TResult } from '@/shared';
 import type { TProfileFilters } from './types';
 import { DEFAULT_PROFILE_FILTERS_VALUES } from '../config/default-profile-filters-values';
+import { prisma } from '@/shared/lib/prisma/client';
 
 class ProfileRepository {
   async getProfiles(filters: TProfileFilters = DEFAULT_PROFILE_FILTERS_VALUES): Promise<TResult<Profile[]>> {
