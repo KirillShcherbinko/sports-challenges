@@ -2,14 +2,14 @@
 
 import { mapSignInErrors, signInSchema } from '@/entities/auth';
 import type { TSignInSchema } from '@/entities/auth';
-import { EFormActionStatus, type TActionState } from '@/shared';
+import { EActionStatus, type TFormActionState } from '@/shared';
 import { createServer } from '@/shared/lib/supabase/server';
 
-export const signInAction = async (formValues: TSignInSchema): Promise<TActionState<TSignInSchema>> => {
+export const signInAction = async (formValues: TSignInSchema): Promise<TFormActionState<TSignInSchema>> => {
   const validatedData = signInSchema.safeParse(formValues);
   if (!validatedData.success) {
     return {
-      status: EFormActionStatus.Error,
+      status: EActionStatus.Error,
       errors: { root: 'Некорректные данные формы' },
     };
   }
@@ -24,10 +24,10 @@ export const signInAction = async (formValues: TSignInSchema): Promise<TActionSt
   const mappedError = mapSignInErrors(error);
   if (mappedError) {
     return {
-      status: EFormActionStatus.Error,
+      status: EActionStatus.Error,
       errors: mappedError || { root: 'Ошибка атворизации' },
     };
   }
 
-  return { status: EFormActionStatus.Success, redirect: '/' };
+  return { status: EActionStatus.Success, redirect: '/' };
 };

@@ -1,25 +1,38 @@
 import type { Profile } from '@/shared/generated/prisma/client';
 import type { ProfileCreateInput, ProfileUpdateInput } from '@/shared/generated/prisma/models';
 import type { TResult } from '@/shared';
-import type { TProfileFilters } from './types';
+import type { TProfileFilters, TProfilesData } from './types';
 import { DEFAULT_PROFILE_FILTERS_VALUES } from '../config/default-profile-filters-values';
 import { prisma } from '@/shared/lib/prisma/client';
 
 class ProfileRepository {
-  async getProfiles(filters: TProfileFilters = DEFAULT_PROFILE_FILTERS_VALUES): Promise<TResult<Profile[]>> {
+  async getProfiles(filters: TProfileFilters = DEFAULT_PROFILE_FILTERS_VALUES): Promise<TResult<TProfilesData>> {
     try {
       const { search, fitnessLevel, page, limit } = filters;
 
-      const profiles = await prisma.profile.findMany({
-        where: {
-          ...(search && { username: { contains: search, mode: 'insensitive' } }),
-          ...(fitnessLevel && { fitnessLevel }),
-        },
-        skip: (page - 1) * limit,
-        take: limit,
-      });
+      const where = {
+        ...(search && {
+          username: { contains: search, mode: 'insensitive' as const },
+        }),
+        ...(fitnessLevel && { fitnessLevel }),
+      };
 
-      return { success: true, data: profiles };
+      const [items, total] = await prisma.$transaction([
+        prisma.profile.findMany({
+          where,
+          skip: (page - 1) * limit,
+          take: limit,
+        }),
+        prisma.profile.count({ where }),
+      ]);
+
+      return {
+        success: true,
+        data: {
+          items,
+          pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
+        },
+      };
     } catch {
       return { success: false, error: 'Ошибка получения профилей' };
     }

@@ -3,15 +3,15 @@
 import { mapSignUpErrors, signUpSchema } from '@/entities/auth';
 import type { TSignUpSchema } from '@/entities/auth';
 import { profileRepository } from '@/entities/profile';
-import { EFormActionStatus, type TActionState } from '@/shared';
+import { EActionStatus, type TFormActionState } from '@/shared';
 import { createServer } from '@/shared/lib/supabase/server';
 
-export const signUpAction = async (formValues: TSignUpSchema): Promise<TActionState<TSignUpSchema>> => {
+export const signUpAction = async (formValues: TSignUpSchema): Promise<TFormActionState<TSignUpSchema>> => {
   // Серверная валидация
   const validatedData = signUpSchema.safeParse(formValues);
   if (!validatedData.success) {
     return {
-      status: EFormActionStatus.Error,
+      status: EActionStatus.Error,
       errors: { root: 'Некорректные данные формы' },
     };
   }
@@ -20,13 +20,13 @@ export const signUpAction = async (formValues: TSignUpSchema): Promise<TActionSt
   const isExistingUsername = await profileRepository.getProfileByUsername(validatedData.data.username);
   if (!isExistingUsername.success) {
     return {
-      status: EFormActionStatus.Error,
+      status: EActionStatus.Error,
       errors: { root: 'Пользователь не найден' },
     };
   }
   if (isExistingUsername.data) {
     return {
-      status: EFormActionStatus.Error,
+      status: EActionStatus.Error,
       errors: { fields: [{ field: 'username', message: 'Пользователь с таким именем уже существует' }] },
     };
   }
@@ -42,7 +42,7 @@ export const signUpAction = async (formValues: TSignUpSchema): Promise<TActionSt
   const mappedError = mapSignUpErrors(error);
   if (mappedError) {
     return {
-      status: EFormActionStatus.Error,
+      status: EActionStatus.Error,
       errors: mappedError,
     };
   }
@@ -50,7 +50,7 @@ export const signUpAction = async (formValues: TSignUpSchema): Promise<TActionSt
   // Обработска ошибок, если пользователь не создан
   if (!data.user) {
     return {
-      status: EFormActionStatus.Error,
+      status: EActionStatus.Error,
       errors: { root: 'Пользователь не создан' },
     };
   }
@@ -64,10 +64,10 @@ export const signUpAction = async (formValues: TSignUpSchema): Promise<TActionSt
   // Проверка ошибок после создания профиля
   if (!profileData.success) {
     return {
-      status: EFormActionStatus.Error,
+      status: EActionStatus.Error,
       errors: { root: profileData.error },
     };
   }
 
-  return { status: EFormActionStatus.Success, redirect: '/profile' };
+  return { status: EActionStatus.Success, redirect: '/profile' };
 };

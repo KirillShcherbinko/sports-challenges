@@ -1,13 +1,13 @@
 import { notifications } from '@mantine/notifications';
 import type { FieldValues } from 'react-hook-form';
-import type { THandleActionErrorsProps } from './types';
-import { EFormActionStatus } from './enums';
+import type { THandleFormActionErrorsProps } from './types';
+import { EActionStatus } from '../error/enums';
 
 export const handleFormActionErrors = <TFields extends FieldValues>({
   state,
   setError,
-}: THandleActionErrorsProps<TFields>) => {
-  if (state.status !== EFormActionStatus.Error || !state.errors) return;
+}: THandleFormActionErrorsProps<TFields>) => {
+  if (state.status !== EActionStatus.Error || !state.errors) return;
 
   const { root, fields } = state.errors;
 

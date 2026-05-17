@@ -1,5 +1,5 @@
 import type { FieldValues, Path, UseFormSetError } from 'react-hook-form';
-import type { EFormActionStatus } from './enums';
+import type { EActionStatus } from '../error/enums';
 
 export type TErrorFields<TFields> = {
   root?: string;
@@ -9,13 +9,13 @@ export type TErrorFields<TFields> = {
   }>;
 };
 
-export type TActionState<TFields> = {
-  status: EFormActionStatus;
+export type TFormActionState<TFields> = {
+  status: EActionStatus;
   errors?: TErrorFields<TFields>;
   redirect?: string;
 };
 
-export type THandleActionErrorsProps<TFields extends FieldValues> = {
-  state: TActionState<TFields>;
+export type THandleFormActionErrorsProps<TFields extends FieldValues> = {
+  state: TFormActionState<TFields>;
   setError?: UseFormSetError<TFields>;
 };

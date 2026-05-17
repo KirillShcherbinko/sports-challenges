@@ -2,7 +2,7 @@
 
 import { Button } from '@mantine/core';
 import { signOutAction } from '../actions/sign-out';
-import { handleFormActionErrors, EFormActionStatus } from '@/shared';
+import { handleFormActionErrors, EActionStatus } from '@/shared';
 import { useRouter } from 'next/navigation';
 import { IconLogout } from '@tabler/icons-react';
 import { useState, useTransition } from 'react';
@@ -20,7 +20,7 @@ export const SignOutButton = () => {
 
     handleFormActionErrors({ state });
 
-    if (state.status === EFormActionStatus.Success && state.redirect) {
+    if (state.status === EActionStatus.Success && state.redirect) {
       const redirect = state.redirect;
 
       startTransition(() => {

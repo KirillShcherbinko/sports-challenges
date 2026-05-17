@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { SIGN_UP_DATA } from '../config/sign-up-data';
 import type { TSignUpSchema } from '@/entities/auth';
 import { Stack, TextInput, PasswordInput, Button } from '@mantine/core';
-import { handleFormActionErrors, EFormActionStatus } from '@/shared';
+import { handleFormActionErrors, EActionStatus } from '@/shared';
 import { useRouter } from 'next/navigation';
 import { signUpAction } from '../actions/sign-up';
 import { useTransition } from 'react';
@@ -26,7 +26,7 @@ export const SignUpForm = () => {
 
     handleFormActionErrors({ state, setError });
 
-    if (state.status === EFormActionStatus.Success && state.redirect) {
+    if (state.status === EActionStatus.Success && state.redirect) {
       const redirect = state.redirect;
 
       startTransition(() => {

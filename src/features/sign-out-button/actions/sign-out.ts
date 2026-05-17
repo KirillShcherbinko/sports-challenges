@@ -1,20 +1,20 @@
 'use server';
 
 import { createServer } from '@/shared/lib/supabase/server';
-import { EFormActionStatus, type TActionState } from '@/shared';
+import { EActionStatus, type TFormActionState } from '@/shared';
 import { mapSignOutErrors } from '@/entities/auth';
 
-export const signOutAction = async (): Promise<TActionState<Record<string, never>>> => {
+export const signOutAction = async (): Promise<TFormActionState<Record<string, never>>> => {
   const supabase = await createServer();
 
   const { error } = await supabase.auth.signOut();
   const mappedError = mapSignOutErrors(error);
   if (mappedError) {
     return {
-      status: EFormActionStatus.Error,
+      status: EActionStatus.Error,
       errors: mappedError,
     };
   }
 
-  return { status: EFormActionStatus.Success, redirect: '/sign-in' };
+  return { status: EActionStatus.Success, redirect: '/sign-in' };
 };

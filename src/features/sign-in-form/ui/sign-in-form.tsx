@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { SIGN_IN_DATA } from '../config/sign-in-data';
 import type { TSignInSchema } from '@/entities/auth';
 import { Stack, TextInput, PasswordInput, Button } from '@mantine/core';
-import { EFormActionStatus, handleFormActionErrors } from '@/shared';
+import { EActionStatus, handleFormActionErrors } from '@/shared';
 import { signInAction } from '../actions/sign-in';
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
@@ -26,7 +26,7 @@ export const SignInForm = () => {
 
     handleFormActionErrors({ state });
 
-    if (state.status === EFormActionStatus.Success && state.redirect) {
+    if (state.status === EActionStatus.Success && state.redirect) {
       const redirect = state.redirect;
 
       startTransition(() => {

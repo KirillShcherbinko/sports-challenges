@@ -3,3 +3,9 @@ export type TResult<TData> = {
   data?: TData;
   error?: string;
 };
+
+export type RetryOptions<TData> = {
+  retries?: number;
+  delayMs?: number;
+  shouldRetry?: (result: TResult<TData>) => boolean;
+};

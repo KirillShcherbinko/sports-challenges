@@ -36,7 +36,7 @@ model Profile {
   id                  String          @id @db.Uuid
   username            String          @unique
   avatarUrl           String?         @map("avatar_url")
-  fitnessLevel        FitnessLevel?   @map("fitness_level")
+  fitnessLevel        FitnessLevel    @default(beginner) @map("fitness_level")
   preferences         Json?
   bio                 String?
   streakCount         Int             @default(0) @map("streak_count")

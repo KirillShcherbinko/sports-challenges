@@ -1,4 +1,4 @@
-export enum EFormActionStatus {
+export enum EActionStatus {
   Success = 'success',
   Error = 'error',
 }
