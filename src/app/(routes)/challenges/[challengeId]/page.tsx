@@ -1,3 +1,3 @@
 export default function ChallengeRoute() {
-  return <div>Страница челленджа</div>
+  return <div>Страница челленджа</div>;
 }

@@ -1,3 +1,3 @@
 export default function SignInRoute() {
-  return <div>Войти</div>
+  return <div>Войти</div>;
 }

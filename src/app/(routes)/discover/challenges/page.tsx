@@ -1,3 +1,3 @@
 export default function DiscoverChallengesRoute() {
-  return <div>Иссдедовать челленджи</div>
+  return <div>Иссдедовать челленджи</div>;
 }

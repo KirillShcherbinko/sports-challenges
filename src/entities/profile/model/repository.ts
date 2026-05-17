@@ -1,45 +1,73 @@
 import { prisma } from '@/shared';
 import type { Profile } from '@/shared/generated/prisma/client';
 import type { ProfileCreateInput, ProfileUpdateInput } from '@/shared/generated/prisma/models';
+import type { TResult } from '@/shared';
 import type { TProfileFilters } from './types';
 import { DEFAULT_PROFILE_FILTERS_VALUES } from '../config/default-profile-filters-values';
 
 class ProfileRepository {
-  async getProfiles(filters: TProfileFilters = DEFAULT_PROFILE_FILTERS_VALUES) {
-    const { search, fitnessLevel, page, limit } = filters;
-    return prisma.profile.findMany({
-      where: {
-        ...(search && {
-          username: {
-            contains: search,
-            mode: 'insensitive',
-          },
-        }),
+  async getProfiles(filters: TProfileFilters = DEFAULT_PROFILE_FILTERS_VALUES): Promise<TResult<Profile[]>> {
+    try {
+      const { search, fitnessLevel, page, limit } = filters;
 
-        ...(fitnessLevel && {
-          fitnessLevel,
-        }),
-      },
+      const profiles = await prisma.profile.findMany({
+        where: {
+          ...(search && { username: { contains: search, mode: 'insensitive' } }),
+          ...(fitnessLevel && { fitnessLevel }),
+        },
+        skip: (page - 1) * limit,
+        take: limit,
+      });
 
-      skip: (page - 1) * limit,
-      take: limit,
-    });
+      return { success: true, data: profiles };
+    } catch {
+      return { success: false, error: 'Ошибка получения профилей' };
+    }
   }
 
-  async createProfile(data: ProfileCreateInput): Promise<Profile> {
-    return prisma.profile.create({ data });
+  async createProfile(data: ProfileCreateInput): Promise<TResult<Profile>> {
+    try {
+      const profile = await prisma.profile.create({ data });
+      return { success: true, data: profile };
+    } catch {
+      return { success: false, error: 'Ошибка создания профиля' };
+    }
   }
 
-  async getProfileById(profileId: string): Promise<Profile | null> {
-    return prisma.profile.findUnique({ where: { id: profileId } });
+  async getProfileById(profileId: string): Promise<TResult<Profile | null>> {
+    try {
+      const profile = await prisma.profile.findUnique({ where: { id: profileId } });
+      return { success: true, data: profile };
+    } catch {
+      return { success: false, error: 'Ошибка получения профиля' };
+    }
   }
 
-  async updateProfile(profileId: string, data: ProfileUpdateInput): Promise<Profile> {
-    return prisma.profile.update({ data, where: { id: profileId } });
+  async getProfileByUsername(username: string): Promise<TResult<Profile | null>> {
+    try {
+      const profile = await prisma.profile.findUnique({ where: { username } });
+      return { success: true, data: profile };
+    } catch {
+      return { success: false, error: 'Ошибка получения профиля' };
+    }
   }
 
-  async deleteProfile(profileId: string): Promise<Profile> {
-    return prisma.profile.delete({ where: { id: profileId } });
+  async updateProfile(profileId: string, data: ProfileUpdateInput): Promise<TResult<Profile>> {
+    try {
+      const profile = await prisma.profile.update({ data, where: { id: profileId } });
+      return { success: true, data: profile };
+    } catch {
+      return { success: false, error: 'Ошибка обновления профиля' };
+    }
+  }
+
+  async deleteProfile(profileId: string): Promise<TResult<Profile>> {
+    try {
+      const profile = await prisma.profile.delete({ where: { id: profileId } });
+      return { success: true, data: profile };
+    } catch {
+      return { success: false, error: 'Ошибка удаления профиля' };
+    }
   }
 }
 

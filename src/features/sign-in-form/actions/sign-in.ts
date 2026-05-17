@@ -1,23 +1,32 @@
 'use server';
 
-import { signInSchema } from '@/entities/auth';
+import { mapSignInErrors, signInSchema } from '@/entities/auth';
 import type { TSignInSchema } from '@/entities/auth';
-import { redirect } from 'next/navigation';
-import { createServer } from '@/shared';
+import { createServer, EFormActionStatus, type TActionState } from '@/shared';
 
-export const signInAction = async (formValues: TSignInSchema): Promise<void> => {
-  const validatedData = signInSchema.parse(formValues);
+export const signInAction = async (formValues: TSignInSchema): Promise<TActionState<TSignInSchema>> => {
+  const validatedData = signInSchema.safeParse(formValues);
+  if (!validatedData.success) {
+    return {
+      status: EFormActionStatus.Error,
+      errors: { root: 'Некорректные данные формы' },
+    };
+  }
 
   const supabase = await createServer();
 
   const { error } = await supabase.auth.signInWithPassword({
-    email: validatedData.email,
-    password: validatedData.password,
+    email: validatedData.data.email,
+    password: validatedData.data.password,
   });
 
-  if (error) {
-    throw new Error('Неверный email или пароль');
+  const mappedError = mapSignInErrors(error);
+  if (mappedError) {
+    return {
+      status: EFormActionStatus.Error,
+      errors: mappedError || { root: 'Ошибка атворизации' },
+    };
   }
 
-  redirect('/');
+  return { status: EFormActionStatus.Success, redirect: '/' };
 };

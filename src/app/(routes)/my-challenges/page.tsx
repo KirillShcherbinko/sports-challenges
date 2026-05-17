@@ -1,3 +1,3 @@
 export default function MyChallengesRoute() {
-  return <div>Мои челленджи</div>
+  return <div>Мои челленджи</div>;
 }

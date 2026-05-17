@@ -1,3 +1,3 @@
 export default function AchievementsRoute() {
-  return <div>Достижения</div>
+  return <div>Достижения</div>;
 }

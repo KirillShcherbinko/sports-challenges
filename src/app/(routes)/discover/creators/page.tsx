@@ -1,3 +1,3 @@
 export default function DiscoverCreatorsRoute() {
-  return <div>ИСселедовать креаторов</div>
+  return <div>ИСселедовать креаторов</div>;
 }

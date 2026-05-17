@@ -1,3 +1,3 @@
 export default function CreatorRoute() {
-  return <div>Страница креатора</div>
+  return <div>Страница креатора</div>;
 }
