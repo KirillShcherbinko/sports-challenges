@@ -19,12 +19,12 @@ const passwordSchema = z
   .regex(/[0-9]/, 'Пароль должен содержать цифру')
   .regex(/[A-Z]/, 'Пароль должен содержать заглавную букву');
 
-export const loginSchema = z.object({
+export const signInSchema = z.object({
   email: emailSchema,
   password: noemptyFieldSchema,
 });
 
-export const registerSchema = z.object({
+export const signUpSchema = z.object({
   username: usernameSchema,
   email: emailSchema,
   password: passwordSchema,

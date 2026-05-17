@@ -1,4 +1,5 @@
 import { createTheme, type MantineColorsTuple } from '@mantine/core';
+import { NOTIFICATION_THEME } from './notification-theme';
 
 const DARK_COLORS: MantineColorsTuple = [
   '#f4f5f6', // 0: Самый светлый (текст на темном)
@@ -42,5 +43,6 @@ export const DARK_THEME = createTheme({
         shadow: 'sm',
       },
     },
+    Notification: NOTIFICATION_THEME,
   },
 });

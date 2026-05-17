@@ -28,6 +28,9 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "suspicious": {
+        "useIterableCallbackReturn": "off"
+      },
       "style": {
         "useImportType": {
           "level": "error"

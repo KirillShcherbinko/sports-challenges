@@ -1,9 +1,7 @@
-import { loginSchema } from '@/entities/auth';
+import { signInSchema } from '@/entities/auth';
 
-import type { TLoginConfig } from '../model/types';
-
-export const LOGIN_DATA: TLoginConfig = {
-  schema: loginSchema,
+export const SIGN_IN_DATA = {
+  schema: signInSchema,
   defaultValues: {
     email: '',
     password: '',

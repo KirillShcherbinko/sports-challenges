@@ -1,2 +1,2 @@
-export type { TAuthProps, TLoginSchema, TRegisterSchema } from './model/types';
-export { loginSchema, registerSchema } from './model/shemas';
+export type { TAuthProps, TSignInSchema, TSignUpSchema } from './model/types';
+export { signInSchema, signUpSchema } from './model/shemas';

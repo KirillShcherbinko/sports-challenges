@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
-
 import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
 import '@mantine/core/styles.css';
-
+import '@mantine/notifications/styles.css';
 import { inter } from './fonts/inter';
 import './index.css';
 import { ThemeProvider } from './providers/theme';
 import type { PropsWithChildren } from 'react';
+import { Notifications } from '@mantine/notifications';
 
 export const metadata: Metadata = {
   title: 'Sport Challenges — спортивные челленджи',
@@ -21,7 +21,10 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <ColorSchemeScript defaultColorScheme="light" />
       </head>
       <body className={inter.className}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <Notifications />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

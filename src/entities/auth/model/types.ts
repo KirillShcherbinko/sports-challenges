@@ -1,8 +1,8 @@
 import type { z } from 'zod';
-import type { loginSchema, registerSchema } from './shemas';
+import type { signInSchema, signUpSchema } from './shemas';
 
-export type TLoginSchema = z.infer<typeof loginSchema>;
-export type TRegisterSchema = z.infer<typeof registerSchema>;
+export type TSignInSchema = z.infer<typeof signInSchema>;
+export type TSignUpSchema = z.infer<typeof signUpSchema>;
 
 export type TAuthProps = {
   required: boolean;
