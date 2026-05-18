@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏃‍♂️ Sports Challenge Platform
 
-## Getting Started
+Полнофункциональная full-stack веб-платформа для создания, прохождения и отслеживания спортивных челленджей. Приложение ориентировано на социальное взаимодействие, пользовательский контент и адаптивный интерфейс, корректно работающий на мобильных и десктопных устройствах.
 
-First, run the development server:
+---
 
+## ✨ Ключевые особенности
+- 👤 **Управление пользователями**: регистрация, авторизация, редактирование профиля, указание уровня подготовки
+- 🎯 **Челленджи**: создание, редактирование, публикация, каталог с фильтрацией
+- 📅 **Ежедневные задания**: детальная структура тренировок, инструкции, целевые показатели
+- 📊 **Прогресс-трекинг**: фиксация выполнения/пропуска, визуализация истории, статусы прохождения
+- 💬 **Социальные механики**: лайки, комментарии с ветвлением, статистика популярности контента
+- 🏆 **Геймификация**: система достижений, критерии получения, привязка к аккаунту
+- 📱 **Адаптивный интерфейс**: корректное отображение от `360px`, оптимизированный мобильный UX
+- 🔒 **Безопасность**: JWT-сессии, ролевая модель, серверная валидация (Zod), защита от инъекций
+
+---
+
+## 🛠 Технологический стек
+| Категория | Технологии |
+|-----------|------------|
+| **Фреймворк** | Next.js 14+ (App Router, Server Actions) |
+| **Язык / Рантайм** | TypeScript + Bun |
+| **UI** | Mantine UI |
+| **Формы & Валидация** | React Hook Form + Zod |
+| **База данных** | PostgreSQL |
+| **ORM** | Prisma |
+| **Облачные сервисы** | Supabase (Auth, Storage, Managed PostgreSQL) |
+| **Линтинг & Формат** | BiomeJS |
+| **Деплой** | Vercel |
+| **Контроль версий** | Git + GitHub |
+
+---
+
+## 🏗 Архитектура и методология
+- **Архитектурный стиль**: монолитная клиент-серверная модель (3 уровня)
+- **Паттерн организации кода**: `Feature-Sliced Design (FSD)`
+  - Чёткое разделение на слои: `app`, `pages`, `widgets`, `features`, `entities`, `shared`
+  - Запрет циклических зависимостей, устойчивая эволюция кодовой базы
+- **Взаимодействие компонентов**: клиент ↔ Next.js Server Actions ↔ Prisma ↔ PostgreSQL / Supabase Services
+- **Файловое хранилище**: загрузка через `Signed URLs` (бинарные данные не проходят через серверную логику)
+- **Аутентификация**: Supabase Auth + `@supabase/ssr`, управление сессиями на стороне сервера
+
+---
+
+## 📦 Установка и локальный запуск
+
+### 1. Клонирование репозитория
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/KirillShcherbinko/sports-challenge-platform.git
+cd sports-challenge-platform
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Установка зависимостей (Bun)
+```bash
+bun install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Настройка переменных окружения
+Создайте файл `.env.local` в корне проекта:
+```env
+# Supabase & Database
+DATABASE_URL="postgresql://user:password@db.supabase.co:5432/postgres?pgbouncer=true"
+DIRECT_URL="postgresql://user:password@db.supabase.co:5432/postgres"
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+NEXT_PUBLIC_SUPABASE_URL="https://your-project.supabase.co"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
+SUPABASE_SERVICE_ROLE_KEY="your-service-role-key"
 
-## Learn More
+# Security
+JWT_SECRET="your-super-secret-jwt-key"
+```
+> ⚠️ Получите URL и ключи в панели управления [Supabase Dashboard](https://supabase.com/dashboard).
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Инициализация базы данных
+```bash
+bunx prisma generate
+bunx prisma db push        # Синхронизация схемы (для разработки)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 5. Запуск в режиме разработки
+```bash
+bun run dev
+```
+Приложение будет доступно по адресу: `http://localhost:3000`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## ⚙️ Основные команды (Bun)
+| Команда | Описание |
+|---------|----------|
+| `bun run dev` | Запуск сервера разработки с hot-reload |
+| `bun run build` | Продакшн-сборка (клиент + сервер) |
+| `bun run start` | Запуск собранного приложения |
+| `bun run lint` | Проверка кода через BiomeJS |
+| `bun run format` | Автоматическое форматирование кода |
+| `bunx prisma studio` | Визуальный редактор схемы БД |
+| `bunx prisma generate` | Генерация типизированного Prisma-клиента |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🌐 Деплой в облако
+Проект оптимизирован для развёртывания на **Vercel**:
+1. Подключите репозиторий к Vercel через GitHub
+2. В настройках проекта добавьте переменные окружения из `.env.local`
+3. Vercel автоматически детектирует `bun` и использует его для сборки
+4. При каждом push в ветку `review` создаётся preview-окружение
+5. При слиянии в `main` автоматически запускается production-сборка и деплой
+
+Supabase (БД, Auth, Storage) разворачивается отдельно и подключается через прокси-соединения с пулингом соединений.
+
+---
+
+## 🔀 Git-воркфлоу
+В проекте используется двухветочная модель контроля версий:
+- 🌿 `main` — стабильная ветка, содержащая готовую к развёртыванию версию. Принимает изменения только через Pull Request после код-ревью.
+- 🛠 `review` — основная ветка разработки. Все новые фичи, багфиксы и эксперименты вносятся сюда. Перед вливанием в `main` код проходит проверку на конфликты, линтинг и ревью.
+
+Такой подход изолирует процесс разработки от production-окружения, минимизирует риск поломок рабочей версии и обеспечивает контроль качества на каждом этапе интеграции.
+
+---
+
+## 🧪 Тестирование и качество кода
+- Валидация клиентских и серверных форм через `Zod` + `React Hook Form`
+- Фаззинг-тестирование критических эндпоинтов (аутентификация, создание челленджей, фиксация выполнения)
+- Статический анализ и форматирование через `BiomeJS` в локальном окружении и CI
+- Типобезопасная работа с БД через Prisma + TypeScript
