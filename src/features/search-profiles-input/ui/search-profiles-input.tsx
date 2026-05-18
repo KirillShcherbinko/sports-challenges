@@ -30,5 +30,5 @@ export const SearchProfilesInput = () => {
     updateSearch(nextValue);
   };
 
-  return <TextInput value={value} onChange={handleChange} placeholder="Поиск профилей" />;
+  return <TextInput maw={552} w="100%" value={value} onChange={handleChange} placeholder="Поиск профилей" />;
 };

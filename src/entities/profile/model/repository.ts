@@ -33,7 +33,8 @@ class ProfileRepository {
           pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
         },
       };
-    } catch {
+    } catch(error) {
+      console.error(error);
       return { success: false, error: 'Ошибка получения профилей' };
     }
   }

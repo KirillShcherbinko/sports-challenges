@@ -1,5 +1,6 @@
 import type { FitnessLevel } from '@/shared/generated/prisma/enums';
-import { Avatar, Group, Pill, Stack, Title } from '@mantine/core';
+import { Avatar, Badge, Group, Stack, Title } from '@mantine/core';
+import { FITNESS_LEVEL_COLORS } from '../config/fitness-level-colors';
 
 type TUserCardProps = {
   username: string;
@@ -9,13 +10,13 @@ type TUserCardProps = {
 
 export const ProfileCard = ({ username, avatarUrl, fitnessLevel }: TUserCardProps) => {
   return (
-    <Group gap={12} wrap="nowrap">
+    <Group gap={12} wrap="nowrap" maw={800} w="100%">
       <Avatar src={avatarUrl} radius="50%" size={64} />
       <Stack gap={8}>
         <Title component="h3" order={3} lineClamp={1}>
           {username}
         </Title>
-        <Pill>{fitnessLevel}</Pill>
+        <Badge c={FITNESS_LEVEL_COLORS[fitnessLevel]}>{fitnessLevel}</Badge>
       </Stack>
     </Group>
   );

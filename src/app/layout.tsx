@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ColorSchemeScript, mantineHtmlProps } from '@mantine/core';
+import { ColorSchemeScript, mantineHtmlProps, Stack } from '@mantine/core';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import { inter } from './fonts/inter';
@@ -23,7 +23,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <body className={inter.className}>
         <ThemeProvider>
           <Notifications />
-          {children}
+          <Stack maw={1280} w="100%" align="center">{children}</Stack>
         </ThemeProvider>
       </body>
     </html>
