@@ -1,0 +1,181 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/shared/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum FitnessLevel {
+  beginner
+  intermediate
+  advanced
+}
+
+enum ChallengeDifficulty {
+  easy
+  medium
+  hard
+}
+
+enum ChallengeCategory {
+  strength
+  cardio
+  flexibility
+  endurance
+}
+
+enum ProfileChallengeStatus {
+  active
+  completed
+  abandoned
+}
+
+model Profile {
+  id                  String          @id @db.Uuid
+  username            String          @unique
+  avatarUrl           String?         @map("avatar_url")
+  fitnessLevel        FitnessLevel    @default(beginner) @map("fitness_level")
+  preferences         Json?
+  bio                 String?
+  streakCount         Int             @default(0) @map("streak_count")
+  totalCompletedTasks Int             @default(0) @map("total_completed_tasks")
+  createdAt           DateTime        @default(now()) @map("created_at")
+  updatedAt           DateTime        @updatedAt @map("updated_at")
+
+  challenges          Challenge[]
+  profileChallenges   ProfileChallenge[]
+  challengeLikes      ChallengeLike[]
+  challengeComments   ChallengeComment[]
+  achievements        ProfileAchievement[]
+
+  @@map("profiles")
+}
+
+model Challenge {
+  id                  String                @id @default(uuid()) @db.Uuid
+  creatorId           String                @db.Uuid @map("creator_id")
+  creator             Profile               @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  title               String
+  description         String
+  coverImageUrl       String?               @map("cover_image_url")
+  category            ChallengeCategory
+  difficulty          ChallengeDifficulty
+  durationDays        Int                   @map("duration_days")
+  isPublished         Boolean               @default(false) @map("is_published")
+  likesCount          Int                   @default(0) @map("likes_count")
+  participantsCount   Int                   @default(0) @map("participants_count")
+  createdAt           DateTime              @default(now()) @map("created_at")
+  updatedAt           DateTime              @updatedAt @map("updated_at")
+
+  dailyTasks          DailyTask[]
+  profileChallenges   ProfileChallenge[]
+  likes               ChallengeLike[]
+  comments            ChallengeComment[]
+
+  @@map("challenges")
+}
+
+model DailyTask {
+  id                      String                @id @default(uuid()) @db.Uuid
+  challengeId             String                @db.Uuid @map("challenge_id")
+  challenge               Challenge             @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  dayNumber               Int                   @map("day_number")
+  title                   String 
+  description             String?
+  exerciseType            String                @map("exercise_type")
+  targetValue             Int                   @map("target_value")
+  createdAt               DateTime              @default(now()) @map("created_at")
+  updatedAt               DateTime              @updatedAt @map("updated_at")
+
+  taskCompletions         TaskCompletion[]
+
+  @@unique([challengeId, dayNumber])
+  @@map("daily_tasks")
+}
+
+model ProfileChallenge {
+  id                      String                    @id @default(uuid()) @db.Uuid
+  profileId               String                    @db.Uuid @map("profile_id")
+  challengeId             String                    @db.Uuid @map("challenge_id")
+  profile                 Profile                   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  challenge               Challenge                 @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  status                  ProfileChallengeStatus    @default(active)
+  startedAt               DateTime                  @default(now()) @map("started_at")
+  completedAt             DateTime?                 @map("completed_at")
+  currentDay              Int                       @default(1) @map("current_day")
+  lastActivityAt          DateTime                  @default(now()) @map("last_activity_at")
+  createdAt               DateTime                  @default(now()) @map("created_at")
+  updatedAt               DateTime                  @updatedAt @map("updated_at")
+
+  taskCompletions         TaskCompletion[]
+
+  @@unique([profileId, challengeId])
+  @@map("profile_challenges")
+}
+
+model TaskCompletion {
+  id                      String                @id @default(uuid()) @db.Uuid
+  profileChallengeId      String                @db.Uuid @map("profile_challenge_id")
+  dailyTaskId             String                @db.Uuid @map("daily_task_id")
+  profileChallenge        ProfileChallenge      @relation(fields: [profileChallengeId], references: [id], onDelete: Cascade)
+  dailyTask               DailyTask             @relation(fields: [dailyTaskId], references: [id], onDelete: Cascade)
+  isCompleted             Boolean               @default(false) @map("is_completed")
+  completedAt             DateTime?             @map("completed_at")
+  createdAt               DateTime              @default(now()) @map("created_at")
+
+  @@unique([profileChallengeId, dailyTaskId])
+  @@map("task_completions")
+}
+
+model ChallengeLike {
+  id                      String                @id @default(uuid()) @db.Uuid
+  profileId               String                @db.Uuid @map("profile_id")
+  challengeId             String                @db.Uuid @map("challenge_id")
+  profile                 Profile               @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  challenge               Challenge             @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  createdAt               DateTime              @default(now()) @map("created_at")
+
+  @@unique([profileId, challengeId])
+  @@map("challenge_likes")
+}
+
+model ChallengeComment {
+  id                      String                  @id @default(uuid()) @db.Uuid
+  challengeId             String                  @db.Uuid @map("challenge_id")
+  profileId               String                  @db.Uuid @map("profile_id")
+  parentCommentId         String?                 @db.Uuid @map("parent_comment_id")
+  challenge               Challenge               @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  profile                 Profile                 @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  parentComment           ChallengeComment?       @relation("CommentReplies", fields: [parentCommentId], references: [id], onDelete: Cascade)
+  replies                 ChallengeComment[]      @relation("CommentReplies")
+  content                 String
+  createdAt               DateTime                @default(now()) @map("created_at")
+  updatedAt               DateTime                @updatedAt @map("updated_at")
+
+  @@map("challenge_comments")
+}
+
+model Achievement {
+  id                      String                  @id @default(uuid()) @db.Uuid
+  title                   String
+  description             String
+  iconUrl                 String?                 @map("icon_url")
+  createdAt               DateTime                @default(now()) @map("created_at")
+  profileAchievements     ProfileAchievement[]
+
+  @@map("achievements")
+}
+
+model ProfileAchievement {
+  id                      String                @id @default(uuid()) @db.Uuid
+  profileId               String                @db.Uuid @map("profile_id")
+  achievementId           String                @db.Uuid @map("achievement_id")
+  profile                 Profile               @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  achievement             Achievement           @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  earnedAt                DateTime              @default(now()) @map("earned_at")
+
+  @@unique([profileId, achievementId])
+  @@map("profile_achievements")
+}

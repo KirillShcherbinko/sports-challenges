@@ -11,13 +11,31 @@
   },
   "formatter": {
     "enabled": true,
+    "formatWithErrors": false,
     "indentStyle": "space",
-    "indentWidth": 2
+    "indentWidth": 2,
+    "lineWidth": 120,
+    "lineEnding": "lf"
+  },
+  "javascript": {
+    "formatter": {
+      "semicolons": "always",
+      "quoteStyle": "single",
+      "trailingCommas": "es5"
+    }
   },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "suspicious": {
+        "useIterableCallbackReturn": "off"
+      },
+      "style": {
+        "useImportType": {
+          "level": "error"
+        }
+      }
     },
     "domains": {
       "next": "recommended",
@@ -27,7 +45,27 @@
   "assist": {
     "actions": {
       "source": {
-        "organizeImports": "on"
+        "organizeImports": {
+          "level": "off",
+          "options": {
+            "groups": [
+              [":NODE:", ":BUN:"],
+              ":BLANK_LINE:",
+              [":PACKAGE:", "!@/**"],
+              ":BLANK_LINE:",
+              "@/app/**",
+              "@/views/**",
+              "@/widgets/**",
+              "@/features/**",
+              "@/entities/**",
+              "@/shared/**",
+              ":BLANK_LINE:",
+              ":RELATIVE:",
+              ":BLANK_LINE:",
+              "**/*.css"
+            ]
+          }
+        }
       }
     }
   }
