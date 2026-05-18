@@ -1,7 +1,7 @@
 'use server';
 
-import { createServer } from '@/shared/lib/supabase/server';
-import { EActionStatus, type TFormActionState } from '@/shared';
+import { createServer } from '@/shared/server';
+import { EActionStatus, type TErrorFields, type TFormActionState } from '@/shared';
 import { mapSignOutErrors } from '@/entities/auth';
 
 export const signOutAction = async (): Promise<TFormActionState<Record<string, never>>> => {
@@ -12,7 +12,7 @@ export const signOutAction = async (): Promise<TFormActionState<Record<string, n
   if (mappedError) {
     return {
       status: EActionStatus.Error,
-      errors: mappedError,
+      errors: mappedError as TErrorFields<Record<string, never>>,
     };
   }
 
