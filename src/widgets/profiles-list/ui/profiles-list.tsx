@@ -29,7 +29,7 @@ export const ProfilesList = async ({ searchParams }: TProfilesListProps) => {
       {data?.items.map(({ id, username, fitnessLevel, avatarUrl }) => (
         <ProfileCard key={id} username={username} fitnessLevel={fitnessLevel} avatarUrl={avatarUrl} />
       ))}
-      <ProfilesPagination total={data?.pagination.total || 20} />
+      <ProfilesPagination total={data?.pagination.totalPages || 1} />
     </Stack>
   );
 };
