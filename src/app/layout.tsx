@@ -23,7 +23,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
       <body className={inter.className}>
         <ThemeProvider>
           <Notifications />
-          <Stack maw={1280} w="100%" align="center">{children}</Stack>
+          <Stack maw={1280} w="100%" align="center">
+            {children}
+          </Stack>
         </ThemeProvider>
       </body>
     </html>

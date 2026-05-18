@@ -1,5 +1,5 @@
 import { retryResult } from '@/shared';
-import { profileRepository } from '@/entities/profile';
+import { profileRepository } from '@/entities/profile/server';
 
 import { unstable_cache } from 'next/cache';
 

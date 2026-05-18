@@ -7,4 +7,7 @@ export enum EErrorCode {
   UserAlreadyExists = 'user_already_exists',
   WeakPassword = 'weak_password',
   InvalidCredentials = 'invalid_credentials',
+  PermissionDenied = 'permission_denied',
+  Unauthorized = 'unauthorized',
+  ValidationFailed = 'validation_failed',
 }

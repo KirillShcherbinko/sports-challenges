@@ -5,7 +5,7 @@ import { Button, Stack } from '@mantine/core';
 export const ProfilePage = () => {
   return (
     <Stack>
-      <ProfileInfo/>
+      <ProfileInfo />
       <Button>Редактировать</Button>
       <SignOutButton />
     </Stack>

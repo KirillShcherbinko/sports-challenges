@@ -1,9 +1,9 @@
-import type { Profile } from '@/shared/generated/prisma/client';
-import type { ProfileCreateInput, ProfileUpdateInput } from '@/shared/generated/prisma/models';
+import type { ProfileCreateInput, ProfileUpdateInput } from '@/shared/types';
 import type { TResult } from '@/shared';
 import type { TProfileFilters, TProfilesData } from './types';
 import { DEFAULT_PROFILE_FILTERS_VALUES } from '../config/default-profile-filters-values';
-import { prisma } from '@/shared/lib/prisma/client';
+import { prisma } from '@/shared/server';
+import type { Profile } from '@/shared/client';
 
 class ProfileRepository {
   async getProfiles(filters: TProfileFilters = DEFAULT_PROFILE_FILTERS_VALUES): Promise<TResult<TProfilesData>> {
@@ -33,7 +33,7 @@ class ProfileRepository {
           pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
         },
       };
-    } catch(error) {
+    } catch (error) {
       console.error(error);
       return { success: false, error: 'Ошибка получения профилей' };
     }

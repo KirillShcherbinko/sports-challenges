@@ -3,7 +3,7 @@
 import { mapSignInErrors, signInSchema } from '@/entities/auth';
 import type { TSignInSchema } from '@/entities/auth';
 import { EActionStatus, type TFormActionState } from '@/shared';
-import { createServer } from '@/shared/lib/supabase/server';
+import { createServer } from '@/shared/server';
 
 export const signInAction = async (formValues: TSignInSchema): Promise<TFormActionState<TSignInSchema>> => {
   const validatedData = signInSchema.safeParse(formValues);

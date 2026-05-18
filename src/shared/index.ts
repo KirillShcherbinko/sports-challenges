@@ -7,3 +7,4 @@ export type { TResult } from './model/types';
 export { ERoutes } from './routes/enums';
 export type { TDataAction } from './ui/data/types';
 export { retryResult } from './model/retry';
+export { EBuckets } from './ui/data/enums';

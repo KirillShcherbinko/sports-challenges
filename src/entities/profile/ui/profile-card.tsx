@@ -1,6 +1,6 @@
-import type { FitnessLevel } from '@/shared/generated/prisma/enums';
 import { Avatar, Badge, Group, Stack, Title } from '@mantine/core';
 import { FITNESS_LEVEL_COLORS } from '../config/fitness-level-colors';
+import type { FitnessLevel } from '@/shared/types';
 
 type TUserCardProps = {
   username: string;

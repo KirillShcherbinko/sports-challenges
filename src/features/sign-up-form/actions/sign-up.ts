@@ -1,10 +1,9 @@
 'use server';
 
-import { mapSignUpErrors, signUpSchema } from '@/entities/auth';
-import type { TSignUpSchema } from '@/entities/auth';
-import { profileRepository } from '@/entities/profile';
+import { mapSignUpErrors, signUpSchema, type TSignUpSchema } from '@/entities/auth';
+import { profileRepository } from '@/entities/profile/server';
 import { EActionStatus, type TFormActionState } from '@/shared';
-import { createServer } from '@/shared/lib/supabase/server';
+import { createServer } from '@/shared/server';
 
 export const signUpAction = async (formValues: TSignUpSchema): Promise<TFormActionState<TSignUpSchema>> => {
   // Серверная валидация

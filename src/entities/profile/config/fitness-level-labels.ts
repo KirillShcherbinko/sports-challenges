@@ -1,4 +1,4 @@
-import type { FitnessLevel } from "@/shared/generated/prisma/enums";
+import type { FitnessLevel } from '@/shared/server';
 
 export const FITNESS_LEVEL_LABELS: Record<FitnessLevel, string> = {
   beginner: 'Новичок',
