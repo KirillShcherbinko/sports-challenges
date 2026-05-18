@@ -1,4 +1,4 @@
-import type { FitnessLevel } from '@/shared/server';
+import type { FitnessLevel } from '@/shared/types';
 import type { MantineColor } from '@mantine/core';
 
 export const FITNESS_LEVEL_COLORS: Record<FitnessLevel, MantineColor> = {
