@@ -4,7 +4,7 @@ import type { AuthError } from '@supabase/supabase-js';
 import { EActionStatus, type TErrorFields, type TFormActionState } from '@/shared';
 import { createServer } from '@/shared/server';
 
-export const mapSignOutErrors = (error: AuthError | null): TErrorFields<Record<string, never>> | null => {
+const mapSignOutErrors = (error: AuthError | null): TErrorFields<Record<string, never>> | null => {
   if (!error) return null;
 
   return {
