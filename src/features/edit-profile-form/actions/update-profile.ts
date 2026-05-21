@@ -3,57 +3,37 @@
 import { actionClient } from '@/shared/actions';
 import { editProfileSchema, type TEditProfileSchema } from '@/entities/profile';
 import { profileRepository } from '@/entities/profile/server';
-import { EBuckets, ERoutes, type TResult } from '@/shared';
+import { ERoutes, type TResult } from '@/shared';
 import { revalidatePath } from 'next/cache';
 import { createServer } from '@/shared/server';
-
-const { randomUUID } = await import('node:crypto');
+import { uploadAvatar } from './upload-avatar';
+import type { ProfileUpdateInput } from '@/shared/types';
+import { getUser } from '@/entities/auth/server';
 
 export const updateProfileAction = actionClient
   .inputSchema(editProfileSchema)
   .action(async ({ parsedInput }): Promise<TResult<TEditProfileSchema>> => {
     const supabase = await createServer();
+    const user = await getUser(supabase);
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const { username, bio, fitnessLevel, avatar } = parsedInput;
+    const updatedData: ProfileUpdateInput = { username, bio, fitnessLevel };
 
-    if (!user) {
-      throw new Error('Пользователь не найден');
+    if (avatar && avatar.size > 0) {
+      const { avatarUrl, avatarPath } = await uploadAvatar({ supabase, avatar, userId: user.id });
+      updatedData.avatarUrl = avatarUrl;
+      updatedData.avatarPath = avatarPath;
     }
 
-    let avatarUrl: string | undefined;
-
-    if (parsedInput.avatar instanceof File) {
-      const fileExt = parsedInput.avatar.name.split('.').pop();
-      const filePath = `${user.id}/${randomUUID()}.${fileExt}`;
-
-      const { error } = await supabase.storage.from(EBuckets.AVATARS_BUCKET).upload(filePath, parsedInput.avatar);
-
-      if (error) {
-        console.error(error);
-        throw new Error('Не удалось загрузить файл');
-      }
-
-      const { data } = supabase.storage.from(EBuckets.AVATARS_BUCKET).getPublicUrl(filePath);
-
-      avatarUrl = data.publicUrl;
-    }
-
-    const result = await profileRepository.updateProfile(user.id, {
-      username: parsedInput.username,
-      bio: parsedInput.bio,
-      fitnessLevel: parsedInput.fitnessLevel,
-      ...(avatarUrl && { avatarUrl }),
-    });
+    const result = await profileRepository.updateProfile(user.id, updatedData);
 
     if (!result.success) {
       throw new Error(result.error ?? 'Не удалось обновить данные');
     }
 
-    revalidatePath('/profile');
-    revalidatePath('/profile/edit');
-    revalidatePath('/discover/creators');
+    revalidatePath(ERoutes.PROFILE);
+    revalidatePath(ERoutes.PROFILE_EDIT);
+    revalidatePath(ERoutes.DISCOVER);
 
     return {
       success: true,
