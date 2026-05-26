@@ -1,15 +1,10 @@
 // src/entities/challenge/model/repository.ts
 
-import type {
-  Challenge
-} from '@/shared/client';
+import type { Challenge } from '@/shared/client';
 
 import type { TResult } from '@/shared';
 
-import type {
-  TChallengeFilters,
-  TChallengesData,
-} from './types';
+import type { TChallengeFilters, TChallengesData } from './types';
 
 import { DEFAULT_CHALLENGE_FILTERS_VALUES } from '../config/default-challenge-filters-values';
 
@@ -21,14 +16,7 @@ class ChallengeRepository {
     filters: TChallengeFilters = DEFAULT_CHALLENGE_FILTERS_VALUES
   ): Promise<TResult<TChallengesData>> {
     try {
-      const {
-        search,
-        creatorId,
-        category,
-        difficulty,
-        page = 1,
-        limit = 12,
-      } = filters;
+      const { search, creatorId, category, difficulty, page = 1, limit = 12 } = filters;
 
       const where: ChallengeWhereInput = {
         ...(search && {
@@ -92,9 +80,7 @@ class ChallengeRepository {
     }
   }
 
-  async createChallenge(
-    data: ChallengeCreateInput
-  ): Promise<TResult<Challenge>> {
+  async createChallenge(data: ChallengeCreateInput): Promise<TResult<Challenge>> {
     try {
       const challenge = await prisma.challenge.create({
         data,
@@ -114,9 +100,7 @@ class ChallengeRepository {
     }
   }
 
-  async getChallengeById(
-    challengeId: string
-  ): Promise<TResult<Challenge | null>> {
+  async getChallengeById(challengeId: string): Promise<TResult<Challenge | null>> {
     try {
       const challenge = await prisma.challenge.findUnique({
         where: {
@@ -143,10 +127,7 @@ class ChallengeRepository {
     }
   }
 
-  async updateChallenge(
-    challengeId: string,
-    data: ChallengeUpdateInput
-  ): Promise<TResult<Challenge>> {
+  async updateChallenge(challengeId: string, data: ChallengeUpdateInput): Promise<TResult<Challenge>> {
     try {
       const challenge = await prisma.challenge.update({
         where: {
@@ -170,9 +151,7 @@ class ChallengeRepository {
     }
   }
 
-  async deleteChallenge(
-    challengeId: string
-  ): Promise<TResult<Challenge>> {
+  async deleteChallenge(challengeId: string): Promise<TResult<Challenge>> {
     try {
       const challenge = await prisma.challenge.delete({
         where: {

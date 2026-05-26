@@ -2,47 +2,90 @@ import { createTheme, type MantineColorsTuple } from '@mantine/core';
 import { NOTIFICATION_THEME } from './notification-theme';
 
 const DARK_COLORS: MantineColorsTuple = [
-  '#f4f5f6', // 0: Самый светлый (текст на темном)
-  '#e4e7eb', // 1: Светлый текст / границы
-  '#cbd2d9', // 2: Иконки / заблокированные элементы
-  '#9aa5b1', // 3: Второстепенный текст
-  '#7b8794', // 4: Границы контейнеров
-  '#616e7c', // 5: Внутренние разделители
-  '#475a6b', // 6: Элементы форм / кнопки
-  '#323f4b', // 7: Дефолтный фон карточек/модалок
-  '#1f2933', // 8: Основной фон приложения (Body BG)
-  '#12181f', // 9: Самый глубокий темный (шапка, сайдбар)
+  '#f5f7fa',
+  '#e8ecf3',
+  '#d0d6e3',
+  '#aab4c9',
+  '#7f8ba5',
+  '#5a657d',
+  '#414b5e',
+  '#2b3241',
+  '#1a1f2b',
+  '#0c0f16',
+];
+
+const BRAND_ELECTRIC: MantineColorsTuple = [
+  '#f4f2ff',
+  '#e9e5ff',
+  '#d4ceff',
+  '#b8afff',
+  '#9988ff',
+  '#7c5cff',
+  '#5e3aff',
+  '#4725ff',
+  '#3318e6',
+  '#2612c4',
+];
+
+const SUCCESS_VIBRANT: MantineColorsTuple = [
+  '#f0fdf6',
+  '#dcfce9',
+  '#b8f5d8',
+  '#86e8bf',
+  '#4dd9a0',
+  '#16c484',
+  '#0aa870',
+  '#06855a',
+  '#046645',
+  '#024a32',
 ];
 
 export const DARK_THEME = createTheme({
   colors: {
     dark: DARK_COLORS,
-    brand: [
-      '#eef3ff',
-      '#dce4f5',
-      '#b9c7e2',
-      '#94a8d0',
-      '#748dc1',
-      '#5f7cb8',
-      '#5474b4',
-      '#44639f',
-      '#39588f',
-      '#2d4b81',
-    ],
+    brand: BRAND_ELECTRIC,
+    success: SUCCESS_VIBRANT,
   },
 
   primaryColor: 'brand',
-  primaryShade: 6,
+  primaryShade: 5,
 
   defaultRadius: 'md',
+  autoContrast: true,
 
   components: {
     Card: {
       defaultProps: {
         padding: 'xl',
-        shadow: 'sm',
+        shadow: 'lg',
+        withBorder: true,
+      },
+      styles: {
+        root: {
+          borderColor: 'var(--mantine-color-dark-6)',
+          background: 'var(--mantine-color-dark-8)',
+        },
       },
     },
+
+    Button: {
+      styles: {
+        root: {
+          fontWeight: 600,
+          transition: 'transform 0.15s ease, box-shadow 0.15s ease',
+        },
+      },
+    },
+
+    Progress: {
+      styles: {
+        section: {
+          transition: 'width 0.3s ease',
+          background: 'linear-gradient(90deg, var(--mantine-color-brand-6), var(--mantine-color-brand-4))',
+        },
+      },
+    },
+
     PasswordInput: {
       styles: {
         visibilityToggle: {
@@ -52,6 +95,7 @@ export const DARK_THEME = createTheme({
         },
       },
     },
+
     Notification: NOTIFICATION_THEME,
   },
 });

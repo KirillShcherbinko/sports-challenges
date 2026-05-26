@@ -1,4 +1,4 @@
-'use server'
+'use server';
 
 import type { TUploadFileRequest, TUploadFileResponse } from '../model/types';
 

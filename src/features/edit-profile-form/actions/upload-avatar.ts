@@ -10,7 +10,7 @@ export const uploadAvatar = async ({
   avatar,
   userId,
 }: TUploadAvatarRequest): Promise<TUploadAvatarResponse> => {
-  const { data } = await profileRepository.getProfileById(userId);
+  const data = await profileRepository.getProfileById(userId);
 
   const fileExt = avatar.name.split('.').pop() || 'png';
   const fileName = data?.avatarPath ? data.avatarPath : crypto.randomUUID();

@@ -1,72 +1,31 @@
 'use server';
 
-import { mapSignUpErrors, signUpSchema, type TSignUpSchema } from '@/entities/auth';
+import { signUpSchema } from '@/entities/auth';
 import { profileRepository } from '@/entities/profile/server';
-import { EActionStatus, type TFormActionState } from '@/shared';
+import { actionClient } from '@/shared/actions';
 import { createServer } from '@/shared/server';
 
-export const signUpAction = async (formValues: TSignUpSchema): Promise<TFormActionState<TSignUpSchema>> => {
-  // Серверная валидация
-  const validatedData = signUpSchema.safeParse(formValues);
-  if (!validatedData.success) {
-    return {
-      status: EActionStatus.Error,
-      errors: { root: 'Некорректные данные формы' },
-    };
+export const signUpAction = actionClient.inputSchema(signUpSchema).action(async ({ parsedInput }) => {
+  const { username, email, password } = parsedInput;
+
+  const isUsernameExist = await profileRepository.getProfileByUsername(username);
+  if (isUsernameExist) {
+    throw new Error('Пользователь с таким именем уже существует');
   }
 
-  // Проверка на уникальность имени пользователя
-  const isExistingUsername = await profileRepository.getProfileByUsername(validatedData.data.username);
-  if (!isExistingUsername.success) {
-    return {
-      status: EActionStatus.Error,
-      errors: { root: 'Пользователь не найден' },
-    };
-  }
-  if (isExistingUsername.data) {
-    return {
-      status: EActionStatus.Error,
-      errors: { fields: [{ field: 'username', message: 'Пользователь с таким именем уже существует' }] },
-    };
-  }
-
-  // Регистрация пользователя
   const supabase = await createServer();
-  const { data, error } = await supabase.auth.signUp({
-    email: validatedData.data.email,
-    password: validatedData.data.password,
-  });
 
-  // Обработка ошибок после регистрации
-  const mappedError = mapSignUpErrors(error);
-  if (mappedError) {
-    return {
-      status: EActionStatus.Error,
-      errors: mappedError,
-    };
+  const { data, error: authError } = await supabase.auth.signUp({ email, password });
+  if (authError) {
+    if (authError.code === 'user_already_exists') {
+      throw new Error('Пользователь уже существует в системе');
+    }
+    throw new Error('Ошибка регистрации');
   }
 
-  // Обработска ошибок, если пользователь не создан
   if (!data.user) {
-    return {
-      status: EActionStatus.Error,
-      errors: { root: 'Пользователь не создан' },
-    };
+    throw new Error('Не удалось создать пользователя');
   }
 
-  // Создание профиля пользователя
-  const profileData = await profileRepository.createProfile({
-    id: data.user.id,
-    username: validatedData.data.username,
-  });
-
-  // Проверка ошибок после создания профиля
-  if (!profileData.success) {
-    return {
-      status: EActionStatus.Error,
-      errors: { root: profileData.error },
-    };
-  }
-
-  return { status: EActionStatus.Success, redirect: '/profile' };
-};
+  await profileRepository.createProfile({ id: data.user.id, username });
+});

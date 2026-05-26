@@ -7,8 +7,4 @@ export type TResult<TData> = {
   redirect?: ERoutes;
 };
 
-export type RetryOptions<TData> = {
-  retries?: number;
-  delayMs?: number;
-  shouldRetry?: (result: TResult<TData>) => boolean;
-};
+

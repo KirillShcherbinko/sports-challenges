@@ -1,13 +1,8 @@
-import { MAX_USERNAME_LENGTH, MAX_PASSWORD_LENGTH, MIN_USERNAME_LENGTH, MIN_PASSWORD_LENGTH } from './consts';
+import { usernameSchema } from '@/entities/profile';
+import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH } from './consts';
 import { z } from 'zod';
 
 const noemptyFieldSchema = z.string().nonempty('Поле обязателено');
-
-const usernameSchema = z
-  .string()
-  .nonempty('Имя пользователя обязателено')
-  .min(MIN_USERNAME_LENGTH, `Минимальная длина имени: ${MIN_PASSWORD_LENGTH}`)
-  .max(MAX_USERNAME_LENGTH, `Максимальная длина имени: ${MAX_PASSWORD_LENGTH}`);
 
 const emailSchema = z.email('Неверный Email').nonempty('Email обязателен');
 

@@ -5,10 +5,11 @@ import { useForm } from 'react-hook-form';
 import { SIGN_IN_DATA } from '../config/sign-in-data';
 import type { TSignInSchema } from '@/entities/auth';
 import { Stack, TextInput, PasswordInput, Button } from '@mantine/core';
-import { EActionStatus, handleFormActionErrors } from '@/shared';
+import { ERoutes } from '@/shared';
 import { signInAction } from '../actions/sign-in';
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
+import { notifications } from '@mantine/notifications';
 
 export const SignInForm = () => {
   const { schema, defaultValues, fields } = SIGN_IN_DATA;
@@ -22,17 +23,29 @@ export const SignInForm = () => {
   });
 
   const onSubmit = async (formValues: TSignInSchema) => {
-    const state = await signInAction(formValues);
+    const { serverError, validationErrors } = await signInAction(formValues);
 
-    handleFormActionErrors({ state });
+    if (serverError) {
+      notifications.show({
+        title: 'Ошибка',
+        message: serverError,
+        color: 'red',
+      });
 
-    if (state.status === EActionStatus.Success && state.redirect) {
-      const redirect = state.redirect;
+      return;
+    }
 
-      startTransition(() => {
-        router.push(redirect);
+    if (validationErrors) {
+      notifications.show({
+        title: 'Ошибка',
+        message: validationErrors._errors?.join('. '),
+        color: 'red',
       });
     }
+
+    startTransition(() => {
+      router.push(ERoutes.PROFILE);
+    });
   };
 
   return (

@@ -13,6 +13,14 @@ export type TProfileFilters = {
 export type TProfileFiltersSchema = z.infer<typeof profileFiltersSchema>;
 export type TEditProfileSchema = z.infer<typeof editProfileSchema>;
 
+export type TEditProfileData = {
+  username: string;
+  bio?: string | null;
+  fitnessLevel: FitnessLevel;
+  preferences: string[];
+  avatarUrl?: string | null;
+};
+
 export type TProfilesData = {
   items: Profile[];
 

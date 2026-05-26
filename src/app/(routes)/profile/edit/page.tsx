@@ -1,5 +1,5 @@
-import { EditProfileForm } from '@/features/edit-profile-form';
+import { EditProfilePage } from '@/views/edit-profile-page';
 
 export default function EditProfileRoute() {
-  return <EditProfileForm />;
+  return <EditProfilePage />;
 }

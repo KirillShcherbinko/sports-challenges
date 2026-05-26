@@ -38,7 +38,7 @@ model Profile {
   avatarUrl           String?      @map("avatar_url")
   avatarPath          String?      @map("avatar_path")
   fitnessLevel        FitnessLevel @default(beginner) @map("fitness_level")
-  preferences         Json?
+  preferences         String[]     @default([])
   bio                 String?
   streakCount         Int          @default(0) @map("streak_count")
   totalCompletedTasks Int          @default(0) @map("total_completed_tasks")

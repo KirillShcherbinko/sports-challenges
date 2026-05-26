@@ -1,26 +1,34 @@
 import { ProfileCard, type TProfileFilters } from '@/entities/profile';
-import { EActionStatus } from '@/shared';
-import { fetchProfiles } from '../actions/fetch-profiles';
 import { Button, Stack, Text } from '@mantine/core';
 import { ProfilesPagination } from '@/features/profiles-pagination';
+import { getProfilesAction } from '../actions/get-profiles';
 
 type TProfilesListProps = {
   searchParams: TProfileFilters;
 };
 
 export const ProfilesList = async ({ searchParams }: TProfilesListProps) => {
-  const { status, data, error } = await fetchProfiles(searchParams);
+  const { data, serverError, validationErrors } = await getProfilesAction(searchParams);
 
-  if (status === EActionStatus.Error) {
+  if (serverError) {
     return (
       <Stack align="center">
-        <Text c="var(--mantine-color-dark-2)">{error || 'Не удалось получить список профилей'}</Text>
-        <Button>Повторить</Button>
+        <Text c="var(--mantine-color-dark-2)">{`Ошибка ${serverError}`}</Text>
+        <Button onClick={async () => await getProfilesAction(searchParams)}>Повторить</Button>
       </Stack>
     );
   }
 
-  if (status === EActionStatus.Success && data?.items.length === 0) {
+  if (validationErrors) {
+    return (
+      <Stack align="center">
+        <Text c="var(--mantine-color-dark-2)">Неверные параметры фильтрации</Text>
+        <Button onClick={async () => await getProfilesAction({})}>Перезагрузить</Button>
+      </Stack>
+    );
+  }
+
+  if (!data) {
     return <Text c="var(--mantine-color-dark-2)">Список профилей пуст</Text>;
   }
 
@@ -29,7 +37,7 @@ export const ProfilesList = async ({ searchParams }: TProfilesListProps) => {
       {data?.items.map(({ id, username, fitnessLevel, avatarUrl }) => (
         <ProfileCard key={id} username={username} fitnessLevel={fitnessLevel} avatarUrl={avatarUrl} />
       ))}
-      <ProfilesPagination total={data?.pagination.totalPages || 1} />
+      <ProfilesPagination total={data.pagination.totalPages || 1} />
     </Stack>
   );
 };

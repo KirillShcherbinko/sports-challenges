@@ -1,30 +1,38 @@
-import { Avatar, Badge, Card, Divider, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core';
-
+import { Avatar, Badge, Button, Card, Divider, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core';
 import { IconBolt, IconChecklist } from '@tabler/icons-react';
-
 import { notFound, redirect } from 'next/navigation';
-import { fetchProfileByUsername } from '../actions/fetch-profile-by-username';
-import { fetchProfileById } from '../actions/fetch-profile-by-id';
-import { FITNESS_LEVEL_COLORS } from '@/entities/profile/config/fitness-level-colors';
-import { FITNESS_LEVEL_LABELS } from '@/entities/profile/config/fitness-level-labels';
-import { EActionStatus, ERoutes } from '@/shared';
+import { FITNESS_LEVEL_COLORS, FITNESS_LEVEL_LABELS } from '@/entities/profile';
+import { ERoutes } from '@/shared';
+import { getUserProfileAction } from '../actions/get-user-profile';
+import { getMyProfileAction } from '../actions/get-my-profile';
 
 type TProfileInfoProps = {
   profileUsername?: string;
 };
 
 export const ProfileInfo = async ({ profileUsername }: TProfileInfoProps) => {
-  const profile = profileUsername ? await fetchProfileByUsername(profileUsername) : await fetchProfileById();
+  const { data, serverError } = profileUsername ? await getUserProfileAction(profileUsername) : await getMyProfileAction();
 
-  if (profile.status === EActionStatus.Error || !profile.data) {
+  if (serverError) {
+    return (
+      <Stack align="center">
+        <Text c="var(--mantine-color-dark-2)">{`Ошибка ${serverError}`}</Text>
+        <Button onClick={async () => (profileUsername ? await getUserProfileAction(profileUsername) : await getMyProfileAction())}>
+          Повторить
+        </Button>
+      </Stack>
+    );
+  }
+
+  if (!data) {
     notFound();
   }
 
-  if (profileUsername === profile.data.username) {
+  if (profileUsername === data.username) {
     redirect(ERoutes.PROFILE);
   }
 
-  const { username, avatarUrl, bio, fitnessLevel, streakCount, totalCompletedTasks } = profile.data;
+  const { username, avatarUrl, bio, fitnessLevel, streakCount, totalCompletedTasks } = data;
 
   return (
     <Card radius="xl" padding="xl" withBorder maw={520} w="100%">

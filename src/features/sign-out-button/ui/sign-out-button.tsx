@@ -2,10 +2,11 @@
 
 import { Button } from '@mantine/core';
 import { signOutAction } from '../actions/sign-out';
-import { handleFormActionErrors, EActionStatus } from '@/shared';
 import { useRouter } from 'next/navigation';
 import { IconLogout } from '@tabler/icons-react';
 import { useState, useTransition } from 'react';
+import { notifications } from '@mantine/notifications';
+import { ERoutes } from '@/shared';
 
 export const SignOutButton = () => {
   const router = useRouter();
@@ -16,19 +17,21 @@ export const SignOutButton = () => {
   const handleSignOut = async () => {
     setIsLoading(true);
 
-    const state = await signOutAction();
+    const { serverError } = await signOutAction();
 
-    handleFormActionErrors({ state });
-
-    if (state.status === EActionStatus.Success && state.redirect) {
-      const redirect = state.redirect;
-
-      startTransition(() => {
-        router.push(redirect);
+    if (serverError) {
+      notifications.show({
+        title: 'Ошибка',
+        message: serverError,
+        color: 'red',
       });
-
+      setIsLoading(false);
       return;
     }
+
+    startTransition(() => {
+      router.push(ERoutes.SIGN_IN);
+    });
 
     setIsLoading(false);
   };
@@ -41,7 +44,7 @@ export const SignOutButton = () => {
       loading={isPending || isLoading}
       disabled={isPending || isLoading}
       onClick={handleSignOut}
-      rightSection={!isPending && <IconLogout color="var(--mantine-color-dark-1)" size={24} />}
+      rightSection={<IconLogout color="var(--mantine-color-dark-1)" size={24} />}
     >
       Выйти
     </Button>

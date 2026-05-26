@@ -10,12 +10,8 @@ type Props = {
   }>;
 };
 
-export default async function ChallengesPage({
-  searchParams,
-}: Props) {
+export default async function ChallengesPage({ searchParams }: Props) {
   const params = await searchParams;
 
-  return (
-    <ChallengesList searchParams={params} />
-  );
+  return <ChallengesList searchParams={params} />;
 }
