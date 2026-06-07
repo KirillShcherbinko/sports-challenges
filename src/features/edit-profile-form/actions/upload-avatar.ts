@@ -13,8 +13,7 @@ export const uploadAvatar = async ({
   const data = await profileRepository.getProfileById(userId);
 
   const fileExt = avatar.name.split('.').pop() || 'png';
-  const fileName = data?.avatarPath ? data.avatarPath : crypto.randomUUID();
-  const filePath = `${userId}/${fileName}.${fileExt}`;
+  const filePath = data?.avatarPath ? data.avatarPath : `${userId}/${crypto.randomUUID()}.${fileExt}`;
 
   const { success, publicUrl, currentFilePath } = await uploadFile({
     supabase,

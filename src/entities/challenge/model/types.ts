@@ -1,32 +1,30 @@
-// src/entities/challenge/model/types.ts
-
 import type { ChallengeCategory, ChallengeDifficulty } from '@/shared/client';
+import type { ChallengeGetPayload, ProfileChallengeGetPayload, ProfileChallengeStatus } from '@/shared/types';
 
-// src/entities/challenge/model/types.ts
-
-import type { Prisma } from '@/shared/client';
-
-export type TChallengeWithCreator = Prisma.ChallengeGetPayload<{
-  include: {
-    creator: true;
-  };
+export type TChallengeWithCreator = ChallengeGetPayload<{
+  include: { creator: true };
 }>;
 
-export type TChallengeFilters = {
+export type TProfileChallengeWithChallenge = ProfileChallengeGetPayload<{
+  include: { challenge: true };
+}>
+
+export type TChallengesFilters = {
   search?: string;
-  creatorId?: string;
+  creatorName?: string;
   category?: ChallengeCategory;
   difficulty?: ChallengeDifficulty;
-  page?: number;
-  limit?: number;
+  page: number;
+  limit: number;
+  isPublished: boolean;
 };
 
-export type TChallengesData = {
-  items: TChallengeWithCreator[];
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
-};
+export type TMyChallengesFilters = {
+  search?: string;
+  creatorName?: string;
+  status?: ProfileChallengeStatus;
+  category?: ChallengeCategory;
+  difficulty?: ChallengeDifficulty; 
+  page: number;
+  limit: number;
+}

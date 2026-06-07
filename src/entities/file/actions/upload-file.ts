@@ -9,7 +9,9 @@ export const uploadFile = async ({
   filePath,
   upsert = true,
 }: TUploadFileRequest): Promise<TUploadFileResponse> => {
-  const { error } = await supabase.storage.from(bucketName).upload(filePath, file, { upsert });
+  const { error } = await supabase.storage
+    .from(bucketName)
+    .upload(filePath, file, { cacheControl: 'no-cache', upsert });
 
   if (error) {
     return { success: false };

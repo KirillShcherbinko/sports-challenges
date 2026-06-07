@@ -8,22 +8,51 @@ datasource db {
 }
 
 enum FitnessLevel {
-  beginner
-  intermediate
-  advanced
+  Beginner
+  Intermediate
+  Advanced
 }
 
 enum ChallengeDifficulty {
-  easy
-  medium
-  hard
+  Easy
+  Medium
+  Hard
 }
 
 enum ChallengeCategory {
-  strength
-  cardio
-  flexibility
-  endurance
+  // === Базовые (ваши исходные) ===
+  Strength
+  Cardio
+  Flexibility
+  Endurance
+
+  // === Физическая подготовка (детализация) ===
+  Mobility // Мобильность (отличается от гибкости, работа с суставами)
+  Balance // Баланс и стабильность
+  Speed // Скорость
+  Agility // Ловкость и координация
+  Power // Взрывная сила
+  WeightLoss // Похудение / жиросжигание
+  MuscleGain // Набор мышечной массы
+
+  // === Здоровье и образ жизни (очень популярны в челленджах) ===
+  Nutrition // Питание (например, "без сахара", "подсчет КБЖУ")
+  Hydration // Водный баланс
+  Sleep // Сон и режим
+  Recovery // Восстановление (массаж, растяжка, дни отдыха)
+  MentalHealth // Ментальное здоровье
+  Mindfulness // Осознанность и медитация
+  DailySteps // Ежедневная активность (шаги, NEAT)
+  Posture // Осанка
+
+  // === Конкретные спортивные дисциплины ===
+  Yoga
+  Calisthenics // Воркаут / упражнения с собственным весом
+  Running // Бег
+  Cycling // Велоспорт
+  Swimming // Плавание
+  Dance // Танцы
+  MartialArts // Единоборства
 }
 
 enum ProfileChallengeStatus {
@@ -37,7 +66,7 @@ model Profile {
   username            String       @unique
   avatarUrl           String?      @map("avatar_url")
   avatarPath          String?      @map("avatar_path")
-  fitnessLevel        FitnessLevel @default(beginner) @map("fitness_level")
+  fitnessLevel        FitnessLevel @default(Beginner) @map("fitness_level")
   preferences         String[]     @default([])
   bio                 String?
   streakCount         Int          @default(0) @map("streak_count")

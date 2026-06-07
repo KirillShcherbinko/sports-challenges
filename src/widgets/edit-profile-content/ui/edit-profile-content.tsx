@@ -1,5 +1,5 @@
 import { EditProfileForm } from '@/features/edit-profile-form';
-import { Button, Card, Stack, Text } from '@mantine/core';
+import { Button, Card, Stack, Text, Title } from '@mantine/core';
 import { getEditProfileFormDataAction } from '../actions/get-edit-profile-form-data';
 
 export const EditProfileContent = async () => {
@@ -9,7 +9,7 @@ export const EditProfileContent = async () => {
     return (
       <Stack>
         <Text>{`Ошибка: ${serverError}`}</Text>
-        <Button onClick={async () => await getEditProfileFormDataAction()}>Повторить</Button>
+        <Button>Повторить</Button>
       </Stack>
     );
   }
@@ -19,8 +19,11 @@ export const EditProfileContent = async () => {
   }
 
   return (
-    <Card>
-      <EditProfileForm initialData={data} />
+    <Card maw={700} w="100%">
+      <Stack gap="xl" w="100%" align="center">
+        <Title ta="center">Редактировать профиль</Title>
+        <EditProfileForm initialData={data} />
+      </Stack>
     </Card>
   );
 };

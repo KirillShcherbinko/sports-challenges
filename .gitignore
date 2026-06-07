@@ -43,3 +43,8 @@ next-env.d.ts
 #database
 /prisma/migrations
 .supabase
+
+#ai
+.opencode
+opencode.json
+*.pen

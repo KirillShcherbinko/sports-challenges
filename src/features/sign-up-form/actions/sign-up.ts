@@ -2,8 +2,10 @@
 
 import { signUpSchema } from '@/entities/auth';
 import { profileRepository } from '@/entities/profile/server';
+import { ERoutes } from '@/shared';
 import { actionClient } from '@/shared/actions';
 import { createServer } from '@/shared/server';
+import { redirect } from 'next/navigation';
 
 export const signUpAction = actionClient.inputSchema(signUpSchema).action(async ({ parsedInput }) => {
   const { username, email, password } = parsedInput;
@@ -28,4 +30,6 @@ export const signUpAction = actionClient.inputSchema(signUpSchema).action(async 
   }
 
   await profileRepository.createProfile({ id: data.user.id, username });
+
+  redirect(ERoutes.PROFILE);
 });
