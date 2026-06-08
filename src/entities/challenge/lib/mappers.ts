@@ -21,7 +21,7 @@ export const mapChallengeToDto = (data: TChallengeWithCreator): TChallengeDto =>
 
 export const mapMyChallengeToDto = (data: TProfileChallengeWithChallenge): TMyChallengeDto => {
   return {
-    id: data.id,
+    id: `${data.profileId}_${data.challengeId}`,
     status: data.status,
     currentDay: data.currentDay,
     challenge: {

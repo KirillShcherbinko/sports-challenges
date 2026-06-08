@@ -126,7 +126,6 @@ model DailyTask {
 }
 
 model ProfileChallenge {
-  id             String                 @id @default(uuid()) @db.Uuid
   profileId      String                 @map("profile_id") @db.Uuid
   challengeId    String                 @map("challenge_id") @db.Uuid
   profile        Profile                @relation(fields: [profileId], references: [id], onDelete: Cascade)
@@ -141,33 +140,32 @@ model ProfileChallenge {
 
   taskCompletions TaskCompletion[]
 
-  @@unique([profileId, challengeId])
+  @@id([profileId, challengeId])
   @@map("profile_challenges")
 }
 
 model TaskCompletion {
-  id                 String           @id @default(uuid()) @db.Uuid
-  profileChallengeId String           @map("profile_challenge_id") @db.Uuid
-  dailyTaskId        String           @map("daily_task_id") @db.Uuid
-  profileChallenge   ProfileChallenge @relation(fields: [profileChallengeId], references: [id], onDelete: Cascade)
-  dailyTask          DailyTask        @relation(fields: [dailyTaskId], references: [id], onDelete: Cascade)
-  isCompleted        Boolean          @default(false) @map("is_completed")
-  completedAt        DateTime?        @map("completed_at")
-  createdAt          DateTime         @default(now()) @map("created_at")
+  profileId        String           @map("profile_id") @db.Uuid
+  challengeId      String           @map("challenge_id") @db.Uuid
+  dailyTaskId      String           @map("daily_task_id") @db.Uuid
+  profileChallenge ProfileChallenge @relation(fields: [profileId, challengeId], references: [profileId, challengeId], onDelete: Cascade)
+  dailyTask        DailyTask        @relation(fields: [dailyTaskId], references: [id], onDelete: Cascade)
+  isCompleted      Boolean          @default(false) @map("is_completed")
+  completedAt      DateTime?        @map("completed_at")
+  createdAt        DateTime         @default(now()) @map("created_at")
 
-  @@unique([profileChallengeId, dailyTaskId])
+  @@id([profileId, challengeId, dailyTaskId])
   @@map("task_completions")
 }
 
 model ChallengeLike {
-  id          String    @id @default(uuid()) @db.Uuid
   profileId   String    @map("profile_id") @db.Uuid
   challengeId String    @map("challenge_id") @db.Uuid
   profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
   challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
   createdAt   DateTime  @default(now()) @map("created_at")
 
-  @@unique([profileId, challengeId])
+  @@id([profileId, challengeId])
   @@map("challenge_likes")
 }
 
@@ -199,13 +197,12 @@ model Achievement {
 }
 
 model ProfileAchievement {
-  id            String      @id @default(uuid()) @db.Uuid
   profileId     String      @map("profile_id") @db.Uuid
   achievementId String      @map("achievement_id") @db.Uuid
   profile       Profile     @relation(fields: [profileId], references: [id], onDelete: Cascade)
   achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
   earnedAt      DateTime    @default(now()) @map("earned_at")
 
-  @@unique([profileId, achievementId])
+  @@id([profileId, achievementId])
   @@map("profile_achievements")
 }
