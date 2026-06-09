@@ -1,9 +1,25 @@
 import type { TChallengesFilters, TMyChallengesFilters } from './types';
 import { DEFAULT_CHALLENGES_FILTERS_VALUES } from '../config/default-challenges-filters-values';
 import { prisma } from '@/shared/server';
-import type { ChallengeCreateInput, ChallengeUpdateInput, ChallengeWhereInput, ProfileChallengeWhereInput } from '@/shared/types';
-import type { TChallengeDetailDto, TChallengeDto, TChallengeMutationDto, TGetChallengesResponseDto, TMyChallengeDto } from './dtos';
-import { mapChallengeDetailToDto, mapChallengeMutationToDto, mapChallengeToDto, mapMyChallengeToDto } from '../lib/mappers';
+import type {
+  ChallengeCreateInput,
+  ChallengeUpdateInput,
+  ChallengeWhereInput,
+  ProfileChallengeWhereInput,
+} from '@/shared/types';
+import type {
+  TChallengeDetailDto,
+  TChallengeDto,
+  TChallengeMutationDto,
+  TGetChallengesResponseDto,
+  TMyChallengeDto,
+} from './dtos';
+import {
+  mapChallengeDetailToDto,
+  mapChallengeMutationToDto,
+  mapChallengeToDto,
+  mapMyChallengeToDto,
+} from '../lib/mappers';
 import { DEFAULT_MY_CHALLENGES_FILTERS_VALUES } from '../config/default-my-challenges-filters-values';
 
 class ChallengeRepository {
@@ -55,16 +71,16 @@ class ChallengeRepository {
         ...(category && { category }),
         ...(difficulty && { difficulty }),
         isPublished: true,
-      }
-    }
+      },
+    };
 
     const [rawItems, total] = await prisma.$transaction([
       prisma.profileChallenge.findMany({
         where,
         skip: (page - 1) * limit,
         take: limit,
-        include: { challenge: true },
         orderBy: { createdAt: 'desc' },
+        include: { challenge: true },
       }),
 
       prisma.profileChallenge.count({ where }),

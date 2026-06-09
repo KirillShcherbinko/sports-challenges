@@ -1205,10 +1205,8 @@ export type ChallengeLikeScalarFieldEnum = (typeof ChallengeLikeScalarFieldEnum)
 
 
 export const ChallengeCommentScalarFieldEnum = {
-  id: 'id',
   challengeId: 'challengeId',
   profileId: 'profileId',
-  parentCommentId: 'parentCommentId',
   content: 'content',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

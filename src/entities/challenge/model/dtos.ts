@@ -1,3 +1,4 @@
+import type { TPaginationResponse } from '@/shared';
 import type { ChallengeCategory, ChallengeDifficulty, FitnessLevel, ProfileChallengeStatus } from '@/shared/types';
 
 export type TChallengeDto = {
@@ -43,12 +44,7 @@ export type TChallengeMutationDto = {
 
 export type TGetChallengesResponseDto<T> = {
   items: T[];
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
+  pagination: TPaginationResponse
 };
 
 

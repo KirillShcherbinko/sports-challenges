@@ -1,3 +1,4 @@
+////////// Маршруты //////////
 export enum ERoutes {
   HOME = '/',
 
@@ -17,4 +18,10 @@ export enum ERoutes {
   CREATE_CHALLENGE = '/create-challenge',
 
   ACHIEVEMENTS = '/achievements',
+}
+
+////////// Хранилища файлов //////////
+export enum EBuckets {
+  AVATARS_BUCKET = 'avatars',
+  CHALLENGES_BUCKET = 'challenges',
 }

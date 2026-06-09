@@ -170,18 +170,15 @@ model ChallengeLike {
 }
 
 model ChallengeComment {
-  id              String             @id @default(uuid()) @db.Uuid
-  challengeId     String             @map("challenge_id") @db.Uuid
-  profileId       String             @map("profile_id") @db.Uuid
-  parentCommentId String?            @map("parent_comment_id") @db.Uuid
-  challenge       Challenge          @relation(fields: [challengeId], references: [id], onDelete: Cascade)
-  profile         Profile            @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  parentComment   ChallengeComment?  @relation("CommentReplies", fields: [parentCommentId], references: [id], onDelete: Cascade)
-  replies         ChallengeComment[] @relation("CommentReplies")
-  content         String
-  createdAt       DateTime           @default(now()) @map("created_at")
-  updatedAt       DateTime           @updatedAt @map("updated_at")
+  challengeId String    @map("challenge_id") @db.Uuid
+  profileId   String    @map("profile_id") @db.Uuid
+  challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  content     String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
 
+  @@id([challengeId, profileId])
   @@map("challenge_comments")
 }
 

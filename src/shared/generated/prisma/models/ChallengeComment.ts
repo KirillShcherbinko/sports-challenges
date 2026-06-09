@@ -25,30 +25,24 @@ export type AggregateChallengeComment = {
 }
 
 export type ChallengeCommentMinAggregateOutputType = {
-  id: string | null
   challengeId: string | null
   profileId: string | null
-  parentCommentId: string | null
   content: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type ChallengeCommentMaxAggregateOutputType = {
-  id: string | null
   challengeId: string | null
   profileId: string | null
-  parentCommentId: string | null
   content: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type ChallengeCommentCountAggregateOutputType = {
-  id: number
   challengeId: number
   profileId: number
-  parentCommentId: number
   content: number
   createdAt: number
   updatedAt: number
@@ -57,30 +51,24 @@ export type ChallengeCommentCountAggregateOutputType = {
 
 
 export type ChallengeCommentMinAggregateInputType = {
-  id?: true
   challengeId?: true
   profileId?: true
-  parentCommentId?: true
   content?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type ChallengeCommentMaxAggregateInputType = {
-  id?: true
   challengeId?: true
   profileId?: true
-  parentCommentId?: true
   content?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type ChallengeCommentCountAggregateInputType = {
-  id?: true
   challengeId?: true
   profileId?: true
-  parentCommentId?: true
   content?: true
   createdAt?: true
   updatedAt?: true
@@ -160,10 +148,8 @@ export type ChallengeCommentGroupByArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 export type ChallengeCommentGroupByOutputType = {
-  id: string
   challengeId: string
   profileId: string
-  parentCommentId: string | null
   content: string
   createdAt: Date
   updatedAt: Date
@@ -191,55 +177,42 @@ export type ChallengeCommentWhereInput = {
   AND?: Prisma.ChallengeCommentWhereInput | Prisma.ChallengeCommentWhereInput[]
   OR?: Prisma.ChallengeCommentWhereInput[]
   NOT?: Prisma.ChallengeCommentWhereInput | Prisma.ChallengeCommentWhereInput[]
-  id?: Prisma.UuidFilter<"ChallengeComment"> | string
   challengeId?: Prisma.UuidFilter<"ChallengeComment"> | string
   profileId?: Prisma.UuidFilter<"ChallengeComment"> | string
-  parentCommentId?: Prisma.UuidNullableFilter<"ChallengeComment"> | string | null
   content?: Prisma.StringFilter<"ChallengeComment"> | string
   createdAt?: Prisma.DateTimeFilter<"ChallengeComment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChallengeComment"> | Date | string
   challenge?: Prisma.XOR<Prisma.ChallengeScalarRelationFilter, Prisma.ChallengeWhereInput>
   profile?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
-  parentComment?: Prisma.XOR<Prisma.ChallengeCommentNullableScalarRelationFilter, Prisma.ChallengeCommentWhereInput> | null
-  replies?: Prisma.ChallengeCommentListRelationFilter
 }
 
 export type ChallengeCommentOrderByWithRelationInput = {
-  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   profileId?: Prisma.SortOrder
-  parentCommentId?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   challenge?: Prisma.ChallengeOrderByWithRelationInput
   profile?: Prisma.ProfileOrderByWithRelationInput
-  parentComment?: Prisma.ChallengeCommentOrderByWithRelationInput
-  replies?: Prisma.ChallengeCommentOrderByRelationAggregateInput
 }
 
 export type ChallengeCommentWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  challengeId_profileId?: Prisma.ChallengeCommentChallengeIdProfileIdCompoundUniqueInput
   AND?: Prisma.ChallengeCommentWhereInput | Prisma.ChallengeCommentWhereInput[]
   OR?: Prisma.ChallengeCommentWhereInput[]
   NOT?: Prisma.ChallengeCommentWhereInput | Prisma.ChallengeCommentWhereInput[]
   challengeId?: Prisma.UuidFilter<"ChallengeComment"> | string
   profileId?: Prisma.UuidFilter<"ChallengeComment"> | string
-  parentCommentId?: Prisma.UuidNullableFilter<"ChallengeComment"> | string | null
   content?: Prisma.StringFilter<"ChallengeComment"> | string
   createdAt?: Prisma.DateTimeFilter<"ChallengeComment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChallengeComment"> | Date | string
   challenge?: Prisma.XOR<Prisma.ChallengeScalarRelationFilter, Prisma.ChallengeWhereInput>
   profile?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
-  parentComment?: Prisma.XOR<Prisma.ChallengeCommentNullableScalarRelationFilter, Prisma.ChallengeCommentWhereInput> | null
-  replies?: Prisma.ChallengeCommentListRelationFilter
-}, "id">
+}, "challengeId_profileId">
 
 export type ChallengeCommentOrderByWithAggregationInput = {
-  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   profileId?: Prisma.SortOrder
-  parentCommentId?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -252,81 +225,62 @@ export type ChallengeCommentScalarWhereWithAggregatesInput = {
   AND?: Prisma.ChallengeCommentScalarWhereWithAggregatesInput | Prisma.ChallengeCommentScalarWhereWithAggregatesInput[]
   OR?: Prisma.ChallengeCommentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ChallengeCommentScalarWhereWithAggregatesInput | Prisma.ChallengeCommentScalarWhereWithAggregatesInput[]
-  id?: Prisma.UuidWithAggregatesFilter<"ChallengeComment"> | string
   challengeId?: Prisma.UuidWithAggregatesFilter<"ChallengeComment"> | string
   profileId?: Prisma.UuidWithAggregatesFilter<"ChallengeComment"> | string
-  parentCommentId?: Prisma.UuidNullableWithAggregatesFilter<"ChallengeComment"> | string | null
   content?: Prisma.StringWithAggregatesFilter<"ChallengeComment"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ChallengeComment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ChallengeComment"> | Date | string
 }
 
 export type ChallengeCommentCreateInput = {
-  id?: string
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
   challenge: Prisma.ChallengeCreateNestedOneWithoutCommentsInput
   profile: Prisma.ProfileCreateNestedOneWithoutChallengeCommentsInput
-  parentComment?: Prisma.ChallengeCommentCreateNestedOneWithoutRepliesInput
-  replies?: Prisma.ChallengeCommentCreateNestedManyWithoutParentCommentInput
 }
 
 export type ChallengeCommentUncheckedCreateInput = {
-  id?: string
   challengeId: string
   profileId: string
-  parentCommentId?: string | null
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  replies?: Prisma.ChallengeCommentUncheckedCreateNestedManyWithoutParentCommentInput
 }
 
 export type ChallengeCommentUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   challenge?: Prisma.ChallengeUpdateOneRequiredWithoutCommentsNestedInput
   profile?: Prisma.ProfileUpdateOneRequiredWithoutChallengeCommentsNestedInput
-  parentComment?: Prisma.ChallengeCommentUpdateOneWithoutRepliesNestedInput
-  replies?: Prisma.ChallengeCommentUpdateManyWithoutParentCommentNestedInput
 }
 
 export type ChallengeCommentUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   profileId?: Prisma.StringFieldUpdateOperationsInput | string
-  parentCommentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  replies?: Prisma.ChallengeCommentUncheckedUpdateManyWithoutParentCommentNestedInput
 }
 
 export type ChallengeCommentCreateManyInput = {
-  id?: string
   challengeId: string
   profileId: string
-  parentCommentId?: string | null
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ChallengeCommentUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ChallengeCommentUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   profileId?: Prisma.StringFieldUpdateOperationsInput | string
-  parentCommentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -342,36 +296,30 @@ export type ChallengeCommentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type ChallengeCommentNullableScalarRelationFilter = {
-  is?: Prisma.ChallengeCommentWhereInput | null
-  isNot?: Prisma.ChallengeCommentWhereInput | null
+export type ChallengeCommentChallengeIdProfileIdCompoundUniqueInput = {
+  challengeId: string
+  profileId: string
 }
 
 export type ChallengeCommentCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   profileId?: Prisma.SortOrder
-  parentCommentId?: Prisma.SortOrder
   content?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ChallengeCommentMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   profileId?: Prisma.SortOrder
-  parentCommentId?: Prisma.SortOrder
   content?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ChallengeCommentMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   profileId?: Prisma.SortOrder
-  parentCommentId?: Prisma.SortOrder
   content?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -461,82 +409,18 @@ export type ChallengeCommentUncheckedUpdateManyWithoutChallengeNestedInput = {
   deleteMany?: Prisma.ChallengeCommentScalarWhereInput | Prisma.ChallengeCommentScalarWhereInput[]
 }
 
-export type ChallengeCommentCreateNestedOneWithoutRepliesInput = {
-  create?: Prisma.XOR<Prisma.ChallengeCommentCreateWithoutRepliesInput, Prisma.ChallengeCommentUncheckedCreateWithoutRepliesInput>
-  connectOrCreate?: Prisma.ChallengeCommentCreateOrConnectWithoutRepliesInput
-  connect?: Prisma.ChallengeCommentWhereUniqueInput
-}
-
-export type ChallengeCommentCreateNestedManyWithoutParentCommentInput = {
-  create?: Prisma.XOR<Prisma.ChallengeCommentCreateWithoutParentCommentInput, Prisma.ChallengeCommentUncheckedCreateWithoutParentCommentInput> | Prisma.ChallengeCommentCreateWithoutParentCommentInput[] | Prisma.ChallengeCommentUncheckedCreateWithoutParentCommentInput[]
-  connectOrCreate?: Prisma.ChallengeCommentCreateOrConnectWithoutParentCommentInput | Prisma.ChallengeCommentCreateOrConnectWithoutParentCommentInput[]
-  createMany?: Prisma.ChallengeCommentCreateManyParentCommentInputEnvelope
-  connect?: Prisma.ChallengeCommentWhereUniqueInput | Prisma.ChallengeCommentWhereUniqueInput[]
-}
-
-export type ChallengeCommentUncheckedCreateNestedManyWithoutParentCommentInput = {
-  create?: Prisma.XOR<Prisma.ChallengeCommentCreateWithoutParentCommentInput, Prisma.ChallengeCommentUncheckedCreateWithoutParentCommentInput> | Prisma.ChallengeCommentCreateWithoutParentCommentInput[] | Prisma.ChallengeCommentUncheckedCreateWithoutParentCommentInput[]
-  connectOrCreate?: Prisma.ChallengeCommentCreateOrConnectWithoutParentCommentInput | Prisma.ChallengeCommentCreateOrConnectWithoutParentCommentInput[]
-  createMany?: Prisma.ChallengeCommentCreateManyParentCommentInputEnvelope
-  connect?: Prisma.ChallengeCommentWhereUniqueInput | Prisma.ChallengeCommentWhereUniqueInput[]
-}
-
-export type ChallengeCommentUpdateOneWithoutRepliesNestedInput = {
-  create?: Prisma.XOR<Prisma.ChallengeCommentCreateWithoutRepliesInput, Prisma.ChallengeCommentUncheckedCreateWithoutRepliesInput>
-  connectOrCreate?: Prisma.ChallengeCommentCreateOrConnectWithoutRepliesInput
-  upsert?: Prisma.ChallengeCommentUpsertWithoutRepliesInput
-  disconnect?: Prisma.ChallengeCommentWhereInput | boolean
-  delete?: Prisma.ChallengeCommentWhereInput | boolean
-  connect?: Prisma.ChallengeCommentWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ChallengeCommentUpdateToOneWithWhereWithoutRepliesInput, Prisma.ChallengeCommentUpdateWithoutRepliesInput>, Prisma.ChallengeCommentUncheckedUpdateWithoutRepliesInput>
-}
-
-export type ChallengeCommentUpdateManyWithoutParentCommentNestedInput = {
-  create?: Prisma.XOR<Prisma.ChallengeCommentCreateWithoutParentCommentInput, Prisma.ChallengeCommentUncheckedCreateWithoutParentCommentInput> | Prisma.ChallengeCommentCreateWithoutParentCommentInput[] | Prisma.ChallengeCommentUncheckedCreateWithoutParentCommentInput[]
-  connectOrCreate?: Prisma.ChallengeCommentCreateOrConnectWithoutParentCommentInput | Prisma.ChallengeCommentCreateOrConnectWithoutParentCommentInput[]
-  upsert?: Prisma.ChallengeCommentUpsertWithWhereUniqueWithoutParentCommentInput | Prisma.ChallengeCommentUpsertWithWhereUniqueWithoutParentCommentInput[]
-  createMany?: Prisma.ChallengeCommentCreateManyParentCommentInputEnvelope
-  set?: Prisma.ChallengeCommentWhereUniqueInput | Prisma.ChallengeCommentWhereUniqueInput[]
-  disconnect?: Prisma.ChallengeCommentWhereUniqueInput | Prisma.ChallengeCommentWhereUniqueInput[]
-  delete?: Prisma.ChallengeCommentWhereUniqueInput | Prisma.ChallengeCommentWhereUniqueInput[]
-  connect?: Prisma.ChallengeCommentWhereUniqueInput | Prisma.ChallengeCommentWhereUniqueInput[]
-  update?: Prisma.ChallengeCommentUpdateWithWhereUniqueWithoutParentCommentInput | Prisma.ChallengeCommentUpdateWithWhereUniqueWithoutParentCommentInput[]
-  updateMany?: Prisma.ChallengeCommentUpdateManyWithWhereWithoutParentCommentInput | Prisma.ChallengeCommentUpdateManyWithWhereWithoutParentCommentInput[]
-  deleteMany?: Prisma.ChallengeCommentScalarWhereInput | Prisma.ChallengeCommentScalarWhereInput[]
-}
-
-export type ChallengeCommentUncheckedUpdateManyWithoutParentCommentNestedInput = {
-  create?: Prisma.XOR<Prisma.ChallengeCommentCreateWithoutParentCommentInput, Prisma.ChallengeCommentUncheckedCreateWithoutParentCommentInput> | Prisma.ChallengeCommentCreateWithoutParentCommentInput[] | Prisma.ChallengeCommentUncheckedCreateWithoutParentCommentInput[]
-  connectOrCreate?: Prisma.ChallengeCommentCreateOrConnectWithoutParentCommentInput | Prisma.ChallengeCommentCreateOrConnectWithoutParentCommentInput[]
-  upsert?: Prisma.ChallengeCommentUpsertWithWhereUniqueWithoutParentCommentInput | Prisma.ChallengeCommentUpsertWithWhereUniqueWithoutParentCommentInput[]
-  createMany?: Prisma.ChallengeCommentCreateManyParentCommentInputEnvelope
-  set?: Prisma.ChallengeCommentWhereUniqueInput | Prisma.ChallengeCommentWhereUniqueInput[]
-  disconnect?: Prisma.ChallengeCommentWhereUniqueInput | Prisma.ChallengeCommentWhereUniqueInput[]
-  delete?: Prisma.ChallengeCommentWhereUniqueInput | Prisma.ChallengeCommentWhereUniqueInput[]
-  connect?: Prisma.ChallengeCommentWhereUniqueInput | Prisma.ChallengeCommentWhereUniqueInput[]
-  update?: Prisma.ChallengeCommentUpdateWithWhereUniqueWithoutParentCommentInput | Prisma.ChallengeCommentUpdateWithWhereUniqueWithoutParentCommentInput[]
-  updateMany?: Prisma.ChallengeCommentUpdateManyWithWhereWithoutParentCommentInput | Prisma.ChallengeCommentUpdateManyWithWhereWithoutParentCommentInput[]
-  deleteMany?: Prisma.ChallengeCommentScalarWhereInput | Prisma.ChallengeCommentScalarWhereInput[]
-}
-
 export type ChallengeCommentCreateWithoutProfileInput = {
-  id?: string
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
   challenge: Prisma.ChallengeCreateNestedOneWithoutCommentsInput
-  parentComment?: Prisma.ChallengeCommentCreateNestedOneWithoutRepliesInput
-  replies?: Prisma.ChallengeCommentCreateNestedManyWithoutParentCommentInput
 }
 
 export type ChallengeCommentUncheckedCreateWithoutProfileInput = {
-  id?: string
   challengeId: string
-  parentCommentId?: string | null
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  replies?: Prisma.ChallengeCommentUncheckedCreateNestedManyWithoutParentCommentInput
 }
 
 export type ChallengeCommentCreateOrConnectWithoutProfileInput = {
@@ -569,33 +453,25 @@ export type ChallengeCommentScalarWhereInput = {
   AND?: Prisma.ChallengeCommentScalarWhereInput | Prisma.ChallengeCommentScalarWhereInput[]
   OR?: Prisma.ChallengeCommentScalarWhereInput[]
   NOT?: Prisma.ChallengeCommentScalarWhereInput | Prisma.ChallengeCommentScalarWhereInput[]
-  id?: Prisma.UuidFilter<"ChallengeComment"> | string
   challengeId?: Prisma.UuidFilter<"ChallengeComment"> | string
   profileId?: Prisma.UuidFilter<"ChallengeComment"> | string
-  parentCommentId?: Prisma.UuidNullableFilter<"ChallengeComment"> | string | null
   content?: Prisma.StringFilter<"ChallengeComment"> | string
   createdAt?: Prisma.DateTimeFilter<"ChallengeComment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChallengeComment"> | Date | string
 }
 
 export type ChallengeCommentCreateWithoutChallengeInput = {
-  id?: string
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
   profile: Prisma.ProfileCreateNestedOneWithoutChallengeCommentsInput
-  parentComment?: Prisma.ChallengeCommentCreateNestedOneWithoutRepliesInput
-  replies?: Prisma.ChallengeCommentCreateNestedManyWithoutParentCommentInput
 }
 
 export type ChallengeCommentUncheckedCreateWithoutChallengeInput = {
-  id?: string
   profileId: string
-  parentCommentId?: string | null
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  replies?: Prisma.ChallengeCommentUncheckedCreateNestedManyWithoutParentCommentInput
 }
 
 export type ChallengeCommentCreateOrConnectWithoutChallengeInput = {
@@ -624,321 +500,114 @@ export type ChallengeCommentUpdateManyWithWhereWithoutChallengeInput = {
   data: Prisma.XOR<Prisma.ChallengeCommentUpdateManyMutationInput, Prisma.ChallengeCommentUncheckedUpdateManyWithoutChallengeInput>
 }
 
-export type ChallengeCommentCreateWithoutRepliesInput = {
-  id?: string
-  content: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  challenge: Prisma.ChallengeCreateNestedOneWithoutCommentsInput
-  profile: Prisma.ProfileCreateNestedOneWithoutChallengeCommentsInput
-  parentComment?: Prisma.ChallengeCommentCreateNestedOneWithoutRepliesInput
-}
-
-export type ChallengeCommentUncheckedCreateWithoutRepliesInput = {
-  id?: string
-  challengeId: string
-  profileId: string
-  parentCommentId?: string | null
-  content: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type ChallengeCommentCreateOrConnectWithoutRepliesInput = {
-  where: Prisma.ChallengeCommentWhereUniqueInput
-  create: Prisma.XOR<Prisma.ChallengeCommentCreateWithoutRepliesInput, Prisma.ChallengeCommentUncheckedCreateWithoutRepliesInput>
-}
-
-export type ChallengeCommentCreateWithoutParentCommentInput = {
-  id?: string
-  content: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  challenge: Prisma.ChallengeCreateNestedOneWithoutCommentsInput
-  profile: Prisma.ProfileCreateNestedOneWithoutChallengeCommentsInput
-  replies?: Prisma.ChallengeCommentCreateNestedManyWithoutParentCommentInput
-}
-
-export type ChallengeCommentUncheckedCreateWithoutParentCommentInput = {
-  id?: string
-  challengeId: string
-  profileId: string
-  content: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  replies?: Prisma.ChallengeCommentUncheckedCreateNestedManyWithoutParentCommentInput
-}
-
-export type ChallengeCommentCreateOrConnectWithoutParentCommentInput = {
-  where: Prisma.ChallengeCommentWhereUniqueInput
-  create: Prisma.XOR<Prisma.ChallengeCommentCreateWithoutParentCommentInput, Prisma.ChallengeCommentUncheckedCreateWithoutParentCommentInput>
-}
-
-export type ChallengeCommentCreateManyParentCommentInputEnvelope = {
-  data: Prisma.ChallengeCommentCreateManyParentCommentInput | Prisma.ChallengeCommentCreateManyParentCommentInput[]
-  skipDuplicates?: boolean
-}
-
-export type ChallengeCommentUpsertWithoutRepliesInput = {
-  update: Prisma.XOR<Prisma.ChallengeCommentUpdateWithoutRepliesInput, Prisma.ChallengeCommentUncheckedUpdateWithoutRepliesInput>
-  create: Prisma.XOR<Prisma.ChallengeCommentCreateWithoutRepliesInput, Prisma.ChallengeCommentUncheckedCreateWithoutRepliesInput>
-  where?: Prisma.ChallengeCommentWhereInput
-}
-
-export type ChallengeCommentUpdateToOneWithWhereWithoutRepliesInput = {
-  where?: Prisma.ChallengeCommentWhereInput
-  data: Prisma.XOR<Prisma.ChallengeCommentUpdateWithoutRepliesInput, Prisma.ChallengeCommentUncheckedUpdateWithoutRepliesInput>
-}
-
-export type ChallengeCommentUpdateWithoutRepliesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  challenge?: Prisma.ChallengeUpdateOneRequiredWithoutCommentsNestedInput
-  profile?: Prisma.ProfileUpdateOneRequiredWithoutChallengeCommentsNestedInput
-  parentComment?: Prisma.ChallengeCommentUpdateOneWithoutRepliesNestedInput
-}
-
-export type ChallengeCommentUncheckedUpdateWithoutRepliesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  challengeId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
-  parentCommentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type ChallengeCommentUpsertWithWhereUniqueWithoutParentCommentInput = {
-  where: Prisma.ChallengeCommentWhereUniqueInput
-  update: Prisma.XOR<Prisma.ChallengeCommentUpdateWithoutParentCommentInput, Prisma.ChallengeCommentUncheckedUpdateWithoutParentCommentInput>
-  create: Prisma.XOR<Prisma.ChallengeCommentCreateWithoutParentCommentInput, Prisma.ChallengeCommentUncheckedCreateWithoutParentCommentInput>
-}
-
-export type ChallengeCommentUpdateWithWhereUniqueWithoutParentCommentInput = {
-  where: Prisma.ChallengeCommentWhereUniqueInput
-  data: Prisma.XOR<Prisma.ChallengeCommentUpdateWithoutParentCommentInput, Prisma.ChallengeCommentUncheckedUpdateWithoutParentCommentInput>
-}
-
-export type ChallengeCommentUpdateManyWithWhereWithoutParentCommentInput = {
-  where: Prisma.ChallengeCommentScalarWhereInput
-  data: Prisma.XOR<Prisma.ChallengeCommentUpdateManyMutationInput, Prisma.ChallengeCommentUncheckedUpdateManyWithoutParentCommentInput>
-}
-
 export type ChallengeCommentCreateManyProfileInput = {
-  id?: string
   challengeId: string
-  parentCommentId?: string | null
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ChallengeCommentUpdateWithoutProfileInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   challenge?: Prisma.ChallengeUpdateOneRequiredWithoutCommentsNestedInput
-  parentComment?: Prisma.ChallengeCommentUpdateOneWithoutRepliesNestedInput
-  replies?: Prisma.ChallengeCommentUpdateManyWithoutParentCommentNestedInput
 }
 
 export type ChallengeCommentUncheckedUpdateWithoutProfileInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
-  parentCommentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  replies?: Prisma.ChallengeCommentUncheckedUpdateManyWithoutParentCommentNestedInput
 }
 
 export type ChallengeCommentUncheckedUpdateManyWithoutProfileInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
-  parentCommentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ChallengeCommentCreateManyChallengeInput = {
-  id?: string
   profileId: string
-  parentCommentId?: string | null
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type ChallengeCommentUpdateWithoutChallengeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profile?: Prisma.ProfileUpdateOneRequiredWithoutChallengeCommentsNestedInput
-  parentComment?: Prisma.ChallengeCommentUpdateOneWithoutRepliesNestedInput
-  replies?: Prisma.ChallengeCommentUpdateManyWithoutParentCommentNestedInput
 }
 
 export type ChallengeCommentUncheckedUpdateWithoutChallengeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   profileId?: Prisma.StringFieldUpdateOperationsInput | string
-  parentCommentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  replies?: Prisma.ChallengeCommentUncheckedUpdateManyWithoutParentCommentNestedInput
 }
 
 export type ChallengeCommentUncheckedUpdateManyWithoutChallengeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
-  parentCommentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type ChallengeCommentCreateManyParentCommentInput = {
-  id?: string
-  challengeId: string
-  profileId: string
-  content: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type ChallengeCommentUpdateWithoutParentCommentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  challenge?: Prisma.ChallengeUpdateOneRequiredWithoutCommentsNestedInput
-  profile?: Prisma.ProfileUpdateOneRequiredWithoutChallengeCommentsNestedInput
-  replies?: Prisma.ChallengeCommentUpdateManyWithoutParentCommentNestedInput
-}
-
-export type ChallengeCommentUncheckedUpdateWithoutParentCommentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  challengeId?: Prisma.StringFieldUpdateOperationsInput | string
-  profileId?: Prisma.StringFieldUpdateOperationsInput | string
-  content?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  replies?: Prisma.ChallengeCommentUncheckedUpdateManyWithoutParentCommentNestedInput
-}
-
-export type ChallengeCommentUncheckedUpdateManyWithoutParentCommentInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   profileId?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-
-/**
- * Count Type ChallengeCommentCountOutputType
- */
-
-export type ChallengeCommentCountOutputType = {
-  replies: number
-}
-
-export type ChallengeCommentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  replies?: boolean | ChallengeCommentCountOutputTypeCountRepliesArgs
-}
-
-/**
- * ChallengeCommentCountOutputType without action
- */
-export type ChallengeCommentCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ChallengeCommentCountOutputType
-   */
-  select?: Prisma.ChallengeCommentCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * ChallengeCommentCountOutputType without action
- */
-export type ChallengeCommentCountOutputTypeCountRepliesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ChallengeCommentWhereInput
-}
 
 
 export type ChallengeCommentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   challengeId?: boolean
   profileId?: boolean
-  parentCommentId?: boolean
   content?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   challenge?: boolean | Prisma.ChallengeDefaultArgs<ExtArgs>
   profile?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
-  parentComment?: boolean | Prisma.ChallengeComment$parentCommentArgs<ExtArgs>
-  replies?: boolean | Prisma.ChallengeComment$repliesArgs<ExtArgs>
-  _count?: boolean | Prisma.ChallengeCommentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["challengeComment"]>
 
 export type ChallengeCommentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   challengeId?: boolean
   profileId?: boolean
-  parentCommentId?: boolean
   content?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   challenge?: boolean | Prisma.ChallengeDefaultArgs<ExtArgs>
   profile?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
-  parentComment?: boolean | Prisma.ChallengeComment$parentCommentArgs<ExtArgs>
 }, ExtArgs["result"]["challengeComment"]>
 
 export type ChallengeCommentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   challengeId?: boolean
   profileId?: boolean
-  parentCommentId?: boolean
   content?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   challenge?: boolean | Prisma.ChallengeDefaultArgs<ExtArgs>
   profile?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
-  parentComment?: boolean | Prisma.ChallengeComment$parentCommentArgs<ExtArgs>
 }, ExtArgs["result"]["challengeComment"]>
 
 export type ChallengeCommentSelectScalar = {
-  id?: boolean
   challengeId?: boolean
   profileId?: boolean
-  parentCommentId?: boolean
   content?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ChallengeCommentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "challengeId" | "profileId" | "parentCommentId" | "content" | "createdAt" | "updatedAt", ExtArgs["result"]["challengeComment"]>
+export type ChallengeCommentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"challengeId" | "profileId" | "content" | "createdAt" | "updatedAt", ExtArgs["result"]["challengeComment"]>
 export type ChallengeCommentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   challenge?: boolean | Prisma.ChallengeDefaultArgs<ExtArgs>
   profile?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
-  parentComment?: boolean | Prisma.ChallengeComment$parentCommentArgs<ExtArgs>
-  replies?: boolean | Prisma.ChallengeComment$repliesArgs<ExtArgs>
-  _count?: boolean | Prisma.ChallengeCommentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ChallengeCommentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   challenge?: boolean | Prisma.ChallengeDefaultArgs<ExtArgs>
   profile?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
-  parentComment?: boolean | Prisma.ChallengeComment$parentCommentArgs<ExtArgs>
 }
 export type ChallengeCommentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   challenge?: boolean | Prisma.ChallengeDefaultArgs<ExtArgs>
   profile?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
-  parentComment?: boolean | Prisma.ChallengeComment$parentCommentArgs<ExtArgs>
 }
 
 export type $ChallengeCommentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -946,14 +615,10 @@ export type $ChallengeCommentPayload<ExtArgs extends runtime.Types.Extensions.In
   objects: {
     challenge: Prisma.$ChallengePayload<ExtArgs>
     profile: Prisma.$ProfilePayload<ExtArgs>
-    parentComment: Prisma.$ChallengeCommentPayload<ExtArgs> | null
-    replies: Prisma.$ChallengeCommentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
     challengeId: string
     profileId: string
-    parentCommentId: string | null
     content: string
     createdAt: Date
     updatedAt: Date
@@ -1040,8 +705,8 @@ export interface ChallengeCommentDelegate<ExtArgs extends runtime.Types.Extensio
    * // Get first 10 ChallengeComments
    * const challengeComments = await prisma.challengeComment.findMany({ take: 10 })
    * 
-   * // Only select the `id`
-   * const challengeCommentWithIdOnly = await prisma.challengeComment.findMany({ select: { id: true } })
+   * // Only select the `challengeId`
+   * const challengeCommentWithChallengeIdOnly = await prisma.challengeComment.findMany({ select: { challengeId: true } })
    * 
    */
   findMany<T extends ChallengeCommentFindManyArgs>(args?: Prisma.SelectSubset<T, ChallengeCommentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChallengeCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -1085,9 +750,9 @@ export interface ChallengeCommentDelegate<ExtArgs extends runtime.Types.Extensio
    *   ]
    * })
    * 
-   * // Create many ChallengeComments and only return the `id`
-   * const challengeCommentWithIdOnly = await prisma.challengeComment.createManyAndReturn({
-   *   select: { id: true },
+   * // Create many ChallengeComments and only return the `challengeId`
+   * const challengeCommentWithChallengeIdOnly = await prisma.challengeComment.createManyAndReturn({
+   *   select: { challengeId: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -1176,9 +841,9 @@ export interface ChallengeCommentDelegate<ExtArgs extends runtime.Types.Extensio
    *   ]
    * })
    * 
-   * // Update zero or more ChallengeComments and only return the `id`
-   * const challengeCommentWithIdOnly = await prisma.challengeComment.updateManyAndReturn({
-   *   select: { id: true },
+   * // Update zero or more ChallengeComments and only return the `challengeId`
+   * const challengeCommentWithChallengeIdOnly = await prisma.challengeComment.updateManyAndReturn({
+   *   select: { challengeId: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -1353,8 +1018,6 @@ export interface Prisma__ChallengeCommentClient<T, Null = never, ExtArgs extends
   readonly [Symbol.toStringTag]: "PrismaPromise"
   challenge<T extends Prisma.ChallengeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChallengeDefaultArgs<ExtArgs>>): Prisma.Prisma__ChallengeClient<runtime.Types.Result.GetResult<Prisma.$ChallengePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   profile<T extends Prisma.ProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__ProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  parentComment<T extends Prisma.ChallengeComment$parentCommentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChallengeComment$parentCommentArgs<ExtArgs>>): Prisma.Prisma__ChallengeCommentClient<runtime.Types.Result.GetResult<Prisma.$ChallengeCommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  replies<T extends Prisma.ChallengeComment$repliesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ChallengeComment$repliesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChallengeCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1384,10 +1047,8 @@ export interface Prisma__ChallengeCommentClient<T, Null = never, ExtArgs extends
  * Fields of the ChallengeComment model
  */
 export interface ChallengeCommentFieldRefs {
-  readonly id: Prisma.FieldRef<"ChallengeComment", 'String'>
   readonly challengeId: Prisma.FieldRef<"ChallengeComment", 'String'>
   readonly profileId: Prisma.FieldRef<"ChallengeComment", 'String'>
-  readonly parentCommentId: Prisma.FieldRef<"ChallengeComment", 'String'>
   readonly content: Prisma.FieldRef<"ChallengeComment", 'String'>
   readonly createdAt: Prisma.FieldRef<"ChallengeComment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ChallengeComment", 'DateTime'>
@@ -1789,49 +1450,6 @@ export type ChallengeCommentDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many ChallengeComments to delete.
    */
   limit?: number
-}
-
-/**
- * ChallengeComment.parentComment
- */
-export type ChallengeComment$parentCommentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ChallengeComment
-   */
-  select?: Prisma.ChallengeCommentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ChallengeComment
-   */
-  omit?: Prisma.ChallengeCommentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ChallengeCommentInclude<ExtArgs> | null
-  where?: Prisma.ChallengeCommentWhereInput
-}
-
-/**
- * ChallengeComment.replies
- */
-export type ChallengeComment$repliesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ChallengeComment
-   */
-  select?: Prisma.ChallengeCommentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ChallengeComment
-   */
-  omit?: Prisma.ChallengeCommentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ChallengeCommentInclude<ExtArgs> | null
-  where?: Prisma.ChallengeCommentWhereInput
-  orderBy?: Prisma.ChallengeCommentOrderByWithRelationInput | Prisma.ChallengeCommentOrderByWithRelationInput[]
-  cursor?: Prisma.ChallengeCommentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ChallengeCommentScalarFieldEnum | Prisma.ChallengeCommentScalarFieldEnum[]
 }
 
 /**

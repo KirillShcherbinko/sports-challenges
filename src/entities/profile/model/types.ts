@@ -2,6 +2,7 @@ import type { FitnessLevel } from '@/shared/types';
 import type { editProfileSchema, profileFiltersSchema } from './schemas';
 import type { z } from 'zod';
 import type { Profile } from '@/shared/client';
+import type { TPaginationResponse } from '@/shared';
 
 export type TProfileFilters = {
   search?: string;
@@ -23,11 +24,5 @@ export type TEditProfileData = {
 
 export type TProfilesData = {
   items: Profile[];
-
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
+  pagination: TPaginationResponse;
 };
