@@ -104,6 +104,7 @@ export const ChallengeScalarFieldEnum = {
   category: 'category',
   difficulty: 'difficulty',
   durationDays: 'durationDays',
+  livesCount: 'livesCount',
   isPublished: 'isPublished',
   likesCount: 'likesCount',
   participantsCount: 'participantsCount',
@@ -121,7 +122,6 @@ export const DailyTaskScalarFieldEnum = {
   title: 'title',
   description: 'description',
   exerciseType: 'exerciseType',
-  targetValue: 'targetValue',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -136,7 +136,7 @@ export const ProfileChallengeScalarFieldEnum = {
   startedAt: 'startedAt',
   completedAt: 'completedAt',
   currentDay: 'currentDay',
-  lastActivityAt: 'lastActivityAt',
+  missedDays: 'missedDays',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

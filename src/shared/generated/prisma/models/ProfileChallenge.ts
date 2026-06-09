@@ -28,10 +28,12 @@ export type AggregateProfileChallenge = {
 
 export type ProfileChallengeAvgAggregateOutputType = {
   currentDay: number | null
+  missedDays: number | null
 }
 
 export type ProfileChallengeSumAggregateOutputType = {
   currentDay: number | null
+  missedDays: number | null
 }
 
 export type ProfileChallengeMinAggregateOutputType = {
@@ -41,7 +43,7 @@ export type ProfileChallengeMinAggregateOutputType = {
   startedAt: Date | null
   completedAt: Date | null
   currentDay: number | null
-  lastActivityAt: Date | null
+  missedDays: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -53,7 +55,7 @@ export type ProfileChallengeMaxAggregateOutputType = {
   startedAt: Date | null
   completedAt: Date | null
   currentDay: number | null
-  lastActivityAt: Date | null
+  missedDays: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -65,7 +67,7 @@ export type ProfileChallengeCountAggregateOutputType = {
   startedAt: number
   completedAt: number
   currentDay: number
-  lastActivityAt: number
+  missedDays: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -74,10 +76,12 @@ export type ProfileChallengeCountAggregateOutputType = {
 
 export type ProfileChallengeAvgAggregateInputType = {
   currentDay?: true
+  missedDays?: true
 }
 
 export type ProfileChallengeSumAggregateInputType = {
   currentDay?: true
+  missedDays?: true
 }
 
 export type ProfileChallengeMinAggregateInputType = {
@@ -87,7 +91,7 @@ export type ProfileChallengeMinAggregateInputType = {
   startedAt?: true
   completedAt?: true
   currentDay?: true
-  lastActivityAt?: true
+  missedDays?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -99,7 +103,7 @@ export type ProfileChallengeMaxAggregateInputType = {
   startedAt?: true
   completedAt?: true
   currentDay?: true
-  lastActivityAt?: true
+  missedDays?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -111,7 +115,7 @@ export type ProfileChallengeCountAggregateInputType = {
   startedAt?: true
   completedAt?: true
   currentDay?: true
-  lastActivityAt?: true
+  missedDays?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -210,7 +214,7 @@ export type ProfileChallengeGroupByOutputType = {
   startedAt: Date
   completedAt: Date | null
   currentDay: number
-  lastActivityAt: Date
+  missedDays: number
   createdAt: Date
   updatedAt: Date
   _count: ProfileChallengeCountAggregateOutputType | null
@@ -245,7 +249,7 @@ export type ProfileChallengeWhereInput = {
   startedAt?: Prisma.DateTimeFilter<"ProfileChallenge"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"ProfileChallenge"> | Date | string | null
   currentDay?: Prisma.IntFilter<"ProfileChallenge"> | number
-  lastActivityAt?: Prisma.DateTimeFilter<"ProfileChallenge"> | Date | string
+  missedDays?: Prisma.IntFilter<"ProfileChallenge"> | number
   createdAt?: Prisma.DateTimeFilter<"ProfileChallenge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProfileChallenge"> | Date | string
   profile?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
@@ -260,7 +264,7 @@ export type ProfileChallengeOrderByWithRelationInput = {
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   currentDay?: Prisma.SortOrder
-  lastActivityAt?: Prisma.SortOrder
+  missedDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   profile?: Prisma.ProfileOrderByWithRelationInput
@@ -279,7 +283,7 @@ export type ProfileChallengeWhereUniqueInput = Prisma.AtLeast<{
   startedAt?: Prisma.DateTimeFilter<"ProfileChallenge"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"ProfileChallenge"> | Date | string | null
   currentDay?: Prisma.IntFilter<"ProfileChallenge"> | number
-  lastActivityAt?: Prisma.DateTimeFilter<"ProfileChallenge"> | Date | string
+  missedDays?: Prisma.IntFilter<"ProfileChallenge"> | number
   createdAt?: Prisma.DateTimeFilter<"ProfileChallenge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProfileChallenge"> | Date | string
   profile?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
@@ -294,7 +298,7 @@ export type ProfileChallengeOrderByWithAggregationInput = {
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   currentDay?: Prisma.SortOrder
-  lastActivityAt?: Prisma.SortOrder
+  missedDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProfileChallengeCountOrderByAggregateInput
@@ -314,7 +318,7 @@ export type ProfileChallengeScalarWhereWithAggregatesInput = {
   startedAt?: Prisma.DateTimeWithAggregatesFilter<"ProfileChallenge"> | Date | string
   completedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ProfileChallenge"> | Date | string | null
   currentDay?: Prisma.IntWithAggregatesFilter<"ProfileChallenge"> | number
-  lastActivityAt?: Prisma.DateTimeWithAggregatesFilter<"ProfileChallenge"> | Date | string
+  missedDays?: Prisma.IntWithAggregatesFilter<"ProfileChallenge"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ProfileChallenge"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ProfileChallenge"> | Date | string
 }
@@ -324,7 +328,7 @@ export type ProfileChallengeCreateInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   currentDay?: number
-  lastActivityAt?: Date | string
+  missedDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   profile: Prisma.ProfileCreateNestedOneWithoutProfileChallengesInput
@@ -339,7 +343,7 @@ export type ProfileChallengeUncheckedCreateInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   currentDay?: number
-  lastActivityAt?: Date | string
+  missedDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   taskCompletions?: Prisma.TaskCompletionUncheckedCreateNestedManyWithoutProfileChallengeInput
@@ -350,7 +354,7 @@ export type ProfileChallengeUpdateInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentDay?: Prisma.IntFieldUpdateOperationsInput | number
-  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  missedDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profile?: Prisma.ProfileUpdateOneRequiredWithoutProfileChallengesNestedInput
@@ -365,7 +369,7 @@ export type ProfileChallengeUncheckedUpdateInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentDay?: Prisma.IntFieldUpdateOperationsInput | number
-  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  missedDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   taskCompletions?: Prisma.TaskCompletionUncheckedUpdateManyWithoutProfileChallengeNestedInput
@@ -378,7 +382,7 @@ export type ProfileChallengeCreateManyInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   currentDay?: number
-  lastActivityAt?: Date | string
+  missedDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -388,7 +392,7 @@ export type ProfileChallengeUpdateManyMutationInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentDay?: Prisma.IntFieldUpdateOperationsInput | number
-  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  missedDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -400,7 +404,7 @@ export type ProfileChallengeUncheckedUpdateManyInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentDay?: Prisma.IntFieldUpdateOperationsInput | number
-  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  missedDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -427,13 +431,14 @@ export type ProfileChallengeCountOrderByAggregateInput = {
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   currentDay?: Prisma.SortOrder
-  lastActivityAt?: Prisma.SortOrder
+  missedDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ProfileChallengeAvgOrderByAggregateInput = {
   currentDay?: Prisma.SortOrder
+  missedDays?: Prisma.SortOrder
 }
 
 export type ProfileChallengeMaxOrderByAggregateInput = {
@@ -443,7 +448,7 @@ export type ProfileChallengeMaxOrderByAggregateInput = {
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   currentDay?: Prisma.SortOrder
-  lastActivityAt?: Prisma.SortOrder
+  missedDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -455,13 +460,14 @@ export type ProfileChallengeMinOrderByAggregateInput = {
   startedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   currentDay?: Prisma.SortOrder
-  lastActivityAt?: Prisma.SortOrder
+  missedDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ProfileChallengeSumOrderByAggregateInput = {
   currentDay?: Prisma.SortOrder
+  missedDays?: Prisma.SortOrder
 }
 
 export type ProfileChallengeScalarRelationFilter = {
@@ -580,7 +586,7 @@ export type ProfileChallengeCreateWithoutProfileInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   currentDay?: number
-  lastActivityAt?: Date | string
+  missedDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   challenge: Prisma.ChallengeCreateNestedOneWithoutProfileChallengesInput
@@ -593,7 +599,7 @@ export type ProfileChallengeUncheckedCreateWithoutProfileInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   currentDay?: number
-  lastActivityAt?: Date | string
+  missedDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   taskCompletions?: Prisma.TaskCompletionUncheckedCreateNestedManyWithoutProfileChallengeInput
@@ -635,7 +641,7 @@ export type ProfileChallengeScalarWhereInput = {
   startedAt?: Prisma.DateTimeFilter<"ProfileChallenge"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"ProfileChallenge"> | Date | string | null
   currentDay?: Prisma.IntFilter<"ProfileChallenge"> | number
-  lastActivityAt?: Prisma.DateTimeFilter<"ProfileChallenge"> | Date | string
+  missedDays?: Prisma.IntFilter<"ProfileChallenge"> | number
   createdAt?: Prisma.DateTimeFilter<"ProfileChallenge"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProfileChallenge"> | Date | string
 }
@@ -645,7 +651,7 @@ export type ProfileChallengeCreateWithoutChallengeInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   currentDay?: number
-  lastActivityAt?: Date | string
+  missedDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   profile: Prisma.ProfileCreateNestedOneWithoutProfileChallengesInput
@@ -658,7 +664,7 @@ export type ProfileChallengeUncheckedCreateWithoutChallengeInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   currentDay?: number
-  lastActivityAt?: Date | string
+  missedDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   taskCompletions?: Prisma.TaskCompletionUncheckedCreateNestedManyWithoutProfileChallengeInput
@@ -695,7 +701,7 @@ export type ProfileChallengeCreateWithoutTaskCompletionsInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   currentDay?: number
-  lastActivityAt?: Date | string
+  missedDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   profile: Prisma.ProfileCreateNestedOneWithoutProfileChallengesInput
@@ -709,7 +715,7 @@ export type ProfileChallengeUncheckedCreateWithoutTaskCompletionsInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   currentDay?: number
-  lastActivityAt?: Date | string
+  missedDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -735,7 +741,7 @@ export type ProfileChallengeUpdateWithoutTaskCompletionsInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentDay?: Prisma.IntFieldUpdateOperationsInput | number
-  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  missedDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profile?: Prisma.ProfileUpdateOneRequiredWithoutProfileChallengesNestedInput
@@ -749,7 +755,7 @@ export type ProfileChallengeUncheckedUpdateWithoutTaskCompletionsInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentDay?: Prisma.IntFieldUpdateOperationsInput | number
-  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  missedDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -760,7 +766,7 @@ export type ProfileChallengeCreateManyProfileInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   currentDay?: number
-  lastActivityAt?: Date | string
+  missedDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -770,7 +776,7 @@ export type ProfileChallengeUpdateWithoutProfileInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentDay?: Prisma.IntFieldUpdateOperationsInput | number
-  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  missedDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   challenge?: Prisma.ChallengeUpdateOneRequiredWithoutProfileChallengesNestedInput
@@ -783,7 +789,7 @@ export type ProfileChallengeUncheckedUpdateWithoutProfileInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentDay?: Prisma.IntFieldUpdateOperationsInput | number
-  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  missedDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   taskCompletions?: Prisma.TaskCompletionUncheckedUpdateManyWithoutProfileChallengeNestedInput
@@ -795,7 +801,7 @@ export type ProfileChallengeUncheckedUpdateManyWithoutProfileInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentDay?: Prisma.IntFieldUpdateOperationsInput | number
-  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  missedDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -806,7 +812,7 @@ export type ProfileChallengeCreateManyChallengeInput = {
   startedAt?: Date | string
   completedAt?: Date | string | null
   currentDay?: number
-  lastActivityAt?: Date | string
+  missedDays?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -816,7 +822,7 @@ export type ProfileChallengeUpdateWithoutChallengeInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentDay?: Prisma.IntFieldUpdateOperationsInput | number
-  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  missedDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profile?: Prisma.ProfileUpdateOneRequiredWithoutProfileChallengesNestedInput
@@ -829,7 +835,7 @@ export type ProfileChallengeUncheckedUpdateWithoutChallengeInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentDay?: Prisma.IntFieldUpdateOperationsInput | number
-  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  missedDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   taskCompletions?: Prisma.TaskCompletionUncheckedUpdateManyWithoutProfileChallengeNestedInput
@@ -841,7 +847,7 @@ export type ProfileChallengeUncheckedUpdateManyWithoutChallengeInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   currentDay?: Prisma.IntFieldUpdateOperationsInput | number
-  lastActivityAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  missedDays?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -884,7 +890,7 @@ export type ProfileChallengeSelect<ExtArgs extends runtime.Types.Extensions.Inte
   startedAt?: boolean
   completedAt?: boolean
   currentDay?: boolean
-  lastActivityAt?: boolean
+  missedDays?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   profile?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
@@ -900,7 +906,7 @@ export type ProfileChallengeSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   startedAt?: boolean
   completedAt?: boolean
   currentDay?: boolean
-  lastActivityAt?: boolean
+  missedDays?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   profile?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
@@ -914,7 +920,7 @@ export type ProfileChallengeSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   startedAt?: boolean
   completedAt?: boolean
   currentDay?: boolean
-  lastActivityAt?: boolean
+  missedDays?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   profile?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
@@ -928,12 +934,12 @@ export type ProfileChallengeSelectScalar = {
   startedAt?: boolean
   completedAt?: boolean
   currentDay?: boolean
-  lastActivityAt?: boolean
+  missedDays?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProfileChallengeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"profileId" | "challengeId" | "status" | "startedAt" | "completedAt" | "currentDay" | "lastActivityAt" | "createdAt" | "updatedAt", ExtArgs["result"]["profileChallenge"]>
+export type ProfileChallengeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"profileId" | "challengeId" | "status" | "startedAt" | "completedAt" | "currentDay" | "missedDays" | "createdAt" | "updatedAt", ExtArgs["result"]["profileChallenge"]>
 export type ProfileChallengeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   profile?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
   challenge?: boolean | Prisma.ChallengeDefaultArgs<ExtArgs>
@@ -963,7 +969,7 @@ export type $ProfileChallengePayload<ExtArgs extends runtime.Types.Extensions.In
     startedAt: Date
     completedAt: Date | null
     currentDay: number
-    lastActivityAt: Date
+    missedDays: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["profileChallenge"]>
@@ -1398,7 +1404,7 @@ export interface ProfileChallengeFieldRefs {
   readonly startedAt: Prisma.FieldRef<"ProfileChallenge", 'DateTime'>
   readonly completedAt: Prisma.FieldRef<"ProfileChallenge", 'DateTime'>
   readonly currentDay: Prisma.FieldRef<"ProfileChallenge", 'Int'>
-  readonly lastActivityAt: Prisma.FieldRef<"ProfileChallenge", 'DateTime'>
+  readonly missedDays: Prisma.FieldRef<"ProfileChallenge", 'Int'>
   readonly createdAt: Prisma.FieldRef<"ProfileChallenge", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ProfileChallenge", 'DateTime'>
 }

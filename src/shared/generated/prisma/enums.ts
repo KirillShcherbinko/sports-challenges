@@ -27,7 +27,7 @@ export const ChallengeDifficulty = {
 export type ChallengeDifficulty = (typeof ChallengeDifficulty)[keyof typeof ChallengeDifficulty]
 
 
-export const ChallengeCategory = {
+export const FitnessCategory = {
   Strength: 'Strength',
   Cardio: 'Cardio',
   Flexibility: 'Flexibility',
@@ -56,13 +56,13 @@ export const ChallengeCategory = {
   MartialArts: 'MartialArts'
 } as const
 
-export type ChallengeCategory = (typeof ChallengeCategory)[keyof typeof ChallengeCategory]
+export type FitnessCategory = (typeof FitnessCategory)[keyof typeof FitnessCategory]
 
 
 export const ProfileChallengeStatus = {
-  active: 'active',
-  completed: 'completed',
-  abandoned: 'abandoned'
+  Active: 'Active',
+  Completed: 'Completed',
+  Failed: 'Failed'
 } as const
 
 export type ProfileChallengeStatus = (typeof ProfileChallengeStatus)[keyof typeof ProfileChallengeStatus]

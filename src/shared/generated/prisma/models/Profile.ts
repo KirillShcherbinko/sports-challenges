@@ -221,7 +221,7 @@ export type ProfileGroupByOutputType = {
   avatarUrl: string | null
   avatarPath: string | null
   fitnessLevel: $Enums.FitnessLevel
-  preferences: string[]
+  preferences: $Enums.FitnessCategory[]
   bio: string | null
   streakCount: number
   totalCompletedTasks: number
@@ -258,7 +258,7 @@ export type ProfileWhereInput = {
   avatarUrl?: Prisma.StringNullableFilter<"Profile"> | string | null
   avatarPath?: Prisma.StringNullableFilter<"Profile"> | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFilter<"Profile"> | $Enums.FitnessLevel
-  preferences?: Prisma.StringNullableListFilter<"Profile">
+  preferences?: Prisma.EnumFitnessCategoryNullableListFilter<"Profile">
   bio?: Prisma.StringNullableFilter<"Profile"> | string | null
   streakCount?: Prisma.IntFilter<"Profile"> | number
   totalCompletedTasks?: Prisma.IntFilter<"Profile"> | number
@@ -299,7 +299,7 @@ export type ProfileWhereUniqueInput = Prisma.AtLeast<{
   avatarUrl?: Prisma.StringNullableFilter<"Profile"> | string | null
   avatarPath?: Prisma.StringNullableFilter<"Profile"> | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFilter<"Profile"> | $Enums.FitnessLevel
-  preferences?: Prisma.StringNullableListFilter<"Profile">
+  preferences?: Prisma.EnumFitnessCategoryNullableListFilter<"Profile">
   bio?: Prisma.StringNullableFilter<"Profile"> | string | null
   streakCount?: Prisma.IntFilter<"Profile"> | number
   totalCompletedTasks?: Prisma.IntFilter<"Profile"> | number
@@ -340,7 +340,7 @@ export type ProfileScalarWhereWithAggregatesInput = {
   avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
   avatarPath?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelWithAggregatesFilter<"Profile"> | $Enums.FitnessLevel
-  preferences?: Prisma.StringNullableListFilter<"Profile">
+  preferences?: Prisma.EnumFitnessCategoryNullableListFilter<"Profile">
   bio?: Prisma.StringNullableWithAggregatesFilter<"Profile"> | string | null
   streakCount?: Prisma.IntWithAggregatesFilter<"Profile"> | number
   totalCompletedTasks?: Prisma.IntWithAggregatesFilter<"Profile"> | number
@@ -354,7 +354,7 @@ export type ProfileCreateInput = {
   avatarUrl?: string | null
   avatarPath?: string | null
   fitnessLevel?: $Enums.FitnessLevel
-  preferences?: Prisma.ProfileCreatepreferencesInput | string[]
+  preferences?: Prisma.ProfileCreatepreferencesInput | $Enums.FitnessCategory[]
   bio?: string | null
   streakCount?: number
   totalCompletedTasks?: number
@@ -373,7 +373,7 @@ export type ProfileUncheckedCreateInput = {
   avatarUrl?: string | null
   avatarPath?: string | null
   fitnessLevel?: $Enums.FitnessLevel
-  preferences?: Prisma.ProfileCreatepreferencesInput | string[]
+  preferences?: Prisma.ProfileCreatepreferencesInput | $Enums.FitnessCategory[]
   bio?: string | null
   streakCount?: number
   totalCompletedTasks?: number
@@ -392,7 +392,7 @@ export type ProfileUpdateInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel
-  preferences?: Prisma.ProfileUpdatepreferencesInput | string[]
+  preferences?: Prisma.ProfileUpdatepreferencesInput | $Enums.FitnessCategory[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streakCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
@@ -411,7 +411,7 @@ export type ProfileUncheckedUpdateInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel
-  preferences?: Prisma.ProfileUpdatepreferencesInput | string[]
+  preferences?: Prisma.ProfileUpdatepreferencesInput | $Enums.FitnessCategory[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streakCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
@@ -430,7 +430,7 @@ export type ProfileCreateManyInput = {
   avatarUrl?: string | null
   avatarPath?: string | null
   fitnessLevel?: $Enums.FitnessLevel
-  preferences?: Prisma.ProfileCreatepreferencesInput | string[]
+  preferences?: Prisma.ProfileCreatepreferencesInput | $Enums.FitnessCategory[]
   bio?: string | null
   streakCount?: number
   totalCompletedTasks?: number
@@ -444,7 +444,7 @@ export type ProfileUpdateManyMutationInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel
-  preferences?: Prisma.ProfileUpdatepreferencesInput | string[]
+  preferences?: Prisma.ProfileUpdatepreferencesInput | $Enums.FitnessCategory[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streakCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
@@ -458,7 +458,7 @@ export type ProfileUncheckedUpdateManyInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel
-  preferences?: Prisma.ProfileUpdatepreferencesInput | string[]
+  preferences?: Prisma.ProfileUpdatepreferencesInput | $Enums.FitnessCategory[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streakCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
@@ -466,11 +466,11 @@ export type ProfileUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type StringNullableListFilter<$PrismaModel = never> = {
-  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
-  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
-  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+export type EnumFitnessCategoryNullableListFilter<$PrismaModel = never> = {
+  equals?: $Enums.FitnessCategory[] | Prisma.ListEnumFitnessCategoryFieldRefInput<$PrismaModel> | null
+  has?: $Enums.FitnessCategory | Prisma.EnumFitnessCategoryFieldRefInput<$PrismaModel> | null
+  hasEvery?: $Enums.FitnessCategory[] | Prisma.ListEnumFitnessCategoryFieldRefInput<$PrismaModel>
+  hasSome?: $Enums.FitnessCategory[] | Prisma.ListEnumFitnessCategoryFieldRefInput<$PrismaModel>
   isEmpty?: boolean
 }
 
@@ -530,7 +530,7 @@ export type ProfileScalarRelationFilter = {
 }
 
 export type ProfileCreatepreferencesInput = {
-  set: string[]
+  set: $Enums.FitnessCategory[]
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -546,8 +546,8 @@ export type EnumFitnessLevelFieldUpdateOperationsInput = {
 }
 
 export type ProfileUpdatepreferencesInput = {
-  set?: string[]
-  push?: string | string[]
+  set?: $Enums.FitnessCategory[]
+  push?: $Enums.FitnessCategory | $Enums.FitnessCategory[]
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -638,7 +638,7 @@ export type ProfileCreateWithoutChallengesInput = {
   avatarUrl?: string | null
   avatarPath?: string | null
   fitnessLevel?: $Enums.FitnessLevel
-  preferences?: Prisma.ProfileCreatepreferencesInput | string[]
+  preferences?: Prisma.ProfileCreatepreferencesInput | $Enums.FitnessCategory[]
   bio?: string | null
   streakCount?: number
   totalCompletedTasks?: number
@@ -656,7 +656,7 @@ export type ProfileUncheckedCreateWithoutChallengesInput = {
   avatarUrl?: string | null
   avatarPath?: string | null
   fitnessLevel?: $Enums.FitnessLevel
-  preferences?: Prisma.ProfileCreatepreferencesInput | string[]
+  preferences?: Prisma.ProfileCreatepreferencesInput | $Enums.FitnessCategory[]
   bio?: string | null
   streakCount?: number
   totalCompletedTasks?: number
@@ -690,7 +690,7 @@ export type ProfileUpdateWithoutChallengesInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel
-  preferences?: Prisma.ProfileUpdatepreferencesInput | string[]
+  preferences?: Prisma.ProfileUpdatepreferencesInput | $Enums.FitnessCategory[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streakCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
@@ -708,7 +708,7 @@ export type ProfileUncheckedUpdateWithoutChallengesInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel
-  preferences?: Prisma.ProfileUpdatepreferencesInput | string[]
+  preferences?: Prisma.ProfileUpdatepreferencesInput | $Enums.FitnessCategory[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streakCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
@@ -726,7 +726,7 @@ export type ProfileCreateWithoutProfileChallengesInput = {
   avatarUrl?: string | null
   avatarPath?: string | null
   fitnessLevel?: $Enums.FitnessLevel
-  preferences?: Prisma.ProfileCreatepreferencesInput | string[]
+  preferences?: Prisma.ProfileCreatepreferencesInput | $Enums.FitnessCategory[]
   bio?: string | null
   streakCount?: number
   totalCompletedTasks?: number
@@ -744,7 +744,7 @@ export type ProfileUncheckedCreateWithoutProfileChallengesInput = {
   avatarUrl?: string | null
   avatarPath?: string | null
   fitnessLevel?: $Enums.FitnessLevel
-  preferences?: Prisma.ProfileCreatepreferencesInput | string[]
+  preferences?: Prisma.ProfileCreatepreferencesInput | $Enums.FitnessCategory[]
   bio?: string | null
   streakCount?: number
   totalCompletedTasks?: number
@@ -778,7 +778,7 @@ export type ProfileUpdateWithoutProfileChallengesInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel
-  preferences?: Prisma.ProfileUpdatepreferencesInput | string[]
+  preferences?: Prisma.ProfileUpdatepreferencesInput | $Enums.FitnessCategory[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streakCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
@@ -796,7 +796,7 @@ export type ProfileUncheckedUpdateWithoutProfileChallengesInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel
-  preferences?: Prisma.ProfileUpdatepreferencesInput | string[]
+  preferences?: Prisma.ProfileUpdatepreferencesInput | $Enums.FitnessCategory[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streakCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
@@ -814,7 +814,7 @@ export type ProfileCreateWithoutChallengeLikesInput = {
   avatarUrl?: string | null
   avatarPath?: string | null
   fitnessLevel?: $Enums.FitnessLevel
-  preferences?: Prisma.ProfileCreatepreferencesInput | string[]
+  preferences?: Prisma.ProfileCreatepreferencesInput | $Enums.FitnessCategory[]
   bio?: string | null
   streakCount?: number
   totalCompletedTasks?: number
@@ -832,7 +832,7 @@ export type ProfileUncheckedCreateWithoutChallengeLikesInput = {
   avatarUrl?: string | null
   avatarPath?: string | null
   fitnessLevel?: $Enums.FitnessLevel
-  preferences?: Prisma.ProfileCreatepreferencesInput | string[]
+  preferences?: Prisma.ProfileCreatepreferencesInput | $Enums.FitnessCategory[]
   bio?: string | null
   streakCount?: number
   totalCompletedTasks?: number
@@ -866,7 +866,7 @@ export type ProfileUpdateWithoutChallengeLikesInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel
-  preferences?: Prisma.ProfileUpdatepreferencesInput | string[]
+  preferences?: Prisma.ProfileUpdatepreferencesInput | $Enums.FitnessCategory[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streakCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
@@ -884,7 +884,7 @@ export type ProfileUncheckedUpdateWithoutChallengeLikesInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel
-  preferences?: Prisma.ProfileUpdatepreferencesInput | string[]
+  preferences?: Prisma.ProfileUpdatepreferencesInput | $Enums.FitnessCategory[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streakCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
@@ -902,7 +902,7 @@ export type ProfileCreateWithoutChallengeCommentsInput = {
   avatarUrl?: string | null
   avatarPath?: string | null
   fitnessLevel?: $Enums.FitnessLevel
-  preferences?: Prisma.ProfileCreatepreferencesInput | string[]
+  preferences?: Prisma.ProfileCreatepreferencesInput | $Enums.FitnessCategory[]
   bio?: string | null
   streakCount?: number
   totalCompletedTasks?: number
@@ -920,7 +920,7 @@ export type ProfileUncheckedCreateWithoutChallengeCommentsInput = {
   avatarUrl?: string | null
   avatarPath?: string | null
   fitnessLevel?: $Enums.FitnessLevel
-  preferences?: Prisma.ProfileCreatepreferencesInput | string[]
+  preferences?: Prisma.ProfileCreatepreferencesInput | $Enums.FitnessCategory[]
   bio?: string | null
   streakCount?: number
   totalCompletedTasks?: number
@@ -954,7 +954,7 @@ export type ProfileUpdateWithoutChallengeCommentsInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel
-  preferences?: Prisma.ProfileUpdatepreferencesInput | string[]
+  preferences?: Prisma.ProfileUpdatepreferencesInput | $Enums.FitnessCategory[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streakCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
@@ -972,7 +972,7 @@ export type ProfileUncheckedUpdateWithoutChallengeCommentsInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel
-  preferences?: Prisma.ProfileUpdatepreferencesInput | string[]
+  preferences?: Prisma.ProfileUpdatepreferencesInput | $Enums.FitnessCategory[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streakCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
@@ -990,7 +990,7 @@ export type ProfileCreateWithoutAchievementsInput = {
   avatarUrl?: string | null
   avatarPath?: string | null
   fitnessLevel?: $Enums.FitnessLevel
-  preferences?: Prisma.ProfileCreatepreferencesInput | string[]
+  preferences?: Prisma.ProfileCreatepreferencesInput | $Enums.FitnessCategory[]
   bio?: string | null
   streakCount?: number
   totalCompletedTasks?: number
@@ -1008,7 +1008,7 @@ export type ProfileUncheckedCreateWithoutAchievementsInput = {
   avatarUrl?: string | null
   avatarPath?: string | null
   fitnessLevel?: $Enums.FitnessLevel
-  preferences?: Prisma.ProfileCreatepreferencesInput | string[]
+  preferences?: Prisma.ProfileCreatepreferencesInput | $Enums.FitnessCategory[]
   bio?: string | null
   streakCount?: number
   totalCompletedTasks?: number
@@ -1042,7 +1042,7 @@ export type ProfileUpdateWithoutAchievementsInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel
-  preferences?: Prisma.ProfileUpdatepreferencesInput | string[]
+  preferences?: Prisma.ProfileUpdatepreferencesInput | $Enums.FitnessCategory[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streakCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1060,7 +1060,7 @@ export type ProfileUncheckedUpdateWithoutAchievementsInput = {
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fitnessLevel?: Prisma.EnumFitnessLevelFieldUpdateOperationsInput | $Enums.FitnessLevel
-  preferences?: Prisma.ProfileUpdatepreferencesInput | string[]
+  preferences?: Prisma.ProfileUpdatepreferencesInput | $Enums.FitnessCategory[]
   bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   streakCount?: Prisma.IntFieldUpdateOperationsInput | number
   totalCompletedTasks?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1228,7 +1228,7 @@ export type $ProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     avatarUrl: string | null
     avatarPath: string | null
     fitnessLevel: $Enums.FitnessLevel
-    preferences: string[]
+    preferences: $Enums.FitnessCategory[]
     bio: string | null
     streakCount: number
     totalCompletedTasks: number
@@ -1667,7 +1667,7 @@ export interface ProfileFieldRefs {
   readonly avatarUrl: Prisma.FieldRef<"Profile", 'String'>
   readonly avatarPath: Prisma.FieldRef<"Profile", 'String'>
   readonly fitnessLevel: Prisma.FieldRef<"Profile", 'FitnessLevel'>
-  readonly preferences: Prisma.FieldRef<"Profile", 'String[]'>
+  readonly preferences: Prisma.FieldRef<"Profile", 'FitnessCategory[]'>
   readonly bio: Prisma.FieldRef<"Profile", 'String'>
   readonly streakCount: Prisma.FieldRef<"Profile", 'Int'>
   readonly totalCompletedTasks: Prisma.FieldRef<"Profile", 'Int'>

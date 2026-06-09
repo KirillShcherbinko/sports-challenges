@@ -1143,6 +1143,7 @@ export const ChallengeScalarFieldEnum = {
   category: 'category',
   difficulty: 'difficulty',
   durationDays: 'durationDays',
+  livesCount: 'livesCount',
   isPublished: 'isPublished',
   likesCount: 'likesCount',
   participantsCount: 'participantsCount',
@@ -1160,7 +1161,6 @@ export const DailyTaskScalarFieldEnum = {
   title: 'title',
   description: 'description',
   exerciseType: 'exerciseType',
-  targetValue: 'targetValue',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1175,7 +1175,7 @@ export const ProfileChallengeScalarFieldEnum = {
   startedAt: 'startedAt',
   completedAt: 'completedAt',
   currentDay: 'currentDay',
-  lastActivityAt: 'lastActivityAt',
+  missedDays: 'missedDays',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1294,6 +1294,20 @@ export type ListEnumFitnessLevelFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
+ * Reference to a field of type 'FitnessCategory[]'
+ */
+export type ListEnumFitnessCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FitnessCategory[]'>
+    
+
+
+/**
+ * Reference to a field of type 'FitnessCategory'
+ */
+export type EnumFitnessCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FitnessCategory'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1318,20 +1332,6 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-/**
- * Reference to a field of type 'ChallengeCategory'
- */
-export type EnumChallengeCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChallengeCategory'>
-    
-
-
-/**
- * Reference to a field of type 'ChallengeCategory[]'
- */
-export type ListEnumChallengeCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChallengeCategory[]'>
     
 
 

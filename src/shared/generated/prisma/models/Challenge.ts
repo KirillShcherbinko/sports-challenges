@@ -28,12 +28,14 @@ export type AggregateChallenge = {
 
 export type ChallengeAvgAggregateOutputType = {
   durationDays: number | null
+  livesCount: number | null
   likesCount: number | null
   participantsCount: number | null
 }
 
 export type ChallengeSumAggregateOutputType = {
   durationDays: number | null
+  livesCount: number | null
   likesCount: number | null
   participantsCount: number | null
 }
@@ -44,9 +46,10 @@ export type ChallengeMinAggregateOutputType = {
   title: string | null
   description: string | null
   coverImageUrl: string | null
-  category: $Enums.ChallengeCategory | null
+  category: $Enums.FitnessCategory | null
   difficulty: $Enums.ChallengeDifficulty | null
   durationDays: number | null
+  livesCount: number | null
   isPublished: boolean | null
   likesCount: number | null
   participantsCount: number | null
@@ -60,9 +63,10 @@ export type ChallengeMaxAggregateOutputType = {
   title: string | null
   description: string | null
   coverImageUrl: string | null
-  category: $Enums.ChallengeCategory | null
+  category: $Enums.FitnessCategory | null
   difficulty: $Enums.ChallengeDifficulty | null
   durationDays: number | null
+  livesCount: number | null
   isPublished: boolean | null
   likesCount: number | null
   participantsCount: number | null
@@ -79,6 +83,7 @@ export type ChallengeCountAggregateOutputType = {
   category: number
   difficulty: number
   durationDays: number
+  livesCount: number
   isPublished: number
   likesCount: number
   participantsCount: number
@@ -90,12 +95,14 @@ export type ChallengeCountAggregateOutputType = {
 
 export type ChallengeAvgAggregateInputType = {
   durationDays?: true
+  livesCount?: true
   likesCount?: true
   participantsCount?: true
 }
 
 export type ChallengeSumAggregateInputType = {
   durationDays?: true
+  livesCount?: true
   likesCount?: true
   participantsCount?: true
 }
@@ -109,6 +116,7 @@ export type ChallengeMinAggregateInputType = {
   category?: true
   difficulty?: true
   durationDays?: true
+  livesCount?: true
   isPublished?: true
   likesCount?: true
   participantsCount?: true
@@ -125,6 +133,7 @@ export type ChallengeMaxAggregateInputType = {
   category?: true
   difficulty?: true
   durationDays?: true
+  livesCount?: true
   isPublished?: true
   likesCount?: true
   participantsCount?: true
@@ -141,6 +150,7 @@ export type ChallengeCountAggregateInputType = {
   category?: true
   difficulty?: true
   durationDays?: true
+  livesCount?: true
   isPublished?: true
   likesCount?: true
   participantsCount?: true
@@ -241,9 +251,10 @@ export type ChallengeGroupByOutputType = {
   title: string
   description: string
   coverImageUrl: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished: boolean
   likesCount: number
   participantsCount: number
@@ -280,9 +291,10 @@ export type ChallengeWhereInput = {
   title?: Prisma.StringFilter<"Challenge"> | string
   description?: Prisma.StringFilter<"Challenge"> | string
   coverImageUrl?: Prisma.StringNullableFilter<"Challenge"> | string | null
-  category?: Prisma.EnumChallengeCategoryFilter<"Challenge"> | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFilter<"Challenge"> | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFilter<"Challenge"> | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFilter<"Challenge"> | number
+  livesCount?: Prisma.IntFilter<"Challenge"> | number
   isPublished?: Prisma.BoolFilter<"Challenge"> | boolean
   likesCount?: Prisma.IntFilter<"Challenge"> | number
   participantsCount?: Prisma.IntFilter<"Challenge"> | number
@@ -304,6 +316,7 @@ export type ChallengeOrderByWithRelationInput = {
   category?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
   durationDays?: Prisma.SortOrder
+  livesCount?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   likesCount?: Prisma.SortOrder
   participantsCount?: Prisma.SortOrder
@@ -325,9 +338,10 @@ export type ChallengeWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringFilter<"Challenge"> | string
   description?: Prisma.StringFilter<"Challenge"> | string
   coverImageUrl?: Prisma.StringNullableFilter<"Challenge"> | string | null
-  category?: Prisma.EnumChallengeCategoryFilter<"Challenge"> | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFilter<"Challenge"> | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFilter<"Challenge"> | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFilter<"Challenge"> | number
+  livesCount?: Prisma.IntFilter<"Challenge"> | number
   isPublished?: Prisma.BoolFilter<"Challenge"> | boolean
   likesCount?: Prisma.IntFilter<"Challenge"> | number
   participantsCount?: Prisma.IntFilter<"Challenge"> | number
@@ -349,6 +363,7 @@ export type ChallengeOrderByWithAggregationInput = {
   category?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
   durationDays?: Prisma.SortOrder
+  livesCount?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   likesCount?: Prisma.SortOrder
   participantsCount?: Prisma.SortOrder
@@ -370,9 +385,10 @@ export type ChallengeScalarWhereWithAggregatesInput = {
   title?: Prisma.StringWithAggregatesFilter<"Challenge"> | string
   description?: Prisma.StringWithAggregatesFilter<"Challenge"> | string
   coverImageUrl?: Prisma.StringNullableWithAggregatesFilter<"Challenge"> | string | null
-  category?: Prisma.EnumChallengeCategoryWithAggregatesFilter<"Challenge"> | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryWithAggregatesFilter<"Challenge"> | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyWithAggregatesFilter<"Challenge"> | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntWithAggregatesFilter<"Challenge"> | number
+  livesCount?: Prisma.IntWithAggregatesFilter<"Challenge"> | number
   isPublished?: Prisma.BoolWithAggregatesFilter<"Challenge"> | boolean
   likesCount?: Prisma.IntWithAggregatesFilter<"Challenge"> | number
   participantsCount?: Prisma.IntWithAggregatesFilter<"Challenge"> | number
@@ -385,9 +401,10 @@ export type ChallengeCreateInput = {
   title: string
   description: string
   coverImageUrl?: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished?: boolean
   likesCount?: number
   participantsCount?: number
@@ -406,9 +423,10 @@ export type ChallengeUncheckedCreateInput = {
   title: string
   description: string
   coverImageUrl?: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished?: boolean
   likesCount?: number
   participantsCount?: number
@@ -425,9 +443,10 @@ export type ChallengeUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -446,9 +465,10 @@ export type ChallengeUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -466,9 +486,10 @@ export type ChallengeCreateManyInput = {
   title: string
   description: string
   coverImageUrl?: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished?: boolean
   likesCount?: number
   participantsCount?: number
@@ -481,9 +502,10 @@ export type ChallengeUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -497,9 +519,10 @@ export type ChallengeUncheckedUpdateManyInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -526,6 +549,7 @@ export type ChallengeCountOrderByAggregateInput = {
   category?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
   durationDays?: Prisma.SortOrder
+  livesCount?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   likesCount?: Prisma.SortOrder
   participantsCount?: Prisma.SortOrder
@@ -535,6 +559,7 @@ export type ChallengeCountOrderByAggregateInput = {
 
 export type ChallengeAvgOrderByAggregateInput = {
   durationDays?: Prisma.SortOrder
+  livesCount?: Prisma.SortOrder
   likesCount?: Prisma.SortOrder
   participantsCount?: Prisma.SortOrder
 }
@@ -548,6 +573,7 @@ export type ChallengeMaxOrderByAggregateInput = {
   category?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
   durationDays?: Prisma.SortOrder
+  livesCount?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   likesCount?: Prisma.SortOrder
   participantsCount?: Prisma.SortOrder
@@ -564,6 +590,7 @@ export type ChallengeMinOrderByAggregateInput = {
   category?: Prisma.SortOrder
   difficulty?: Prisma.SortOrder
   durationDays?: Prisma.SortOrder
+  livesCount?: Prisma.SortOrder
   isPublished?: Prisma.SortOrder
   likesCount?: Prisma.SortOrder
   participantsCount?: Prisma.SortOrder
@@ -573,6 +600,7 @@ export type ChallengeMinOrderByAggregateInput = {
 
 export type ChallengeSumOrderByAggregateInput = {
   durationDays?: Prisma.SortOrder
+  livesCount?: Prisma.SortOrder
   likesCount?: Prisma.SortOrder
   participantsCount?: Prisma.SortOrder
 }
@@ -624,8 +652,8 @@ export type ChallengeUncheckedUpdateManyWithoutCreatorNestedInput = {
   deleteMany?: Prisma.ChallengeScalarWhereInput | Prisma.ChallengeScalarWhereInput[]
 }
 
-export type EnumChallengeCategoryFieldUpdateOperationsInput = {
-  set?: $Enums.ChallengeCategory
+export type EnumFitnessCategoryFieldUpdateOperationsInput = {
+  set?: $Enums.FitnessCategory
 }
 
 export type EnumChallengeDifficultyFieldUpdateOperationsInput = {
@@ -697,9 +725,10 @@ export type ChallengeCreateWithoutCreatorInput = {
   title: string
   description: string
   coverImageUrl?: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished?: boolean
   likesCount?: number
   participantsCount?: number
@@ -716,9 +745,10 @@ export type ChallengeUncheckedCreateWithoutCreatorInput = {
   title: string
   description: string
   coverImageUrl?: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished?: boolean
   likesCount?: number
   participantsCount?: number
@@ -765,9 +795,10 @@ export type ChallengeScalarWhereInput = {
   title?: Prisma.StringFilter<"Challenge"> | string
   description?: Prisma.StringFilter<"Challenge"> | string
   coverImageUrl?: Prisma.StringNullableFilter<"Challenge"> | string | null
-  category?: Prisma.EnumChallengeCategoryFilter<"Challenge"> | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFilter<"Challenge"> | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFilter<"Challenge"> | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFilter<"Challenge"> | number
+  livesCount?: Prisma.IntFilter<"Challenge"> | number
   isPublished?: Prisma.BoolFilter<"Challenge"> | boolean
   likesCount?: Prisma.IntFilter<"Challenge"> | number
   participantsCount?: Prisma.IntFilter<"Challenge"> | number
@@ -780,9 +811,10 @@ export type ChallengeCreateWithoutDailyTasksInput = {
   title: string
   description: string
   coverImageUrl?: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished?: boolean
   likesCount?: number
   participantsCount?: number
@@ -800,9 +832,10 @@ export type ChallengeUncheckedCreateWithoutDailyTasksInput = {
   title: string
   description: string
   coverImageUrl?: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished?: boolean
   likesCount?: number
   participantsCount?: number
@@ -834,9 +867,10 @@ export type ChallengeUpdateWithoutDailyTasksInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -854,9 +888,10 @@ export type ChallengeUncheckedUpdateWithoutDailyTasksInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -872,9 +907,10 @@ export type ChallengeCreateWithoutProfileChallengesInput = {
   title: string
   description: string
   coverImageUrl?: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished?: boolean
   likesCount?: number
   participantsCount?: number
@@ -892,9 +928,10 @@ export type ChallengeUncheckedCreateWithoutProfileChallengesInput = {
   title: string
   description: string
   coverImageUrl?: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished?: boolean
   likesCount?: number
   participantsCount?: number
@@ -926,9 +963,10 @@ export type ChallengeUpdateWithoutProfileChallengesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -946,9 +984,10 @@ export type ChallengeUncheckedUpdateWithoutProfileChallengesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -964,9 +1003,10 @@ export type ChallengeCreateWithoutLikesInput = {
   title: string
   description: string
   coverImageUrl?: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished?: boolean
   likesCount?: number
   participantsCount?: number
@@ -984,9 +1024,10 @@ export type ChallengeUncheckedCreateWithoutLikesInput = {
   title: string
   description: string
   coverImageUrl?: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished?: boolean
   likesCount?: number
   participantsCount?: number
@@ -1018,9 +1059,10 @@ export type ChallengeUpdateWithoutLikesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1038,9 +1080,10 @@ export type ChallengeUncheckedUpdateWithoutLikesInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1056,9 +1099,10 @@ export type ChallengeCreateWithoutCommentsInput = {
   title: string
   description: string
   coverImageUrl?: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished?: boolean
   likesCount?: number
   participantsCount?: number
@@ -1076,9 +1120,10 @@ export type ChallengeUncheckedCreateWithoutCommentsInput = {
   title: string
   description: string
   coverImageUrl?: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished?: boolean
   likesCount?: number
   participantsCount?: number
@@ -1110,9 +1155,10 @@ export type ChallengeUpdateWithoutCommentsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1130,9 +1176,10 @@ export type ChallengeUncheckedUpdateWithoutCommentsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1148,9 +1195,10 @@ export type ChallengeCreateManyCreatorInput = {
   title: string
   description: string
   coverImageUrl?: string | null
-  category: $Enums.ChallengeCategory
+  category: $Enums.FitnessCategory
   difficulty: $Enums.ChallengeDifficulty
   durationDays: number
+  livesCount: number
   isPublished?: boolean
   likesCount?: number
   participantsCount?: number
@@ -1163,9 +1211,10 @@ export type ChallengeUpdateWithoutCreatorInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1182,9 +1231,10 @@ export type ChallengeUncheckedUpdateWithoutCreatorInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1201,9 +1251,10 @@ export type ChallengeUncheckedUpdateManyWithoutCreatorInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  category?: Prisma.EnumChallengeCategoryFieldUpdateOperationsInput | $Enums.ChallengeCategory
+  category?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   difficulty?: Prisma.EnumChallengeDifficultyFieldUpdateOperationsInput | $Enums.ChallengeDifficulty
   durationDays?: Prisma.IntFieldUpdateOperationsInput | number
+  livesCount?: Prisma.IntFieldUpdateOperationsInput | number
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   likesCount?: Prisma.IntFieldUpdateOperationsInput | number
   participantsCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1278,6 +1329,7 @@ export type ChallengeSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   category?: boolean
   difficulty?: boolean
   durationDays?: boolean
+  livesCount?: boolean
   isPublished?: boolean
   likesCount?: boolean
   participantsCount?: boolean
@@ -1300,6 +1352,7 @@ export type ChallengeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   category?: boolean
   difficulty?: boolean
   durationDays?: boolean
+  livesCount?: boolean
   isPublished?: boolean
   likesCount?: boolean
   participantsCount?: boolean
@@ -1317,6 +1370,7 @@ export type ChallengeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   category?: boolean
   difficulty?: boolean
   durationDays?: boolean
+  livesCount?: boolean
   isPublished?: boolean
   likesCount?: boolean
   participantsCount?: boolean
@@ -1334,6 +1388,7 @@ export type ChallengeSelectScalar = {
   category?: boolean
   difficulty?: boolean
   durationDays?: boolean
+  livesCount?: boolean
   isPublished?: boolean
   likesCount?: boolean
   participantsCount?: boolean
@@ -1341,7 +1396,7 @@ export type ChallengeSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ChallengeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "creatorId" | "title" | "description" | "coverImageUrl" | "category" | "difficulty" | "durationDays" | "isPublished" | "likesCount" | "participantsCount" | "createdAt" | "updatedAt", ExtArgs["result"]["challenge"]>
+export type ChallengeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "creatorId" | "title" | "description" | "coverImageUrl" | "category" | "difficulty" | "durationDays" | "livesCount" | "isPublished" | "likesCount" | "participantsCount" | "createdAt" | "updatedAt", ExtArgs["result"]["challenge"]>
 export type ChallengeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   creator?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
   dailyTasks?: boolean | Prisma.Challenge$dailyTasksArgs<ExtArgs>
@@ -1372,9 +1427,10 @@ export type $ChallengePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     title: string
     description: string
     coverImageUrl: string | null
-    category: $Enums.ChallengeCategory
+    category: $Enums.FitnessCategory
     difficulty: $Enums.ChallengeDifficulty
     durationDays: number
+    livesCount: number
     isPublished: boolean
     likesCount: number
     participantsCount: number
@@ -1813,9 +1869,10 @@ export interface ChallengeFieldRefs {
   readonly title: Prisma.FieldRef<"Challenge", 'String'>
   readonly description: Prisma.FieldRef<"Challenge", 'String'>
   readonly coverImageUrl: Prisma.FieldRef<"Challenge", 'String'>
-  readonly category: Prisma.FieldRef<"Challenge", 'ChallengeCategory'>
+  readonly category: Prisma.FieldRef<"Challenge", 'FitnessCategory'>
   readonly difficulty: Prisma.FieldRef<"Challenge", 'ChallengeDifficulty'>
   readonly durationDays: Prisma.FieldRef<"Challenge", 'Int'>
+  readonly livesCount: Prisma.FieldRef<"Challenge", 'Int'>
   readonly isPublished: Prisma.FieldRef<"Challenge", 'Boolean'>
   readonly likesCount: Prisma.FieldRef<"Challenge", 'Int'>
   readonly participantsCount: Prisma.FieldRef<"Challenge", 'Int'>

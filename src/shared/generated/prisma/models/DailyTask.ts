@@ -28,12 +28,10 @@ export type AggregateDailyTask = {
 
 export type DailyTaskAvgAggregateOutputType = {
   dayNumber: number | null
-  targetValue: number | null
 }
 
 export type DailyTaskSumAggregateOutputType = {
   dayNumber: number | null
-  targetValue: number | null
 }
 
 export type DailyTaskMinAggregateOutputType = {
@@ -42,8 +40,7 @@ export type DailyTaskMinAggregateOutputType = {
   dayNumber: number | null
   title: string | null
   description: string | null
-  exerciseType: string | null
-  targetValue: number | null
+  exerciseType: $Enums.FitnessCategory | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,8 +51,7 @@ export type DailyTaskMaxAggregateOutputType = {
   dayNumber: number | null
   title: string | null
   description: string | null
-  exerciseType: string | null
-  targetValue: number | null
+  exerciseType: $Enums.FitnessCategory | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -67,7 +63,6 @@ export type DailyTaskCountAggregateOutputType = {
   title: number
   description: number
   exerciseType: number
-  targetValue: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -76,12 +71,10 @@ export type DailyTaskCountAggregateOutputType = {
 
 export type DailyTaskAvgAggregateInputType = {
   dayNumber?: true
-  targetValue?: true
 }
 
 export type DailyTaskSumAggregateInputType = {
   dayNumber?: true
-  targetValue?: true
 }
 
 export type DailyTaskMinAggregateInputType = {
@@ -91,7 +84,6 @@ export type DailyTaskMinAggregateInputType = {
   title?: true
   description?: true
   exerciseType?: true
-  targetValue?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -103,7 +95,6 @@ export type DailyTaskMaxAggregateInputType = {
   title?: true
   description?: true
   exerciseType?: true
-  targetValue?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -115,7 +106,6 @@ export type DailyTaskCountAggregateInputType = {
   title?: true
   description?: true
   exerciseType?: true
-  targetValue?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -212,9 +202,8 @@ export type DailyTaskGroupByOutputType = {
   challengeId: string
   dayNumber: number
   title: string
-  description: string | null
-  exerciseType: string
-  targetValue: number
+  description: string
+  exerciseType: $Enums.FitnessCategory
   createdAt: Date
   updatedAt: Date
   _count: DailyTaskCountAggregateOutputType | null
@@ -247,9 +236,8 @@ export type DailyTaskWhereInput = {
   challengeId?: Prisma.UuidFilter<"DailyTask"> | string
   dayNumber?: Prisma.IntFilter<"DailyTask"> | number
   title?: Prisma.StringFilter<"DailyTask"> | string
-  description?: Prisma.StringNullableFilter<"DailyTask"> | string | null
-  exerciseType?: Prisma.StringFilter<"DailyTask"> | string
-  targetValue?: Prisma.IntFilter<"DailyTask"> | number
+  description?: Prisma.StringFilter<"DailyTask"> | string
+  exerciseType?: Prisma.EnumFitnessCategoryFilter<"DailyTask"> | $Enums.FitnessCategory
   createdAt?: Prisma.DateTimeFilter<"DailyTask"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyTask"> | Date | string
   challenge?: Prisma.XOR<Prisma.ChallengeScalarRelationFilter, Prisma.ChallengeWhereInput>
@@ -261,9 +249,8 @@ export type DailyTaskOrderByWithRelationInput = {
   challengeId?: Prisma.SortOrder
   dayNumber?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  description?: Prisma.SortOrder
   exerciseType?: Prisma.SortOrder
-  targetValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   challenge?: Prisma.ChallengeOrderByWithRelationInput
@@ -279,9 +266,8 @@ export type DailyTaskWhereUniqueInput = Prisma.AtLeast<{
   challengeId?: Prisma.UuidFilter<"DailyTask"> | string
   dayNumber?: Prisma.IntFilter<"DailyTask"> | number
   title?: Prisma.StringFilter<"DailyTask"> | string
-  description?: Prisma.StringNullableFilter<"DailyTask"> | string | null
-  exerciseType?: Prisma.StringFilter<"DailyTask"> | string
-  targetValue?: Prisma.IntFilter<"DailyTask"> | number
+  description?: Prisma.StringFilter<"DailyTask"> | string
+  exerciseType?: Prisma.EnumFitnessCategoryFilter<"DailyTask"> | $Enums.FitnessCategory
   createdAt?: Prisma.DateTimeFilter<"DailyTask"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyTask"> | Date | string
   challenge?: Prisma.XOR<Prisma.ChallengeScalarRelationFilter, Prisma.ChallengeWhereInput>
@@ -293,9 +279,8 @@ export type DailyTaskOrderByWithAggregationInput = {
   challengeId?: Prisma.SortOrder
   dayNumber?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  description?: Prisma.SortOrder
   exerciseType?: Prisma.SortOrder
-  targetValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.DailyTaskCountOrderByAggregateInput
@@ -313,9 +298,8 @@ export type DailyTaskScalarWhereWithAggregatesInput = {
   challengeId?: Prisma.UuidWithAggregatesFilter<"DailyTask"> | string
   dayNumber?: Prisma.IntWithAggregatesFilter<"DailyTask"> | number
   title?: Prisma.StringWithAggregatesFilter<"DailyTask"> | string
-  description?: Prisma.StringNullableWithAggregatesFilter<"DailyTask"> | string | null
-  exerciseType?: Prisma.StringWithAggregatesFilter<"DailyTask"> | string
-  targetValue?: Prisma.IntWithAggregatesFilter<"DailyTask"> | number
+  description?: Prisma.StringWithAggregatesFilter<"DailyTask"> | string
+  exerciseType?: Prisma.EnumFitnessCategoryWithAggregatesFilter<"DailyTask"> | $Enums.FitnessCategory
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"DailyTask"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"DailyTask"> | Date | string
 }
@@ -324,9 +308,8 @@ export type DailyTaskCreateInput = {
   id?: string
   dayNumber: number
   title: string
-  description?: string | null
-  exerciseType: string
-  targetValue: number
+  description: string
+  exerciseType: $Enums.FitnessCategory
   createdAt?: Date | string
   updatedAt?: Date | string
   challenge: Prisma.ChallengeCreateNestedOneWithoutDailyTasksInput
@@ -338,9 +321,8 @@ export type DailyTaskUncheckedCreateInput = {
   challengeId: string
   dayNumber: number
   title: string
-  description?: string | null
-  exerciseType: string
-  targetValue: number
+  description: string
+  exerciseType: $Enums.FitnessCategory
   createdAt?: Date | string
   updatedAt?: Date | string
   taskCompletions?: Prisma.TaskCompletionUncheckedCreateNestedManyWithoutDailyTaskInput
@@ -350,9 +332,8 @@ export type DailyTaskUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
-  targetValue?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  exerciseType?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   challenge?: Prisma.ChallengeUpdateOneRequiredWithoutDailyTasksNestedInput
@@ -364,9 +345,8 @@ export type DailyTaskUncheckedUpdateInput = {
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
-  targetValue?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  exerciseType?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   taskCompletions?: Prisma.TaskCompletionUncheckedUpdateManyWithoutDailyTaskNestedInput
@@ -377,9 +357,8 @@ export type DailyTaskCreateManyInput = {
   challengeId: string
   dayNumber: number
   title: string
-  description?: string | null
-  exerciseType: string
-  targetValue: number
+  description: string
+  exerciseType: $Enums.FitnessCategory
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -388,9 +367,8 @@ export type DailyTaskUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
-  targetValue?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  exerciseType?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -400,9 +378,8 @@ export type DailyTaskUncheckedUpdateManyInput = {
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
-  targetValue?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  exerciseType?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -429,14 +406,12 @@ export type DailyTaskCountOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   exerciseType?: Prisma.SortOrder
-  targetValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type DailyTaskAvgOrderByAggregateInput = {
   dayNumber?: Prisma.SortOrder
-  targetValue?: Prisma.SortOrder
 }
 
 export type DailyTaskMaxOrderByAggregateInput = {
@@ -446,7 +421,6 @@ export type DailyTaskMaxOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   exerciseType?: Prisma.SortOrder
-  targetValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -458,14 +432,12 @@ export type DailyTaskMinOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   exerciseType?: Prisma.SortOrder
-  targetValue?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type DailyTaskSumOrderByAggregateInput = {
   dayNumber?: Prisma.SortOrder
-  targetValue?: Prisma.SortOrder
 }
 
 export type DailyTaskScalarRelationFilter = {
@@ -533,9 +505,8 @@ export type DailyTaskCreateWithoutChallengeInput = {
   id?: string
   dayNumber: number
   title: string
-  description?: string | null
-  exerciseType: string
-  targetValue: number
+  description: string
+  exerciseType: $Enums.FitnessCategory
   createdAt?: Date | string
   updatedAt?: Date | string
   taskCompletions?: Prisma.TaskCompletionCreateNestedManyWithoutDailyTaskInput
@@ -545,9 +516,8 @@ export type DailyTaskUncheckedCreateWithoutChallengeInput = {
   id?: string
   dayNumber: number
   title: string
-  description?: string | null
-  exerciseType: string
-  targetValue: number
+  description: string
+  exerciseType: $Enums.FitnessCategory
   createdAt?: Date | string
   updatedAt?: Date | string
   taskCompletions?: Prisma.TaskCompletionUncheckedCreateNestedManyWithoutDailyTaskInput
@@ -587,9 +557,8 @@ export type DailyTaskScalarWhereInput = {
   challengeId?: Prisma.UuidFilter<"DailyTask"> | string
   dayNumber?: Prisma.IntFilter<"DailyTask"> | number
   title?: Prisma.StringFilter<"DailyTask"> | string
-  description?: Prisma.StringNullableFilter<"DailyTask"> | string | null
-  exerciseType?: Prisma.StringFilter<"DailyTask"> | string
-  targetValue?: Prisma.IntFilter<"DailyTask"> | number
+  description?: Prisma.StringFilter<"DailyTask"> | string
+  exerciseType?: Prisma.EnumFitnessCategoryFilter<"DailyTask"> | $Enums.FitnessCategory
   createdAt?: Prisma.DateTimeFilter<"DailyTask"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"DailyTask"> | Date | string
 }
@@ -598,9 +567,8 @@ export type DailyTaskCreateWithoutTaskCompletionsInput = {
   id?: string
   dayNumber: number
   title: string
-  description?: string | null
-  exerciseType: string
-  targetValue: number
+  description: string
+  exerciseType: $Enums.FitnessCategory
   createdAt?: Date | string
   updatedAt?: Date | string
   challenge: Prisma.ChallengeCreateNestedOneWithoutDailyTasksInput
@@ -611,9 +579,8 @@ export type DailyTaskUncheckedCreateWithoutTaskCompletionsInput = {
   challengeId: string
   dayNumber: number
   title: string
-  description?: string | null
-  exerciseType: string
-  targetValue: number
+  description: string
+  exerciseType: $Enums.FitnessCategory
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -638,9 +605,8 @@ export type DailyTaskUpdateWithoutTaskCompletionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
-  targetValue?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  exerciseType?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   challenge?: Prisma.ChallengeUpdateOneRequiredWithoutDailyTasksNestedInput
@@ -651,9 +617,8 @@ export type DailyTaskUncheckedUpdateWithoutTaskCompletionsInput = {
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
-  targetValue?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  exerciseType?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -662,9 +627,8 @@ export type DailyTaskCreateManyChallengeInput = {
   id?: string
   dayNumber: number
   title: string
-  description?: string | null
-  exerciseType: string
-  targetValue: number
+  description: string
+  exerciseType: $Enums.FitnessCategory
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -673,9 +637,8 @@ export type DailyTaskUpdateWithoutChallengeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
-  targetValue?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  exerciseType?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   taskCompletions?: Prisma.TaskCompletionUpdateManyWithoutDailyTaskNestedInput
@@ -685,9 +648,8 @@ export type DailyTaskUncheckedUpdateWithoutChallengeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
-  targetValue?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  exerciseType?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   taskCompletions?: Prisma.TaskCompletionUncheckedUpdateManyWithoutDailyTaskNestedInput
@@ -697,9 +659,8 @@ export type DailyTaskUncheckedUpdateManyWithoutChallengeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  exerciseType?: Prisma.StringFieldUpdateOperationsInput | string
-  targetValue?: Prisma.IntFieldUpdateOperationsInput | number
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  exerciseType?: Prisma.EnumFitnessCategoryFieldUpdateOperationsInput | $Enums.FitnessCategory
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -742,7 +703,6 @@ export type DailyTaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   title?: boolean
   description?: boolean
   exerciseType?: boolean
-  targetValue?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   challenge?: boolean | Prisma.ChallengeDefaultArgs<ExtArgs>
@@ -757,7 +717,6 @@ export type DailyTaskSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   title?: boolean
   description?: boolean
   exerciseType?: boolean
-  targetValue?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   challenge?: boolean | Prisma.ChallengeDefaultArgs<ExtArgs>
@@ -770,7 +729,6 @@ export type DailyTaskSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   title?: boolean
   description?: boolean
   exerciseType?: boolean
-  targetValue?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   challenge?: boolean | Prisma.ChallengeDefaultArgs<ExtArgs>
@@ -783,12 +741,11 @@ export type DailyTaskSelectScalar = {
   title?: boolean
   description?: boolean
   exerciseType?: boolean
-  targetValue?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type DailyTaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "challengeId" | "dayNumber" | "title" | "description" | "exerciseType" | "targetValue" | "createdAt" | "updatedAt", ExtArgs["result"]["dailyTask"]>
+export type DailyTaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "challengeId" | "dayNumber" | "title" | "description" | "exerciseType" | "createdAt" | "updatedAt", ExtArgs["result"]["dailyTask"]>
 export type DailyTaskInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   challenge?: boolean | Prisma.ChallengeDefaultArgs<ExtArgs>
   taskCompletions?: boolean | Prisma.DailyTask$taskCompletionsArgs<ExtArgs>
@@ -812,9 +769,8 @@ export type $DailyTaskPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     challengeId: string
     dayNumber: number
     title: string
-    description: string | null
-    exerciseType: string
-    targetValue: number
+    description: string
+    exerciseType: $Enums.FitnessCategory
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["dailyTask"]>
@@ -1247,8 +1203,7 @@ export interface DailyTaskFieldRefs {
   readonly dayNumber: Prisma.FieldRef<"DailyTask", 'Int'>
   readonly title: Prisma.FieldRef<"DailyTask", 'String'>
   readonly description: Prisma.FieldRef<"DailyTask", 'String'>
-  readonly exerciseType: Prisma.FieldRef<"DailyTask", 'String'>
-  readonly targetValue: Prisma.FieldRef<"DailyTask", 'Int'>
+  readonly exerciseType: Prisma.FieldRef<"DailyTask", 'FitnessCategory'>
   readonly createdAt: Prisma.FieldRef<"DailyTask", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"DailyTask", 'DateTime'>
 }

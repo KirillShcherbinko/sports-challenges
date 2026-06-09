@@ -181,11 +181,11 @@ export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
 }
 
-export type EnumChallengeCategoryFilter<$PrismaModel = never> = {
-  equals?: $Enums.ChallengeCategory | Prisma.EnumChallengeCategoryFieldRefInput<$PrismaModel>
-  in?: $Enums.ChallengeCategory[] | Prisma.ListEnumChallengeCategoryFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ChallengeCategory[] | Prisma.ListEnumChallengeCategoryFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumChallengeCategoryFilter<$PrismaModel> | $Enums.ChallengeCategory
+export type EnumFitnessCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.FitnessCategory | Prisma.EnumFitnessCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.FitnessCategory[] | Prisma.ListEnumFitnessCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FitnessCategory[] | Prisma.ListEnumFitnessCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFitnessCategoryFilter<$PrismaModel> | $Enums.FitnessCategory
 }
 
 export type EnumChallengeDifficultyFilter<$PrismaModel = never> = {
@@ -200,14 +200,14 @@ export type BoolFilter<$PrismaModel = never> = {
   not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
 }
 
-export type EnumChallengeCategoryWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.ChallengeCategory | Prisma.EnumChallengeCategoryFieldRefInput<$PrismaModel>
-  in?: $Enums.ChallengeCategory[] | Prisma.ListEnumChallengeCategoryFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ChallengeCategory[] | Prisma.ListEnumChallengeCategoryFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumChallengeCategoryWithAggregatesFilter<$PrismaModel> | $Enums.ChallengeCategory
+export type EnumFitnessCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FitnessCategory | Prisma.EnumFitnessCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.FitnessCategory[] | Prisma.ListEnumFitnessCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FitnessCategory[] | Prisma.ListEnumFitnessCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFitnessCategoryWithAggregatesFilter<$PrismaModel> | $Enums.FitnessCategory
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumChallengeCategoryFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumChallengeCategoryFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFitnessCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFitnessCategoryFilter<$PrismaModel>
 }
 
 export type EnumChallengeDifficultyWithAggregatesFilter<$PrismaModel = never> = {
@@ -448,11 +448,11 @@ export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeFilter<$PrismaModel>
 }
 
-export type NestedEnumChallengeCategoryFilter<$PrismaModel = never> = {
-  equals?: $Enums.ChallengeCategory | Prisma.EnumChallengeCategoryFieldRefInput<$PrismaModel>
-  in?: $Enums.ChallengeCategory[] | Prisma.ListEnumChallengeCategoryFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ChallengeCategory[] | Prisma.ListEnumChallengeCategoryFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumChallengeCategoryFilter<$PrismaModel> | $Enums.ChallengeCategory
+export type NestedEnumFitnessCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.FitnessCategory | Prisma.EnumFitnessCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.FitnessCategory[] | Prisma.ListEnumFitnessCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FitnessCategory[] | Prisma.ListEnumFitnessCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFitnessCategoryFilter<$PrismaModel> | $Enums.FitnessCategory
 }
 
 export type NestedEnumChallengeDifficultyFilter<$PrismaModel = never> = {
@@ -467,14 +467,14 @@ export type NestedBoolFilter<$PrismaModel = never> = {
   not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
 }
 
-export type NestedEnumChallengeCategoryWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.ChallengeCategory | Prisma.EnumChallengeCategoryFieldRefInput<$PrismaModel>
-  in?: $Enums.ChallengeCategory[] | Prisma.ListEnumChallengeCategoryFieldRefInput<$PrismaModel>
-  notIn?: $Enums.ChallengeCategory[] | Prisma.ListEnumChallengeCategoryFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumChallengeCategoryWithAggregatesFilter<$PrismaModel> | $Enums.ChallengeCategory
+export type NestedEnumFitnessCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FitnessCategory | Prisma.EnumFitnessCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.FitnessCategory[] | Prisma.ListEnumFitnessCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FitnessCategory[] | Prisma.ListEnumFitnessCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFitnessCategoryWithAggregatesFilter<$PrismaModel> | $Enums.FitnessCategory
   _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumChallengeCategoryFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumChallengeCategoryFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFitnessCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFitnessCategoryFilter<$PrismaModel>
 }
 
 export type NestedEnumChallengeDifficultyWithAggregatesFilter<$PrismaModel = never> = {

@@ -19,7 +19,7 @@ enum ChallengeDifficulty {
   Hard
 }
 
-enum ChallengeCategory {
+enum FitnessCategory {
   // === Базовые (ваши исходные) ===
   Strength
   Cardio
@@ -56,23 +56,23 @@ enum ChallengeCategory {
 }
 
 enum ProfileChallengeStatus {
-  active
-  completed
-  abandoned
+  Active
+  Completed
+  Failed
 }
 
 model Profile {
-  id                  String       @id @db.Uuid
-  username            String       @unique
-  avatarUrl           String?      @map("avatar_url")
-  avatarPath          String?      @map("avatar_path")
-  fitnessLevel        FitnessLevel @default(Beginner) @map("fitness_level")
-  preferences         String[]     @default([])
+  id                  String            @id @db.Uuid
+  username            String            @unique
+  avatarUrl           String?           @map("avatar_url")
+  avatarPath          String?           @map("avatar_path")
+  fitnessLevel        FitnessLevel      @default(Beginner) @map("fitness_level")
+  preferences         FitnessCategory[] @default([])
   bio                 String?
-  streakCount         Int          @default(0) @map("streak_count")
-  totalCompletedTasks Int          @default(0) @map("total_completed_tasks")
-  createdAt           DateTime     @default(now()) @map("created_at")
-  updatedAt           DateTime     @updatedAt @map("updated_at")
+  streakCount         Int               @default(0) @map("streak_count")
+  totalCompletedTasks Int               @default(0) @map("total_completed_tasks")
+  createdAt           DateTime          @default(now()) @map("created_at")
+  updatedAt           DateTime          @updatedAt @map("updated_at")
 
   challenges        Challenge[]
   profileChallenges ProfileChallenge[]
@@ -90,9 +90,10 @@ model Challenge {
   title             String
   description       String
   coverImageUrl     String?             @map("cover_image_url")
-  category          ChallengeCategory
+  category          FitnessCategory
   difficulty        ChallengeDifficulty
   durationDays      Int                 @map("duration_days")
+  livesCount        Int                 @map("lives_count")
   isPublished       Boolean             @default(false) @map("is_published")
   likesCount        Int                 @default(0) @map("likes_count")
   participantsCount Int                 @default(0) @map("participants_count")
@@ -108,16 +109,15 @@ model Challenge {
 }
 
 model DailyTask {
-  id           String    @id @default(uuid()) @db.Uuid
-  challengeId  String    @map("challenge_id") @db.Uuid
-  challenge    Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
-  dayNumber    Int       @map("day_number")
+  id           String          @id @default(uuid()) @db.Uuid
+  challengeId  String          @map("challenge_id") @db.Uuid
+  challenge    Challenge       @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  dayNumber    Int             @map("day_number")
   title        String
-  description  String?
-  exerciseType String    @map("exercise_type")
-  targetValue  Int       @map("target_value")
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at")
+  description  String
+  exerciseType FitnessCategory @map("exercise_type")
+  createdAt    DateTime        @default(now()) @map("created_at")
+  updatedAt    DateTime        @updatedAt @map("updated_at")
 
   taskCompletions TaskCompletion[]
 
@@ -126,17 +126,17 @@ model DailyTask {
 }
 
 model ProfileChallenge {
-  profileId      String                 @map("profile_id") @db.Uuid
-  challengeId    String                 @map("challenge_id") @db.Uuid
-  profile        Profile                @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  challenge      Challenge              @relation(fields: [challengeId], references: [id], onDelete: Cascade)
-  status         ProfileChallengeStatus @default(active)
-  startedAt      DateTime               @default(now()) @map("started_at")
-  completedAt    DateTime?              @map("completed_at")
-  currentDay     Int                    @default(1) @map("current_day")
-  lastActivityAt DateTime               @default(now()) @map("last_activity_at")
-  createdAt      DateTime               @default(now()) @map("created_at")
-  updatedAt      DateTime               @updatedAt @map("updated_at")
+  profileId   String                 @map("profile_id") @db.Uuid
+  challengeId String                 @map("challenge_id") @db.Uuid
+  profile     Profile                @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  challenge   Challenge              @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  status      ProfileChallengeStatus @default(Active)
+  startedAt   DateTime               @default(now()) @map("started_at")
+  completedAt DateTime?              @map("completed_at")
+  currentDay  Int                    @default(1) @map("current_day")
+  missedDays  Int                    @default(0) @map("missed_days")
+  createdAt   DateTime               @default(now()) @map("created_at")
+  updatedAt   DateTime               @updatedAt @map("updated_at")
 
   taskCompletions TaskCompletion[]
 
