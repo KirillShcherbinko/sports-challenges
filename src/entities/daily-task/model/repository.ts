@@ -14,25 +14,18 @@ class DailyTaskRepository {
     return mapToDailyTaskMutationDto(dailyTask);
   }
 
-  async getCurrentDailyTask(challengeId: string, dayNumber: number): Promise<TDailyTaskDto | null> {
-    const dailyTask = await prisma.dailyTask.findUnique({
-      where: { challengeId_dayNumber: { challengeId, dayNumber } },
-    });
-
+  async getDailyTaskById(dailyTaskId: string): Promise<TDailyTaskDto | null> {
+    const dailyTask = await prisma.dailyTask.findUnique({ where: { id: dailyTaskId } });
     return dailyTask ? mapToDailyTaskDto(dailyTask) : null;
   }
 
-  async updateDailyTask(challengeId: string, dayNumber: number, data: DailyTaskUpdateInput) {
-    const dailyTask = await prisma.dailyTask.update({
-      where: { challengeId_dayNumber: { challengeId, dayNumber } },
-      data,
-    });
-
+  async updateDailyTask(dailyTaskId: string, data: DailyTaskUpdateInput) {
+    const dailyTask = await prisma.dailyTask.update({ where: { id: dailyTaskId }, data });
     return mapToDailyTaskMutationDto(dailyTask);
   }
 
-  async deleteDailyTask(challengeId: string, dayNumber: number) {
-    const dailyTask = await prisma.dailyTask.delete({ where: { challengeId_dayNumber: { challengeId, dayNumber } } });
+  async deleteDailyTask(dailyTaskId: string) {
+    const dailyTask = await prisma.dailyTask.delete({ where: { id: dailyTaskId } });
     return mapToDailyTaskMutationDto(dailyTask);
   }
 }

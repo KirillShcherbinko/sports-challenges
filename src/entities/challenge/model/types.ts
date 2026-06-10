@@ -1,4 +1,4 @@
-import type { ChallengeCategory, ChallengeDifficulty } from '@/shared/client';
+import type { FitnessCategory, ChallengeDifficulty } from '@/shared/client';
 import type { ChallengeGetPayload, ProfileChallengeGetPayload, ProfileChallengeStatus } from '@/shared/types';
 
 export type TChallengeWithCreator = ChallengeGetPayload<{
@@ -12,7 +12,7 @@ export type TProfileChallengeWithChallenge = ProfileChallengeGetPayload<{
 export type TChallengesFilters = {
   search?: string;
   creatorName?: string;
-  category?: ChallengeCategory;
+  category?: FitnessCategory;
   difficulty?: ChallengeDifficulty;
   page: number;
   limit: number;
@@ -23,7 +23,7 @@ export type TMyChallengesFilters = {
   search?: string;
   creatorName?: string;
   status?: ProfileChallengeStatus;
-  category?: ChallengeCategory;
+  category?: FitnessCategory;
   difficulty?: ChallengeDifficulty; 
   page: number;
   limit: number;
