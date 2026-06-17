@@ -3,7 +3,7 @@
 import { Tabs } from '@mantine/core';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { FitnessLevel } from '@/shared/generated/prisma/enums';
-import { FITNESS_LEVEL_LABELS } from '@/entities/profile/config/fitness-level-labels';
+import { FITNESS_LEVEL_LABELS } from '@/shared';
 
 export const FitnessLevelTabs = () => {
   const router = useRouter();

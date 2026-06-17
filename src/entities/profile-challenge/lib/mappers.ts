@@ -22,6 +22,6 @@ export const mapProfileChallengeMutationToDto = (
     id: `${data.challengeId}_${data.profileId}`,
     challenge: {
       title: data.challenge.title,
-    }
-  }
+    },
+  };
 };

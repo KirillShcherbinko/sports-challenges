@@ -20,4 +20,4 @@ export const getMyProfileAction = actionClient.action(async () => {
   const { id } = await getUser(supabase);
 
   return await getMyCachedProfile(id);
-})
+});

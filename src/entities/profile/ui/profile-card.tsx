@@ -1,6 +1,6 @@
 import { Avatar, Badge, Group, Stack, Title } from '@mantine/core';
-import { FITNESS_LEVEL_COLORS } from '../config/fitness-level-colors';
 import type { FitnessLevel } from '@/shared/types';
+import { FITNESS_LEVEL_LABELS } from '@/shared';
 
 type TUserCardProps = {
   username: string;
@@ -16,7 +16,7 @@ export const ProfileCard = ({ username, avatarUrl, fitnessLevel }: TUserCardProp
         <Title component="h3" order={3} lineClamp={1}>
           {username}
         </Title>
-        <Badge c={FITNESS_LEVEL_COLORS[fitnessLevel]}>{fitnessLevel}</Badge>
+        <Badge>{FITNESS_LEVEL_LABELS[fitnessLevel]}</Badge>
       </Stack>
     </Group>
   );

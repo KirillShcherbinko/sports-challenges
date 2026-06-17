@@ -3,7 +3,9 @@ import type { ChallengeLikeCreateInput } from '@/shared/types';
 
 class ChallengeLikeRepository {
   async isLiked(profileId: string, challengeId: string): Promise<boolean> {
-    const like = await prisma.challengeLike.findUnique({ where: { profileId_challengeId: { profileId, challengeId } }});
+    const like = await prisma.challengeLike.findUnique({
+      where: { profileId_challengeId: { profileId, challengeId } },
+    });
     return !!like;
   }
 

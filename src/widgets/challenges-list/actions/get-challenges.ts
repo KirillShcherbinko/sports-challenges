@@ -1,8 +1,21 @@
 'use server';
 
+import { retryResult, type TGetPaginatedResponseDto } from '@/shared';
+import { actionClient } from '@/shared/actions';
+import { cacheTag, cacheLife } from 'next/cache';
 import { challengeRepository } from '@/entities/challenge/server';
-import type { TChallengeFilters } from '@/entities/challenge/model/types';
+import { challengeFiltersSchema, type TChallengeDto, type TChallengeFilters } from '@/entities/challenge';
 
-export const getChallenges = async (filters?: TChallengeFilters) => {
-  return challengeRepository.getChallenges(filters);
+const getCachedChallenges = async (filters: TChallengeFilters): Promise<TGetPaginatedResponseDto<TChallengeDto>> => {
+  'use cache';
+  cacheTag(`challenges_${Object.values(filters).join('_')}`);
+  cacheLife('hours');
+
+  return await retryResult(() => challengeRepository.getChallenges(filters));
 };
+
+export const getChallengesAction = actionClient
+  .inputSchema(challengeFiltersSchema)
+  .action(async ({ parsedInput }): Promise<TGetPaginatedResponseDto<TChallengeDto>> => {
+    return await getCachedChallenges(parsedInput);
+  });

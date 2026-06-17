@@ -16,5 +16,5 @@ export type TProfileChallengeMutationDto = {
   id: string;
   challenge: {
     title: string;
-  }
-}
+  };
+};

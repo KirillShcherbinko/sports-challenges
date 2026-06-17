@@ -1,4 +1,4 @@
-import type { FitnessCategory } from "@/shared/types";
+import type { FitnessCategory } from '@/shared/types';
 
 export type TDailyTaskDto = {
   id: string;
@@ -6,10 +6,10 @@ export type TDailyTaskDto = {
   description: string;
   exerciseType: FitnessCategory;
   dayNumber: number;
-}
+};
 
 export type TDailyTaskMutationDto = {
   id: string;
   title: string;
   dayNumber: number;
-}
+};

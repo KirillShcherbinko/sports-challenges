@@ -3,3 +3,7 @@ export { createClient } from './lib/supabase/client';
 export { ERoutes, EBuckets } from './model/enums';
 export type { TPaginationResponse, TGetPaginatedResponseDto } from './model/types';
 export { retryResult } from './lib/utils/retry';
+export { CHALLENGE_DIFFICULTY_LABELS } from './config/challenge-difficulty-labels';
+export { FITNESS_LEVEL_LABELS } from './config/fitness-level-labels';
+export { FITNESS_CATEGORY_LABELS } from './config/fitness-category-labels';
+export { PROFILE_CHALLENGE_STATUS_LABELS } from './config/profile-challenge-status-labels';

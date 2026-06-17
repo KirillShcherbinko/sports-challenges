@@ -1,4 +1,4 @@
-import type { TChallengesFilters } from './types';
+import type { TChallengeFilters } from './types';
 import { DEFAULT_CHALLENGES_FILTERS_VALUES } from '../config/default-challenges-filters-values';
 import { prisma } from '@/shared/server';
 import type { ChallengeCreateInput, ChallengeUpdateInput, ChallengeWhereInput } from '@/shared/types';
@@ -8,7 +8,7 @@ import type { TGetPaginatedResponseDto } from '@/shared';
 
 class ChallengeRepository {
   async getChallenges(
-    filters: TChallengesFilters = DEFAULT_CHALLENGES_FILTERS_VALUES
+    filters: TChallengeFilters = DEFAULT_CHALLENGES_FILTERS_VALUES
   ): Promise<TGetPaginatedResponseDto<TChallengeDto>> {
     const { search, creatorName, category, difficulty, page, limit, isPublished } = filters;
 

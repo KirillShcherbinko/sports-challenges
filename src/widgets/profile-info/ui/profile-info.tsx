@@ -11,13 +11,19 @@ type TProfileInfoProps = {
 };
 
 export const ProfileInfo = async ({ profileUsername }: TProfileInfoProps) => {
-  const { data, serverError } = profileUsername ? await getUserProfileAction(profileUsername) : await getMyProfileAction();
+  const { data, serverError } = profileUsername
+    ? await getUserProfileAction(profileUsername)
+    : await getMyProfileAction();
 
   if (serverError) {
     return (
       <Stack align="center">
         <Text c="var(--mantine-color-dark-2)">{`Ошибка ${serverError}`}</Text>
-        <Button onClick={async () => (profileUsername ? await getUserProfileAction(profileUsername) : await getMyProfileAction())}>
+        <Button
+          onClick={async () =>
+            profileUsername ? await getUserProfileAction(profileUsername) : await getMyProfileAction()
+          }
+        >
           Повторить
         </Button>
       </Stack>

@@ -11,7 +11,7 @@ export const ProfilePage = () => {
       <Suspense fallback={<Loader />}>
         <ProfileInfo />
       </Suspense>
-      <RedirectButton buttonText="Редактировать" route={ERoutes.PROFILE_EDIT}/>
+      <RedirectButton buttonText="Редактировать" route={ERoutes.PROFILE_EDIT} />
       <SignOutButton />
     </Stack>
   );

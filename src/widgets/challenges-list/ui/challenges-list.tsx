@@ -1,30 +1,16 @@
-// src/widgets/challenges-list/ui/challenges-list.tsx
+import { Badge, Card, Group, SimpleGrid, Stack, Text } from '@mantine/core';
+import { getChallengesAction } from '../actions/get-challenges';
+import type { TChallengeFilters } from '@/entities/challenge';
 
-import { Badge, Card, Group, Image, SimpleGrid, Stack, Text } from '@mantine/core';
-
-import { getChallenges } from '../actions/get-challenges';
-
-type Props = {
-  searchParams?: {
-    search?: string;
-    category?: any;
-    difficulty?: any;
-    creatorId?: string;
-    page?: string;
-  };
+type TChallengesListProps = {
+  searchParams: TChallengeFilters;
 };
 
-export const ChallengesList = async ({ searchParams }: Props) => {
-  const result = await getChallenges({
-    search: searchParams?.search,
-    creatorId: searchParams?.creatorId,
-    category: searchParams?.category,
-    difficulty: searchParams?.difficulty,
-    page: searchParams?.page ? Number(searchParams.page) : 1,
-  });
+export const ChallengesList = async ({ searchParams }: TChallengesListProps) => {
+  const result = await getChallengesAction(searchParams);
 
-  if (!result.success || !result.data) {
-    return <Text c="red">{result.error ?? 'Ошибка загрузки челленджей'}</Text>;
+  if (!result || !result.data) {
+    return <Text c="red">{'Ошибка загрузки челленджей'}</Text>;
   }
 
   if (!result.data.items.length) {

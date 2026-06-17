@@ -1,7 +1,7 @@
-import { DEFAULT_LIMIT, DEFAULT_PAGE } from "../model/consts";
-import type { TChallengesFilters } from "../model/types";
+import { DEFAULT_LIMIT, DEFAULT_PAGE } from '../model/consts';
+import type { TChallengeFilters } from '../model/types';
 
-export const DEFAULT_CHALLENGES_FILTERS_VALUES: TChallengesFilters = {
+export const DEFAULT_CHALLENGES_FILTERS_VALUES: TChallengeFilters = {
   search: undefined,
   creatorName: undefined,
   category: undefined,

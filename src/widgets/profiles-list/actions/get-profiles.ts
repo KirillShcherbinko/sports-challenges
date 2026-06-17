@@ -1,14 +1,14 @@
 'use server';
 
-import { type TProfileFilters, type TProfilesData, profileFiltersSchema } from '@/entities/profile';
-import { retryResult } from '@/shared';
+import { type TProfileDto, type TProfileFilters, profileFiltersSchema } from '@/entities/profile';
+import { retryResult, type TGetPaginatedResponseDto } from '@/shared';
 import { profileRepository } from '@/entities/profile/server';
 import { actionClient } from '@/shared/actions';
 import { cacheTag, cacheLife } from 'next/cache';
 
-const getCachedProfiles = async (filters: TProfileFilters): Promise<TProfilesData> => {
+const getCachedProfiles = async (filters: TProfileFilters): Promise<TGetPaginatedResponseDto<TProfileDto>> => {
   'use cache';
-  cacheTag('profile');
+  cacheTag(`profiles_${Object.values(filters).join('_')}`);
   cacheLife('hours');
 
   return await retryResult(() => profileRepository.getProfiles(filters));
@@ -16,6 +16,6 @@ const getCachedProfiles = async (filters: TProfileFilters): Promise<TProfilesDat
 
 export const getProfilesAction = actionClient
   .inputSchema(profileFiltersSchema)
-  .action(async ({ parsedInput }): Promise<TProfilesData> => {
+  .action(async ({ parsedInput }): Promise<TGetPaginatedResponseDto<TProfileDto>> => {
     return await getCachedProfiles(parsedInput);
   });

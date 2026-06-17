@@ -1,8 +1,6 @@
 import type { FitnessLevel } from '@/shared/types';
 import type { editProfileSchema, profileFiltersSchema } from './schemas';
 import type { z } from 'zod';
-import type { Profile } from '@/shared/client';
-import type { TPaginationResponse } from '@/shared';
 
 export type TProfileFilters = {
   search?: string;
@@ -13,16 +11,3 @@ export type TProfileFilters = {
 
 export type TProfileFiltersSchema = z.infer<typeof profileFiltersSchema>;
 export type TEditProfileSchema = z.infer<typeof editProfileSchema>;
-
-export type TEditProfileData = {
-  username: string;
-  bio?: string | null;
-  fitnessLevel: FitnessLevel;
-  preferences: string[];
-  avatarUrl?: string | null;
-};
-
-export type TProfilesData = {
-  items: Profile[];
-  pagination: TPaginationResponse;
-};

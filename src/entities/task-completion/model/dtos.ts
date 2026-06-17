@@ -5,13 +5,13 @@ export type TTaskCompletionDto = {
   dailyTask: {
     title: string;
     dayNumber: number;
-  }
+  };
 };
 
 export type TTaskCompletionMutationDto = {
-  id: string,
+  id: string;
   dailyTask: {
     title: string;
     dayNumber: number;
-  }
-}
+  };
+};

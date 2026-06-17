@@ -1,16 +1,17 @@
-'use client';
-
 import type { ERoutes } from '@/shared';
-import { Button } from '@mantine/core';
-import { useRouter } from 'next/navigation';
+import { Button, type ButtonProps } from '@mantine/core';
+import Link from 'next/link';
 
 type TRedirectButtonProps = {
   buttonText: string;
   route: ERoutes;
+  props?: ButtonProps;
 };
 
-export const RedirectButton = ({ buttonText, route }: TRedirectButtonProps) => {
-  const router = useRouter();
-
-  return <Button onClick={() => router.push(route)}>{buttonText}</Button>;
+export const RedirectButton = ({ buttonText, route, props }: TRedirectButtonProps) => {
+  return (
+    <Link href={`${route}`}>
+      <Button {...props}>{buttonText}</Button>
+    </Link>
+  );
 };

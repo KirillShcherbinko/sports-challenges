@@ -36,7 +36,7 @@ export const mapChallengeDetailToDto = (data: TChallengeWithCreator): TChallenge
       fitnessLevel: data.creator.fitnessLevel,
     },
   };
-}
+};
 
 export const mapChallengeMutationToDto = (data: Challenge): TChallengeMutationDto => {
   return {

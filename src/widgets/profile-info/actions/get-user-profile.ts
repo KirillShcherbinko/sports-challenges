@@ -13,6 +13,8 @@ const getUserCachedProfile = async (username: string) => {
   return await profileRepository.getProfileByUsername(username);
 };
 
-export const getUserProfileAction = actionClient.inputSchema(usernameSchema).action(async ({ parsedInput: username }) => {
-  return await getUserCachedProfile(username);
-});
+export const getUserProfileAction = actionClient
+  .inputSchema(usernameSchema)
+  .action(async ({ parsedInput: username }) => {
+    return await getUserCachedProfile(username);
+  });

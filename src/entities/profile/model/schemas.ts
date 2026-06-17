@@ -8,10 +8,9 @@ import {
   MAX_USERNAME_LENGTH,
   MIN_LIMIT,
   MIN_PAGE,
-  MIN_TAG_SIZE,
   MIN_USERNAME_LENGTH,
 } from './consts';
-import { FitnessLevel } from '@/shared/types';
+import { FitnessCategory, FitnessLevel } from '@/shared/types';
 
 export const usernameSchema = z
   .string()
@@ -33,11 +32,7 @@ export const editProfileSchema = z.object({
     .min(MIN_USERNAME_LENGTH, `Минимум символов: ${MIN_USERNAME_LENGTH}`)
     .max(MAX_USERNAME_LENGTH, `Максимум символов: ${MAX_USERNAME_LENGTH}`),
   bio: z.string().trim().max(MAX_BIO_LENGTH, `Максимум символов: ${MAX_BIO_LENGTH}`).nullish(),
-  preferences: z
-    .array(z.string().trim().min(MIN_TAG_SIZE, 'Тег не может быть пустым'))
-    .transform((arr) => [...new Set(arr.map((s) => s.toLowerCase()))])
-    .default([])
-    .optional(),
+  preferences: z.array(z.enum(FitnessCategory)).default([]).optional(),
   fitnessLevel: z.enum(FitnessLevel),
   avatar: z
     .instanceof(File)
