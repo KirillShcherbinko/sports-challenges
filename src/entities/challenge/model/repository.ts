@@ -1,31 +1,15 @@
-import type { TChallengesFilters, TMyChallengesFilters } from './types';
+import type { TChallengesFilters } from './types';
 import { DEFAULT_CHALLENGES_FILTERS_VALUES } from '../config/default-challenges-filters-values';
 import { prisma } from '@/shared/server';
-import type {
-  ChallengeCreateInput,
-  ChallengeUpdateInput,
-  ChallengeWhereInput,
-  ProfileChallengeWhereInput,
-} from '@/shared/types';
-import type {
-  TChallengeDetailDto,
-  TChallengeDto,
-  TChallengeMutationDto,
-  TGetChallengesResponseDto,
-  TMyChallengeDto,
-} from './dtos';
-import {
-  mapChallengeDetailToDto,
-  mapChallengeMutationToDto,
-  mapChallengeToDto,
-  mapMyChallengeToDto,
-} from '../lib/mappers';
-import { DEFAULT_MY_CHALLENGES_FILTERS_VALUES } from '../config/default-my-challenges-filters-values';
+import type { ChallengeCreateInput, ChallengeUpdateInput, ChallengeWhereInput } from '@/shared/types';
+import type { TChallengeDetailDto, TChallengeDto, TChallengeMutationDto } from './dtos';
+import { mapChallengeDetailToDto, mapChallengeMutationToDto, mapChallengeToDto } from '../lib/mappers';
+import type { TGetPaginatedResponseDto } from '@/shared';
 
 class ChallengeRepository {
   async getChallenges(
     filters: TChallengesFilters = DEFAULT_CHALLENGES_FILTERS_VALUES
-  ): Promise<TGetChallengesResponseDto<TChallengeDto>> {
+  ): Promise<TGetPaginatedResponseDto<TChallengeDto>> {
     const { search, creatorName, category, difficulty, page, limit, isPublished } = filters;
 
     const where: ChallengeWhereInput = {
@@ -49,44 +33,6 @@ class ChallengeRepository {
     ]);
 
     const items = rawItems.map(mapChallengeToDto);
-
-    return {
-      items,
-      pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
-    };
-  }
-
-  async getMyChallenges(
-    userId: string,
-    filters: TMyChallengesFilters = DEFAULT_MY_CHALLENGES_FILTERS_VALUES
-  ): Promise<TGetChallengesResponseDto<TMyChallengeDto>> {
-    const { search, creatorName, status, category, difficulty, page, limit } = filters;
-
-    const where: ProfileChallengeWhereInput = {
-      profileId: userId,
-      ...(status && { status }),
-      challenge: {
-        ...(search && { title: { contains: search } }),
-        ...(creatorName && { creator: { username: { contains: creatorName } } }),
-        ...(category && { category }),
-        ...(difficulty && { difficulty }),
-        isPublished: true,
-      },
-    };
-
-    const [rawItems, total] = await prisma.$transaction([
-      prisma.profileChallenge.findMany({
-        where,
-        skip: (page - 1) * limit,
-        take: limit,
-        orderBy: { createdAt: 'desc' },
-        include: { challenge: true },
-      }),
-
-      prisma.profileChallenge.count({ where }),
-    ]);
-
-    const items = rawItems.map(mapMyChallengeToDto);
 
     return {
       items,

@@ -1,6 +1,6 @@
 import type { Challenge } from '@/shared/client';
-import type { TChallengeDetailDto, TChallengeDto, TChallengeMutationDto, TMyChallengeDto } from '../model/dtos';
-import type { TChallengeWithCreator, TProfileChallengeWithChallenge } from '../model/types';
+import type { TChallengeDetailDto, TChallengeDto, TChallengeMutationDto } from '../model/dtos';
+import type { TChallengeWithCreator } from '../model/types';
 
 export const mapChallengeToDto = (data: TChallengeWithCreator): TChallengeDto => {
   return {
@@ -16,20 +16,6 @@ export const mapChallengeToDto = (data: TChallengeWithCreator): TChallengeDto =>
       username: data.creator.username,
       avatarUrl: data.creator.avatarUrl,
     },
-  };
-};
-
-export const mapMyChallengeToDto = (data: TProfileChallengeWithChallenge): TMyChallengeDto => {
-  return {
-    id: `${data.profileId}_${data.challengeId}`,
-    status: data.status,
-    currentDay: data.currentDay,
-    challenge: {
-      title: data.challenge.title,
-      coverImageUrl: data.challenge.coverImageUrl,
-      durationDays: data.challenge.durationDays,
-    },
-    percentage: Math.round((data.currentDay * 100) / data.challenge.durationDays),
   };
 };
 

@@ -1,7 +1,7 @@
 import { DEFAULT_LIMIT, DEFAULT_PAGE } from '../model/consts';
-import type { TMyChallengesFilters } from '../model/types';
+import type { TProfileChallengesFilters } from '../model/types';
 
-export const DEFAULT_MY_CHALLENGES_FILTERS_VALUES: TMyChallengesFilters = {
+export const DEFAULT_MY_CHALLENGES_FILTERS_VALUES: TProfileChallengesFilters = {
   search: undefined,
   creatorName: undefined,
   status: undefined,

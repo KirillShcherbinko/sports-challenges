@@ -4,3 +4,8 @@ export type TPaginationResponse = {
   total: number;
   totalPages: number;
 };
+
+export type TGetPaginatedResponseDto<T> = {
+  items: T[];
+  pagination: TPaginationResponse;
+};
