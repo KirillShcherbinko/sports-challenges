@@ -2,20 +2,25 @@ import type { TChallengeFilters } from './types';
 import { DEFAULT_CHALLENGES_FILTERS_VALUES } from '../config/default-challenges-filters-values';
 import { prisma } from '@/shared/server';
 import type { ChallengeCreateInput, ChallengeUpdateInput, ChallengeWhereInput } from '@/shared/types';
-import type { TChallengeDetailDto, TChallengeDto, TChallengeMutationDto } from './dtos';
-import { mapChallengeDetailToDto, mapChallengeMutationToDto, mapChallengeToDto } from '../lib/mappers';
+import type { TChallengeDetailDto, TChallengeDto, TChallengeMutationDto, TEditChallengeDto } from './dtos';
+import {
+  mapChallengeDetailToDto,
+  mapChallengeMutationToDto,
+  mapChallengeToDto,
+  mapEditChallengeToDto,
+} from '../lib/mappers';
 import type { TGetPaginatedResponseDto } from '@/shared';
 
 class ChallengeRepository {
   async getChallenges(
     filters: TChallengeFilters = DEFAULT_CHALLENGES_FILTERS_VALUES
   ): Promise<TGetPaginatedResponseDto<TChallengeDto>> {
-    const { search, creatorName, category, difficulty, page, limit, isPublished } = filters;
+    const { search, creatorName, categories, difficulty, page, limit, isPublished } = filters;
 
     const where: ChallengeWhereInput = {
       ...(search && { title: { contains: search } }),
       ...(creatorName && { creator: { username: { contains: creatorName } } }),
-      ...(category && { category }),
+      ...(categories && { categories: { hasSome: categories } }),
       ...(difficulty && { difficulty }),
       ...(isPublished && { isPublished }),
     };
@@ -52,6 +57,11 @@ class ChallengeRepository {
     });
 
     return challenge ? mapChallengeDetailToDto(challenge) : null;
+  }
+
+  async getEditChallengeById(challengeId: string): Promise<TEditChallengeDto | null> {
+    const challenge = await prisma.challenge.findUnique({ where: { id: challengeId } });
+    return challenge ? mapEditChallengeToDto(challenge) : null;
   }
 
   async updateChallenge(challengeId: string, data: ChallengeUpdateInput): Promise<TChallengeMutationDto> {

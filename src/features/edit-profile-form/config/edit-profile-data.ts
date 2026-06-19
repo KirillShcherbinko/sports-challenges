@@ -23,6 +23,9 @@ export const EDIT_PROFILE_DATA = {
     preferences: {
       label: 'Индивидуальные предпочтения',
       placeholder: 'Введите ваши интересы',
+      searchable: true,
+      clearable: true,
+      maxDropdownHeight: 400,
     },
 
     avatar: {

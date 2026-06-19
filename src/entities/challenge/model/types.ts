@@ -10,7 +10,7 @@ export type TChallengeWithCreator = ChallengeGetPayload<{
 export type TChallengeFilters = {
   search?: string;
   creatorName?: string;
-  category?: FitnessCategory;
+  categories?: FitnessCategory[];
   difficulty?: ChallengeDifficulty;
   page: number;
   limit: number;

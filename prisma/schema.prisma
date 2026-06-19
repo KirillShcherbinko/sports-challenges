@@ -90,7 +90,8 @@ model Challenge {
   title             String
   description       String
   coverImageUrl     String?             @map("cover_image_url")
-  category          FitnessCategory
+  coverImagePath    String?             @map("cover_image_path")
+  categories        FitnessCategory[]   @default([])
   difficulty        ChallengeDifficulty
   durationDays      Int                 @map("duration_days")
   isPublished       Boolean             @default(false) @map("is_published")

@@ -2,17 +2,17 @@ import { FitnessLevel } from '@/shared/types';
 
 export const FITNESS_LEVEL_OPTIONS = [
   {
-    value: FitnessLevel.beginner,
+    value: FitnessLevel.Beginner,
     label: 'Новичок',
   },
 
   {
-    value: FitnessLevel.intermediate,
+    value: FitnessLevel.Intermediate,
     label: 'Средний',
   },
 
   {
-    value: FitnessLevel.advanced,
+    value: FitnessLevel.Advanced,
     label: 'Продвинутый',
   },
 ];

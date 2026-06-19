@@ -9,6 +9,10 @@ class DailyTaskRepository {
     return dailyTasks.map(mapToDailyTaskDto);
   }
 
+  async countDailyTasks(challengeId: string): Promise<number> {
+    return await prisma.dailyTask.count({ where: { challengeId } });
+  }
+
   async createDailyTask(data: DailyTaskCreateInput): Promise<TDailyTaskMutationDto> {
     const dailyTask = await prisma.dailyTask.create({ data });
     return mapToDailyTaskMutationDto(dailyTask);

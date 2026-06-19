@@ -1,5 +1,5 @@
 import type { Challenge } from '@/shared/client';
-import type { TChallengeDetailDto, TChallengeDto, TChallengeMutationDto } from '../model/dtos';
+import type { TChallengeDetailDto, TChallengeDto, TChallengeMutationDto, TEditChallengeDto } from '../model/dtos';
 import type { TChallengeWithCreator } from '../model/types';
 
 export const mapChallengeToDto = (data: TChallengeWithCreator): TChallengeDto => {
@@ -7,7 +7,7 @@ export const mapChallengeToDto = (data: TChallengeWithCreator): TChallengeDto =>
     id: data.id,
     title: data.title,
     description: data.description,
-    category: data.category,
+    categories: data.categories,
     difficulty: data.difficulty,
     coverImageUrl: data.coverImageUrl,
     likesCount: data.likesCount,
@@ -24,7 +24,7 @@ export const mapChallengeDetailToDto = (data: TChallengeWithCreator): TChallenge
     id: data.id,
     title: data.title,
     description: data.description,
-    category: data.category,
+    categories: data.categories,
     difficulty: data.difficulty,
     coverImageUrl: data.coverImageUrl,
     likesCount: data.likesCount,
@@ -42,5 +42,18 @@ export const mapChallengeMutationToDto = (data: Challenge): TChallengeMutationDt
   return {
     id: data.id,
     title: data.title,
+  };
+};
+
+export const mapEditChallengeToDto = (data: Challenge): TEditChallengeDto => {
+  return {
+    id: data.id,
+    title: data.title,
+    description: data.description,
+    difficulty: data.difficulty,
+    categories: data.categories,
+    coverImageUrl: data.coverImageUrl,
+    coverImagePath: data.coverImagePath,
+    durationDays: data.durationDays,
   };
 };

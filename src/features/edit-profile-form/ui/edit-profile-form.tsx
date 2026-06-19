@@ -1,17 +1,18 @@
 'use client';
 
-import { Avatar, Button, FileButton, Group, Select, Stack, TagsInput, Textarea, TextInput } from '@mantine/core';
+import { Avatar, Button, FileButton, Group, MultiSelect, Select, Stack, Textarea, TextInput } from '@mantine/core';
 import { useForm, useController } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EDIT_PROFILE_DATA } from '../config/edit-profile-data';
-import type { TEditProfileData, TEditProfileSchema } from '@/entities/profile';
+import type { TEditProfileDto, TEditProfileSchema } from '@/entities/profile';
 import { updateProfileAction } from '../actions/update-profile';
 import { notifications } from '@mantine/notifications';
 import { useAvatarField } from '../lib/use-avatar-field';
 import { useTransition } from 'react';
+import { FITNESS_CATEGORY_DATA } from '@/shared';
 
 type TEditProfileFormProps = {
-  initialData: TEditProfileData;
+  initialData: TEditProfileDto;
 };
 
 export const EditProfileForm = ({ initialData }: TEditProfileFormProps) => {
@@ -85,8 +86,9 @@ export const EditProfileForm = ({ initialData }: TEditProfileFormProps) => {
           <TextInput {...fields.username} error={usernameState.error?.message} {...usernameField} />
           <Textarea {...fields.bio} error={bioState.error?.message} {...bioField} value={bioField.value ?? ''} />
 
-          <TagsInput
+          <MultiSelect
             {...fields.preferences}
+            data={FITNESS_CATEGORY_DATA}
             value={preferencesField.value ?? []}
             onChange={preferencesField.onChange}
             error={preferencesState.error?.message}

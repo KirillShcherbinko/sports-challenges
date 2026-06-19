@@ -4,7 +4,7 @@ export type TChallengeDto = {
   id: string;
   title: string;
   description: string;
-  category: FitnessCategory;
+  categories: FitnessCategory[];
   difficulty: ChallengeDifficulty;
   coverImageUrl: string | null;
   likesCount: number;
@@ -27,4 +27,15 @@ export type TChallengeDetailDto = TChallengeDto & {
 export type TChallengeMutationDto = {
   id: string;
   title: string;
+};
+
+export type TEditChallengeDto = {
+  id: string;
+  title: string;
+  description: string;
+  categories: FitnessCategory[];
+  difficulty: ChallengeDifficulty;
+  coverImageUrl: string | null;
+  coverImagePath: string | null;
+  durationDays: number;
 };

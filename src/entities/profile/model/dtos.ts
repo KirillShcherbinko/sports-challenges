@@ -17,6 +17,7 @@ export type TProfileDetailDto = TProfileDto & {
 export type TEditProfileDto = TProfileDto & {
   bio: string | null;
   preferences: FitnessCategory[];
+  avatarPath: string | null;
 };
 
 export type TProfileMutationDto = {

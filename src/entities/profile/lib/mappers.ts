@@ -31,6 +31,7 @@ export const mapEditProfileToDto = (data: Profile): TEditProfileDto => {
     fitnessLevel: data.fitnessLevel,
     bio: data.bio,
     preferences: data.preferences,
+    avatarPath: data.avatarPath,
   };
 };
 

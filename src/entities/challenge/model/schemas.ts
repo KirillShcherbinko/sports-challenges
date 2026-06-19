@@ -25,7 +25,7 @@ export const challengeFiltersSchema = z.object({
   isPublished: z.boolean(),
 });
 
-export const editChallengeSchema = z.object({
+export const createChallengeSchema = z.object({
   title: z
     .string()
     .trim()
@@ -39,13 +39,17 @@ export const editChallengeSchema = z.object({
   coverImage: z
     .instanceof(File)
     .refine((file) => file.size <= MAX_FILE_SIZE, {
-      message: `Максимальный размер файла — ${MAX_FILE_SIZE / 1024 / 1024} МБ`,
+      message: `Максимальный размер файла: ${MAX_FILE_SIZE / 1024 / 1024} МБ`,
     })
     .nullish(),
-  category: z.array(z.enum(FitnessCategory)).default([]).optional(),
+  categories: z.array(z.enum(FitnessCategory)).default([]).optional(),
   difficulty: z.enum(ChallengeDifficulty),
-  duration: z.coerce
+  durationDays: z.coerce
     .number()
     .min(MIN_DURATION, `Минимальная длительность в днях: ${MIN_DURATION}`)
     .max(MAX_DURATION, `Максимальная длительность в днях: ${MAX_DURATION}`),
+});
+
+export const editChallengeSchema = createChallengeSchema.extend({
+  id: z.uuid('Невалидный ID'),
 });

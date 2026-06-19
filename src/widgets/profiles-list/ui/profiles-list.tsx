@@ -1,7 +1,8 @@
 import { ProfileCard, type TProfileFilters } from '@/entities/profile';
-import { Button, Stack, Text } from '@mantine/core';
 import { ProfilesPagination } from '@/features/profiles-pagination';
 import { getProfilesAction } from '../actions/get-profiles';
+import { EmptyListAlert, ErrorAlert } from '@/shared';
+import { ProfilesListLayout } from './profiles-list-layout';
 
 type TProfilesListProps = {
   searchParams: TProfileFilters;
@@ -12,32 +13,26 @@ export const ProfilesList = async ({ searchParams }: TProfilesListProps) => {
 
   if (serverError) {
     return (
-      <Stack align="center">
-        <Text c="var(--mantine-color-dark-2)">{`Ошибка ${serverError}`}</Text>
-        <Button onClick={async () => await getProfilesAction(searchParams)}>Повторить</Button>
-      </Stack>
+      <ErrorAlert errorMessage={`Ошибка ${serverError}`} retryFn={async () => await getProfilesAction(searchParams)} />
     );
   }
 
   if (validationErrors) {
     return (
-      <Stack align="center">
-        <Text c="var(--mantine-color-dark-2)">Неверные параметры фильтрации</Text>
-        <Button onClick={async () => await getProfilesAction({})}>Перезагрузить</Button>
-      </Stack>
+      <ErrorAlert errorMessage="Неверные параметры фильтрации" retryFn={async () => await getProfilesAction({})} />
     );
   }
 
   if (!data) {
-    return <Text c="var(--mantine-color-dark-2)">Список профилей пуст</Text>;
+    return <EmptyListAlert message="Список профилей пуст" />;
   }
 
   return (
-    <Stack maw={800} w="100%" align="center" gap={12}>
-      {data?.items.map(({ id, username, fitnessLevel, avatarUrl }) => (
+    <ProfilesListLayout>
+      {data.items.map(({ id, username, fitnessLevel, avatarUrl }) => (
         <ProfileCard key={id} username={username} fitnessLevel={fitnessLevel} avatarUrl={avatarUrl} />
       ))}
-      <ProfilesPagination total={data.pagination.totalPages || 1} />
-    </Stack>
+      <ProfilesPagination total={data.pagination.totalPages} />
+    </ProfilesListLayout>
   );
 };
