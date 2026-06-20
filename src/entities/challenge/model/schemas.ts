@@ -15,6 +15,8 @@ import {
   MAX_DURATION,
 } from './consts';
 
+export const challengeIdSchema = z.uuid('Невалидный ID');
+
 export const challengeFiltersSchema = z.object({
   search: z.string().trim().optional(),
   creatorName: z.string().trim().optional(),
@@ -51,5 +53,5 @@ export const createChallengeSchema = z.object({
 });
 
 export const editChallengeSchema = createChallengeSchema.extend({
-  id: z.uuid('Невалидный ID'),
+  id: challengeIdSchema,
 });

@@ -1,3 +1,5 @@
+'use server';
+
 import { getUser } from '@/entities/auth/server';
 import { editChallengeSchema } from '@/entities/challenge';
 import { actionClient } from '@/shared/actions';
