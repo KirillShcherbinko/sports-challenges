@@ -10,6 +10,7 @@ export type TProfileChallengeDto = {
     durationDays: number;
   };
   percentage: number;
+  updatedAt: Date;
 };
 
 export type TProfileChallengeMutationDto = {

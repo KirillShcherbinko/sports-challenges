@@ -13,25 +13,33 @@ class TaskCompletionRepository {
     return taskCompletions.map(mapToTaskCompletionDto);
   }
 
-  async isTaskCompleted(
-    challengeId: string,
-    profileId: string,
-    dailyTaskId: string
-  ): Promise<TTaskCompletionDto | null> {
+  async isTaskCompleted(challengeId: string, profileId: string, dayNumber: number): Promise<TTaskCompletionDto | null> {
     const taskCompletion = await prisma.taskCompletion.findUnique({
-      where: { profileId_challengeId_dailyTaskId: { profileId, challengeId, dailyTaskId } },
+      where: { profileId_challengeId_dayNumber: { profileId, challengeId, dayNumber } },
       include: { dailyTask: true },
     });
 
     return taskCompletion ? mapToTaskCompletionDto(taskCompletion) : null;
   }
 
-  async completeTask(challengeId: string, profileId: string, dailyTaskId: string): Promise<TTaskCompletionMutationDto> {
+  async completeTask(challengeId: string, profileId: string, dayNumber: number): Promise<TTaskCompletionMutationDto> {
     const taskCompletion = await prisma.taskCompletion.update({
-      where: { profileId_challengeId_dailyTaskId: { profileId, challengeId, dailyTaskId } },
+      where: { profileId_challengeId_dayNumber: { profileId, challengeId, dayNumber } },
       data: {
         isCompleted: true,
         completedAt: new Date(),
+      },
+      include: { dailyTask: true },
+    });
+
+    return mapToTaskCompletionMutationDto(taskCompletion);
+  }
+
+  async skipTask(challengeId: string, profileId: string, dayNumber: number): Promise<TTaskCompletionMutationDto> {
+    const taskCompletion = await prisma.taskCompletion.update({
+      where: { profileId_challengeId_dayNumber: { profileId, challengeId, dayNumber } },
+      data: {
+        isCompleted: false,
       },
       include: { dailyTask: true },
     });

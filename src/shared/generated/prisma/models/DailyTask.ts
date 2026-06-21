@@ -35,7 +35,6 @@ export type DailyTaskSumAggregateOutputType = {
 }
 
 export type DailyTaskMinAggregateOutputType = {
-  id: string | null
   challengeId: string | null
   dayNumber: number | null
   title: string | null
@@ -46,7 +45,6 @@ export type DailyTaskMinAggregateOutputType = {
 }
 
 export type DailyTaskMaxAggregateOutputType = {
-  id: string | null
   challengeId: string | null
   dayNumber: number | null
   title: string | null
@@ -57,7 +55,6 @@ export type DailyTaskMaxAggregateOutputType = {
 }
 
 export type DailyTaskCountAggregateOutputType = {
-  id: number
   challengeId: number
   dayNumber: number
   title: number
@@ -78,7 +75,6 @@ export type DailyTaskSumAggregateInputType = {
 }
 
 export type DailyTaskMinAggregateInputType = {
-  id?: true
   challengeId?: true
   dayNumber?: true
   title?: true
@@ -89,7 +85,6 @@ export type DailyTaskMinAggregateInputType = {
 }
 
 export type DailyTaskMaxAggregateInputType = {
-  id?: true
   challengeId?: true
   dayNumber?: true
   title?: true
@@ -100,7 +95,6 @@ export type DailyTaskMaxAggregateInputType = {
 }
 
 export type DailyTaskCountAggregateInputType = {
-  id?: true
   challengeId?: true
   dayNumber?: true
   title?: true
@@ -198,7 +192,6 @@ export type DailyTaskGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 export type DailyTaskGroupByOutputType = {
-  id: string
   challengeId: string
   dayNumber: number
   title: string
@@ -232,7 +225,6 @@ export type DailyTaskWhereInput = {
   AND?: Prisma.DailyTaskWhereInput | Prisma.DailyTaskWhereInput[]
   OR?: Prisma.DailyTaskWhereInput[]
   NOT?: Prisma.DailyTaskWhereInput | Prisma.DailyTaskWhereInput[]
-  id?: Prisma.UuidFilter<"DailyTask"> | string
   challengeId?: Prisma.UuidFilter<"DailyTask"> | string
   dayNumber?: Prisma.IntFilter<"DailyTask"> | number
   title?: Prisma.StringFilter<"DailyTask"> | string
@@ -245,7 +237,6 @@ export type DailyTaskWhereInput = {
 }
 
 export type DailyTaskOrderByWithRelationInput = {
-  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   dayNumber?: Prisma.SortOrder
   title?: Prisma.SortOrder
@@ -258,7 +249,6 @@ export type DailyTaskOrderByWithRelationInput = {
 }
 
 export type DailyTaskWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
   challengeId_dayNumber?: Prisma.DailyTaskChallengeIdDayNumberCompoundUniqueInput
   AND?: Prisma.DailyTaskWhereInput | Prisma.DailyTaskWhereInput[]
   OR?: Prisma.DailyTaskWhereInput[]
@@ -272,10 +262,9 @@ export type DailyTaskWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"DailyTask"> | Date | string
   challenge?: Prisma.XOR<Prisma.ChallengeScalarRelationFilter, Prisma.ChallengeWhereInput>
   taskCompletions?: Prisma.TaskCompletionListRelationFilter
-}, "id" | "challengeId_dayNumber">
+}, "challengeId_dayNumber">
 
 export type DailyTaskOrderByWithAggregationInput = {
-  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   dayNumber?: Prisma.SortOrder
   title?: Prisma.SortOrder
@@ -294,7 +283,6 @@ export type DailyTaskScalarWhereWithAggregatesInput = {
   AND?: Prisma.DailyTaskScalarWhereWithAggregatesInput | Prisma.DailyTaskScalarWhereWithAggregatesInput[]
   OR?: Prisma.DailyTaskScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DailyTaskScalarWhereWithAggregatesInput | Prisma.DailyTaskScalarWhereWithAggregatesInput[]
-  id?: Prisma.UuidWithAggregatesFilter<"DailyTask"> | string
   challengeId?: Prisma.UuidWithAggregatesFilter<"DailyTask"> | string
   dayNumber?: Prisma.IntWithAggregatesFilter<"DailyTask"> | number
   title?: Prisma.StringWithAggregatesFilter<"DailyTask"> | string
@@ -305,7 +293,6 @@ export type DailyTaskScalarWhereWithAggregatesInput = {
 }
 
 export type DailyTaskCreateInput = {
-  id?: string
   dayNumber: number
   title: string
   description: string
@@ -317,7 +304,6 @@ export type DailyTaskCreateInput = {
 }
 
 export type DailyTaskUncheckedCreateInput = {
-  id?: string
   challengeId: string
   dayNumber: number
   title: string
@@ -329,7 +315,6 @@ export type DailyTaskUncheckedCreateInput = {
 }
 
 export type DailyTaskUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -341,7 +326,6 @@ export type DailyTaskUpdateInput = {
 }
 
 export type DailyTaskUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
@@ -353,7 +337,6 @@ export type DailyTaskUncheckedUpdateInput = {
 }
 
 export type DailyTaskCreateManyInput = {
-  id?: string
   challengeId: string
   dayNumber: number
   title: string
@@ -364,7 +347,6 @@ export type DailyTaskCreateManyInput = {
 }
 
 export type DailyTaskUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -374,7 +356,6 @@ export type DailyTaskUpdateManyMutationInput = {
 }
 
 export type DailyTaskUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
@@ -400,7 +381,6 @@ export type DailyTaskChallengeIdDayNumberCompoundUniqueInput = {
 }
 
 export type DailyTaskCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   dayNumber?: Prisma.SortOrder
   title?: Prisma.SortOrder
@@ -415,7 +395,6 @@ export type DailyTaskAvgOrderByAggregateInput = {
 }
 
 export type DailyTaskMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   dayNumber?: Prisma.SortOrder
   title?: Prisma.SortOrder
@@ -426,7 +405,6 @@ export type DailyTaskMaxOrderByAggregateInput = {
 }
 
 export type DailyTaskMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   dayNumber?: Prisma.SortOrder
   title?: Prisma.SortOrder
@@ -506,7 +484,6 @@ export type DailyTaskUpdateOneRequiredWithoutTaskCompletionsNestedInput = {
 }
 
 export type DailyTaskCreateWithoutChallengeInput = {
-  id?: string
   dayNumber: number
   title: string
   description: string
@@ -517,7 +494,6 @@ export type DailyTaskCreateWithoutChallengeInput = {
 }
 
 export type DailyTaskUncheckedCreateWithoutChallengeInput = {
-  id?: string
   dayNumber: number
   title: string
   description: string
@@ -557,7 +533,6 @@ export type DailyTaskScalarWhereInput = {
   AND?: Prisma.DailyTaskScalarWhereInput | Prisma.DailyTaskScalarWhereInput[]
   OR?: Prisma.DailyTaskScalarWhereInput[]
   NOT?: Prisma.DailyTaskScalarWhereInput | Prisma.DailyTaskScalarWhereInput[]
-  id?: Prisma.UuidFilter<"DailyTask"> | string
   challengeId?: Prisma.UuidFilter<"DailyTask"> | string
   dayNumber?: Prisma.IntFilter<"DailyTask"> | number
   title?: Prisma.StringFilter<"DailyTask"> | string
@@ -568,7 +543,6 @@ export type DailyTaskScalarWhereInput = {
 }
 
 export type DailyTaskCreateWithoutTaskCompletionsInput = {
-  id?: string
   dayNumber: number
   title: string
   description: string
@@ -579,7 +553,6 @@ export type DailyTaskCreateWithoutTaskCompletionsInput = {
 }
 
 export type DailyTaskUncheckedCreateWithoutTaskCompletionsInput = {
-  id?: string
   challengeId: string
   dayNumber: number
   title: string
@@ -606,7 +579,6 @@ export type DailyTaskUpdateToOneWithWhereWithoutTaskCompletionsInput = {
 }
 
 export type DailyTaskUpdateWithoutTaskCompletionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -617,7 +589,6 @@ export type DailyTaskUpdateWithoutTaskCompletionsInput = {
 }
 
 export type DailyTaskUncheckedUpdateWithoutTaskCompletionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
@@ -628,7 +599,6 @@ export type DailyTaskUncheckedUpdateWithoutTaskCompletionsInput = {
 }
 
 export type DailyTaskCreateManyChallengeInput = {
-  id?: string
   dayNumber: number
   title: string
   description: string
@@ -638,7 +608,6 @@ export type DailyTaskCreateManyChallengeInput = {
 }
 
 export type DailyTaskUpdateWithoutChallengeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -649,7 +618,6 @@ export type DailyTaskUpdateWithoutChallengeInput = {
 }
 
 export type DailyTaskUncheckedUpdateWithoutChallengeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -660,7 +628,6 @@ export type DailyTaskUncheckedUpdateWithoutChallengeInput = {
 }
 
 export type DailyTaskUncheckedUpdateManyWithoutChallengeInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
@@ -701,7 +668,6 @@ export type DailyTaskCountOutputTypeCountTaskCompletionsArgs<ExtArgs extends run
 
 
 export type DailyTaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   challengeId?: boolean
   dayNumber?: boolean
   title?: boolean
@@ -715,7 +681,6 @@ export type DailyTaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 }, ExtArgs["result"]["dailyTask"]>
 
 export type DailyTaskSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   challengeId?: boolean
   dayNumber?: boolean
   title?: boolean
@@ -727,7 +692,6 @@ export type DailyTaskSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
 }, ExtArgs["result"]["dailyTask"]>
 
 export type DailyTaskSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
   challengeId?: boolean
   dayNumber?: boolean
   title?: boolean
@@ -739,7 +703,6 @@ export type DailyTaskSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 }, ExtArgs["result"]["dailyTask"]>
 
 export type DailyTaskSelectScalar = {
-  id?: boolean
   challengeId?: boolean
   dayNumber?: boolean
   title?: boolean
@@ -749,7 +712,7 @@ export type DailyTaskSelectScalar = {
   updatedAt?: boolean
 }
 
-export type DailyTaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "challengeId" | "dayNumber" | "title" | "description" | "exerciseType" | "createdAt" | "updatedAt", ExtArgs["result"]["dailyTask"]>
+export type DailyTaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"challengeId" | "dayNumber" | "title" | "description" | "exerciseType" | "createdAt" | "updatedAt", ExtArgs["result"]["dailyTask"]>
 export type DailyTaskInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   challenge?: boolean | Prisma.ChallengeDefaultArgs<ExtArgs>
   taskCompletions?: boolean | Prisma.DailyTask$taskCompletionsArgs<ExtArgs>
@@ -769,7 +732,6 @@ export type $DailyTaskPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     taskCompletions: Prisma.$TaskCompletionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
     challengeId: string
     dayNumber: number
     title: string
@@ -860,8 +822,8 @@ export interface DailyTaskDelegate<ExtArgs extends runtime.Types.Extensions.Inte
    * // Get first 10 DailyTasks
    * const dailyTasks = await prisma.dailyTask.findMany({ take: 10 })
    * 
-   * // Only select the `id`
-   * const dailyTaskWithIdOnly = await prisma.dailyTask.findMany({ select: { id: true } })
+   * // Only select the `challengeId`
+   * const dailyTaskWithChallengeIdOnly = await prisma.dailyTask.findMany({ select: { challengeId: true } })
    * 
    */
   findMany<T extends DailyTaskFindManyArgs>(args?: Prisma.SelectSubset<T, DailyTaskFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DailyTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -905,9 +867,9 @@ export interface DailyTaskDelegate<ExtArgs extends runtime.Types.Extensions.Inte
    *   ]
    * })
    * 
-   * // Create many DailyTasks and only return the `id`
-   * const dailyTaskWithIdOnly = await prisma.dailyTask.createManyAndReturn({
-   *   select: { id: true },
+   * // Create many DailyTasks and only return the `challengeId`
+   * const dailyTaskWithChallengeIdOnly = await prisma.dailyTask.createManyAndReturn({
+   *   select: { challengeId: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -996,9 +958,9 @@ export interface DailyTaskDelegate<ExtArgs extends runtime.Types.Extensions.Inte
    *   ]
    * })
    * 
-   * // Update zero or more DailyTasks and only return the `id`
-   * const dailyTaskWithIdOnly = await prisma.dailyTask.updateManyAndReturn({
-   *   select: { id: true },
+   * // Update zero or more DailyTasks and only return the `challengeId`
+   * const dailyTaskWithChallengeIdOnly = await prisma.dailyTask.updateManyAndReturn({
+   *   select: { challengeId: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -1202,7 +1164,6 @@ export interface Prisma__DailyTaskClient<T, Null = never, ExtArgs extends runtim
  * Fields of the DailyTask model
  */
 export interface DailyTaskFieldRefs {
-  readonly id: Prisma.FieldRef<"DailyTask", 'String'>
   readonly challengeId: Prisma.FieldRef<"DailyTask", 'String'>
   readonly dayNumber: Prisma.FieldRef<"DailyTask", 'Int'>
   readonly title: Prisma.FieldRef<"DailyTask", 'String'>

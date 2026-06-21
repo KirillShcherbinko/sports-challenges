@@ -12,6 +12,7 @@ export const mapProfileChallengeToDto = (data: TProfileChallengeWithChallenge): 
       durationDays: data.challenge.durationDays,
     },
     percentage: Math.round((data.currentDay * 100) / data.challenge.durationDays),
+    updatedAt: data.updatedAt,
   };
 };
 

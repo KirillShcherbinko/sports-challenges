@@ -109,7 +109,6 @@ model Challenge {
 }
 
 model DailyTask {
-  id           String          @id @default(uuid()) @db.Uuid
   challengeId  String          @map("challenge_id") @db.Uuid
   challenge    Challenge       @relation(fields: [challengeId], references: [id], onDelete: Cascade)
   dayNumber    Int             @map("day_number")
@@ -146,14 +145,14 @@ model ProfileChallenge {
 model TaskCompletion {
   profileId        String           @map("profile_id") @db.Uuid
   challengeId      String           @map("challenge_id") @db.Uuid
-  dailyTaskId      String           @map("daily_task_id") @db.Uuid
+  dayNumber        Int              @map("day_number")
   profileChallenge ProfileChallenge @relation(fields: [profileId, challengeId], references: [profileId, challengeId], onDelete: Cascade)
-  dailyTask        DailyTask        @relation(fields: [dailyTaskId], references: [id], onDelete: Cascade)
+  dailyTask        DailyTask        @relation(fields: [challengeId, dayNumber], references: [challengeId, dayNumber], onDelete: Cascade)
   isCompleted      Boolean          @default(false) @map("is_completed")
   completedAt      DateTime?        @map("completed_at")
   createdAt        DateTime         @default(now()) @map("created_at")
 
-  @@id([profileId, challengeId, dailyTaskId])
+  @@id([profileId, challengeId, dayNumber])
   @@map("task_completions")
 }
 

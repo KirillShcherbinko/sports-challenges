@@ -116,7 +116,6 @@ export type ChallengeScalarFieldEnum = (typeof ChallengeScalarFieldEnum)[keyof t
 
 
 export const DailyTaskScalarFieldEnum = {
-  id: 'id',
   challengeId: 'challengeId',
   dayNumber: 'dayNumber',
   title: 'title',
@@ -146,7 +145,7 @@ export type ProfileChallengeScalarFieldEnum = (typeof ProfileChallengeScalarFiel
 export const TaskCompletionScalarFieldEnum = {
   profileId: 'profileId',
   challengeId: 'challengeId',
-  dailyTaskId: 'dailyTaskId',
+  dayNumber: 'dayNumber',
   isCompleted: 'isCompleted',
   completedAt: 'completedAt',
   createdAt: 'createdAt'

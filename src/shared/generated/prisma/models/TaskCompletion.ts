@@ -20,14 +20,24 @@ export type TaskCompletionModel = runtime.Types.Result.DefaultSelection<Prisma.$
 
 export type AggregateTaskCompletion = {
   _count: TaskCompletionCountAggregateOutputType | null
+  _avg: TaskCompletionAvgAggregateOutputType | null
+  _sum: TaskCompletionSumAggregateOutputType | null
   _min: TaskCompletionMinAggregateOutputType | null
   _max: TaskCompletionMaxAggregateOutputType | null
+}
+
+export type TaskCompletionAvgAggregateOutputType = {
+  dayNumber: number | null
+}
+
+export type TaskCompletionSumAggregateOutputType = {
+  dayNumber: number | null
 }
 
 export type TaskCompletionMinAggregateOutputType = {
   profileId: string | null
   challengeId: string | null
-  dailyTaskId: string | null
+  dayNumber: number | null
   isCompleted: boolean | null
   completedAt: Date | null
   createdAt: Date | null
@@ -36,7 +46,7 @@ export type TaskCompletionMinAggregateOutputType = {
 export type TaskCompletionMaxAggregateOutputType = {
   profileId: string | null
   challengeId: string | null
-  dailyTaskId: string | null
+  dayNumber: number | null
   isCompleted: boolean | null
   completedAt: Date | null
   createdAt: Date | null
@@ -45,7 +55,7 @@ export type TaskCompletionMaxAggregateOutputType = {
 export type TaskCompletionCountAggregateOutputType = {
   profileId: number
   challengeId: number
-  dailyTaskId: number
+  dayNumber: number
   isCompleted: number
   completedAt: number
   createdAt: number
@@ -53,10 +63,18 @@ export type TaskCompletionCountAggregateOutputType = {
 }
 
 
+export type TaskCompletionAvgAggregateInputType = {
+  dayNumber?: true
+}
+
+export type TaskCompletionSumAggregateInputType = {
+  dayNumber?: true
+}
+
 export type TaskCompletionMinAggregateInputType = {
   profileId?: true
   challengeId?: true
-  dailyTaskId?: true
+  dayNumber?: true
   isCompleted?: true
   completedAt?: true
   createdAt?: true
@@ -65,7 +83,7 @@ export type TaskCompletionMinAggregateInputType = {
 export type TaskCompletionMaxAggregateInputType = {
   profileId?: true
   challengeId?: true
-  dailyTaskId?: true
+  dayNumber?: true
   isCompleted?: true
   completedAt?: true
   createdAt?: true
@@ -74,7 +92,7 @@ export type TaskCompletionMaxAggregateInputType = {
 export type TaskCompletionCountAggregateInputType = {
   profileId?: true
   challengeId?: true
-  dailyTaskId?: true
+  dayNumber?: true
   isCompleted?: true
   completedAt?: true
   createdAt?: true
@@ -119,6 +137,18 @@ export type TaskCompletionAggregateArgs<ExtArgs extends runtime.Types.Extensions
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: TaskCompletionAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: TaskCompletionSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: TaskCompletionMinAggregateInputType
@@ -149,6 +179,8 @@ export type TaskCompletionGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   _count?: TaskCompletionCountAggregateInputType | true
+  _avg?: TaskCompletionAvgAggregateInputType
+  _sum?: TaskCompletionSumAggregateInputType
   _min?: TaskCompletionMinAggregateInputType
   _max?: TaskCompletionMaxAggregateInputType
 }
@@ -156,11 +188,13 @@ export type TaskCompletionGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
 export type TaskCompletionGroupByOutputType = {
   profileId: string
   challengeId: string
-  dailyTaskId: string
+  dayNumber: number
   isCompleted: boolean
   completedAt: Date | null
   createdAt: Date
   _count: TaskCompletionCountAggregateOutputType | null
+  _avg: TaskCompletionAvgAggregateOutputType | null
+  _sum: TaskCompletionSumAggregateOutputType | null
   _min: TaskCompletionMinAggregateOutputType | null
   _max: TaskCompletionMaxAggregateOutputType | null
 }
@@ -186,7 +220,7 @@ export type TaskCompletionWhereInput = {
   NOT?: Prisma.TaskCompletionWhereInput | Prisma.TaskCompletionWhereInput[]
   profileId?: Prisma.UuidFilter<"TaskCompletion"> | string
   challengeId?: Prisma.UuidFilter<"TaskCompletion"> | string
-  dailyTaskId?: Prisma.UuidFilter<"TaskCompletion"> | string
+  dayNumber?: Prisma.IntFilter<"TaskCompletion"> | number
   isCompleted?: Prisma.BoolFilter<"TaskCompletion"> | boolean
   completedAt?: Prisma.DateTimeNullableFilter<"TaskCompletion"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"TaskCompletion"> | Date | string
@@ -197,7 +231,7 @@ export type TaskCompletionWhereInput = {
 export type TaskCompletionOrderByWithRelationInput = {
   profileId?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
-  dailyTaskId?: Prisma.SortOrder
+  dayNumber?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -206,30 +240,32 @@ export type TaskCompletionOrderByWithRelationInput = {
 }
 
 export type TaskCompletionWhereUniqueInput = Prisma.AtLeast<{
-  profileId_challengeId_dailyTaskId?: Prisma.TaskCompletionProfileIdChallengeIdDailyTaskIdCompoundUniqueInput
+  profileId_challengeId_dayNumber?: Prisma.TaskCompletionProfileIdChallengeIdDayNumberCompoundUniqueInput
   AND?: Prisma.TaskCompletionWhereInput | Prisma.TaskCompletionWhereInput[]
   OR?: Prisma.TaskCompletionWhereInput[]
   NOT?: Prisma.TaskCompletionWhereInput | Prisma.TaskCompletionWhereInput[]
   profileId?: Prisma.UuidFilter<"TaskCompletion"> | string
   challengeId?: Prisma.UuidFilter<"TaskCompletion"> | string
-  dailyTaskId?: Prisma.UuidFilter<"TaskCompletion"> | string
+  dayNumber?: Prisma.IntFilter<"TaskCompletion"> | number
   isCompleted?: Prisma.BoolFilter<"TaskCompletion"> | boolean
   completedAt?: Prisma.DateTimeNullableFilter<"TaskCompletion"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"TaskCompletion"> | Date | string
   profileChallenge?: Prisma.XOR<Prisma.ProfileChallengeScalarRelationFilter, Prisma.ProfileChallengeWhereInput>
   dailyTask?: Prisma.XOR<Prisma.DailyTaskScalarRelationFilter, Prisma.DailyTaskWhereInput>
-}, "profileId_challengeId_dailyTaskId">
+}, "profileId_challengeId_dayNumber">
 
 export type TaskCompletionOrderByWithAggregationInput = {
   profileId?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
-  dailyTaskId?: Prisma.SortOrder
+  dayNumber?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.TaskCompletionCountOrderByAggregateInput
+  _avg?: Prisma.TaskCompletionAvgOrderByAggregateInput
   _max?: Prisma.TaskCompletionMaxOrderByAggregateInput
   _min?: Prisma.TaskCompletionMinOrderByAggregateInput
+  _sum?: Prisma.TaskCompletionSumOrderByAggregateInput
 }
 
 export type TaskCompletionScalarWhereWithAggregatesInput = {
@@ -238,7 +274,7 @@ export type TaskCompletionScalarWhereWithAggregatesInput = {
   NOT?: Prisma.TaskCompletionScalarWhereWithAggregatesInput | Prisma.TaskCompletionScalarWhereWithAggregatesInput[]
   profileId?: Prisma.UuidWithAggregatesFilter<"TaskCompletion"> | string
   challengeId?: Prisma.UuidWithAggregatesFilter<"TaskCompletion"> | string
-  dailyTaskId?: Prisma.UuidWithAggregatesFilter<"TaskCompletion"> | string
+  dayNumber?: Prisma.IntWithAggregatesFilter<"TaskCompletion"> | number
   isCompleted?: Prisma.BoolWithAggregatesFilter<"TaskCompletion"> | boolean
   completedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"TaskCompletion"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"TaskCompletion"> | Date | string
@@ -255,7 +291,7 @@ export type TaskCompletionCreateInput = {
 export type TaskCompletionUncheckedCreateInput = {
   profileId: string
   challengeId: string
-  dailyTaskId: string
+  dayNumber: number
   isCompleted?: boolean
   completedAt?: Date | string | null
   createdAt?: Date | string
@@ -272,7 +308,7 @@ export type TaskCompletionUpdateInput = {
 export type TaskCompletionUncheckedUpdateInput = {
   profileId?: Prisma.StringFieldUpdateOperationsInput | string
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
-  dailyTaskId?: Prisma.StringFieldUpdateOperationsInput | string
+  dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -281,7 +317,7 @@ export type TaskCompletionUncheckedUpdateInput = {
 export type TaskCompletionCreateManyInput = {
   profileId: string
   challengeId: string
-  dailyTaskId: string
+  dayNumber: number
   isCompleted?: boolean
   completedAt?: Date | string | null
   createdAt?: Date | string
@@ -296,7 +332,7 @@ export type TaskCompletionUpdateManyMutationInput = {
 export type TaskCompletionUncheckedUpdateManyInput = {
   profileId?: Prisma.StringFieldUpdateOperationsInput | string
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
-  dailyTaskId?: Prisma.StringFieldUpdateOperationsInput | string
+  dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -312,25 +348,29 @@ export type TaskCompletionOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type TaskCompletionProfileIdChallengeIdDailyTaskIdCompoundUniqueInput = {
+export type TaskCompletionProfileIdChallengeIdDayNumberCompoundUniqueInput = {
   profileId: string
   challengeId: string
-  dailyTaskId: string
+  dayNumber: number
 }
 
 export type TaskCompletionCountOrderByAggregateInput = {
   profileId?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
-  dailyTaskId?: Prisma.SortOrder
+  dayNumber?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
+export type TaskCompletionAvgOrderByAggregateInput = {
+  dayNumber?: Prisma.SortOrder
+}
+
 export type TaskCompletionMaxOrderByAggregateInput = {
   profileId?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
-  dailyTaskId?: Prisma.SortOrder
+  dayNumber?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -339,10 +379,14 @@ export type TaskCompletionMaxOrderByAggregateInput = {
 export type TaskCompletionMinOrderByAggregateInput = {
   profileId?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
-  dailyTaskId?: Prisma.SortOrder
+  dayNumber?: Prisma.SortOrder
   isCompleted?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+}
+
+export type TaskCompletionSumOrderByAggregateInput = {
+  dayNumber?: Prisma.SortOrder
 }
 
 export type TaskCompletionCreateNestedManyWithoutDailyTaskInput = {
@@ -438,7 +482,6 @@ export type TaskCompletionCreateWithoutDailyTaskInput = {
 
 export type TaskCompletionUncheckedCreateWithoutDailyTaskInput = {
   profileId: string
-  challengeId: string
   isCompleted?: boolean
   completedAt?: Date | string | null
   createdAt?: Date | string
@@ -476,7 +519,7 @@ export type TaskCompletionScalarWhereInput = {
   NOT?: Prisma.TaskCompletionScalarWhereInput | Prisma.TaskCompletionScalarWhereInput[]
   profileId?: Prisma.UuidFilter<"TaskCompletion"> | string
   challengeId?: Prisma.UuidFilter<"TaskCompletion"> | string
-  dailyTaskId?: Prisma.UuidFilter<"TaskCompletion"> | string
+  dayNumber?: Prisma.IntFilter<"TaskCompletion"> | number
   isCompleted?: Prisma.BoolFilter<"TaskCompletion"> | boolean
   completedAt?: Prisma.DateTimeNullableFilter<"TaskCompletion"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"TaskCompletion"> | Date | string
@@ -490,7 +533,7 @@ export type TaskCompletionCreateWithoutProfileChallengeInput = {
 }
 
 export type TaskCompletionUncheckedCreateWithoutProfileChallengeInput = {
-  dailyTaskId: string
+  dayNumber: number
   isCompleted?: boolean
   completedAt?: Date | string | null
   createdAt?: Date | string
@@ -524,7 +567,6 @@ export type TaskCompletionUpdateManyWithWhereWithoutProfileChallengeInput = {
 
 export type TaskCompletionCreateManyDailyTaskInput = {
   profileId: string
-  challengeId: string
   isCompleted?: boolean
   completedAt?: Date | string | null
   createdAt?: Date | string
@@ -539,7 +581,6 @@ export type TaskCompletionUpdateWithoutDailyTaskInput = {
 
 export type TaskCompletionUncheckedUpdateWithoutDailyTaskInput = {
   profileId?: Prisma.StringFieldUpdateOperationsInput | string
-  challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -547,14 +588,13 @@ export type TaskCompletionUncheckedUpdateWithoutDailyTaskInput = {
 
 export type TaskCompletionUncheckedUpdateManyWithoutDailyTaskInput = {
   profileId?: Prisma.StringFieldUpdateOperationsInput | string
-  challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TaskCompletionCreateManyProfileChallengeInput = {
-  dailyTaskId: string
+  dayNumber: number
   isCompleted?: boolean
   completedAt?: Date | string | null
   createdAt?: Date | string
@@ -568,14 +608,14 @@ export type TaskCompletionUpdateWithoutProfileChallengeInput = {
 }
 
 export type TaskCompletionUncheckedUpdateWithoutProfileChallengeInput = {
-  dailyTaskId?: Prisma.StringFieldUpdateOperationsInput | string
+  dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type TaskCompletionUncheckedUpdateManyWithoutProfileChallengeInput = {
-  dailyTaskId?: Prisma.StringFieldUpdateOperationsInput | string
+  dayNumber?: Prisma.IntFieldUpdateOperationsInput | number
   isCompleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -586,7 +626,7 @@ export type TaskCompletionUncheckedUpdateManyWithoutProfileChallengeInput = {
 export type TaskCompletionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   profileId?: boolean
   challengeId?: boolean
-  dailyTaskId?: boolean
+  dayNumber?: boolean
   isCompleted?: boolean
   completedAt?: boolean
   createdAt?: boolean
@@ -597,7 +637,7 @@ export type TaskCompletionSelect<ExtArgs extends runtime.Types.Extensions.Intern
 export type TaskCompletionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   profileId?: boolean
   challengeId?: boolean
-  dailyTaskId?: boolean
+  dayNumber?: boolean
   isCompleted?: boolean
   completedAt?: boolean
   createdAt?: boolean
@@ -608,7 +648,7 @@ export type TaskCompletionSelectCreateManyAndReturn<ExtArgs extends runtime.Type
 export type TaskCompletionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   profileId?: boolean
   challengeId?: boolean
-  dailyTaskId?: boolean
+  dayNumber?: boolean
   isCompleted?: boolean
   completedAt?: boolean
   createdAt?: boolean
@@ -619,13 +659,13 @@ export type TaskCompletionSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
 export type TaskCompletionSelectScalar = {
   profileId?: boolean
   challengeId?: boolean
-  dailyTaskId?: boolean
+  dayNumber?: boolean
   isCompleted?: boolean
   completedAt?: boolean
   createdAt?: boolean
 }
 
-export type TaskCompletionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"profileId" | "challengeId" | "dailyTaskId" | "isCompleted" | "completedAt" | "createdAt", ExtArgs["result"]["taskCompletion"]>
+export type TaskCompletionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"profileId" | "challengeId" | "dayNumber" | "isCompleted" | "completedAt" | "createdAt", ExtArgs["result"]["taskCompletion"]>
 export type TaskCompletionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   profileChallenge?: boolean | Prisma.ProfileChallengeDefaultArgs<ExtArgs>
   dailyTask?: boolean | Prisma.DailyTaskDefaultArgs<ExtArgs>
@@ -648,7 +688,7 @@ export type $TaskCompletionPayload<ExtArgs extends runtime.Types.Extensions.Inte
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     profileId: string
     challengeId: string
-    dailyTaskId: string
+    dayNumber: number
     isCompleted: boolean
     completedAt: Date | null
     createdAt: Date
@@ -1079,7 +1119,7 @@ export interface Prisma__TaskCompletionClient<T, Null = never, ExtArgs extends r
 export interface TaskCompletionFieldRefs {
   readonly profileId: Prisma.FieldRef<"TaskCompletion", 'String'>
   readonly challengeId: Prisma.FieldRef<"TaskCompletion", 'String'>
-  readonly dailyTaskId: Prisma.FieldRef<"TaskCompletion", 'String'>
+  readonly dayNumber: Prisma.FieldRef<"TaskCompletion", 'Int'>
   readonly isCompleted: Prisma.FieldRef<"TaskCompletion", 'Boolean'>
   readonly completedAt: Prisma.FieldRef<"TaskCompletion", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"TaskCompletion", 'DateTime'>

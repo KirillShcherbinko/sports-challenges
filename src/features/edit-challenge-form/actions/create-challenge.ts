@@ -1,7 +1,6 @@
 'use server';
 
 import { getUser } from '@/entities/auth/server';
-import { createChallengeSchema } from '@/entities/challenge';
 import { actionClient } from '@/shared/actions';
 import { createServer } from '@/shared/server';
 import type { ChallengeCreateInput } from '@/shared/types';
@@ -10,8 +9,9 @@ import { ERoutes } from '@/shared';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { challengeRepository } from '@/entities/challenge/server';
+import { challengeSchema } from '@/entities/challenge';
 
-export const updateChallengeAction = actionClient.inputSchema(createChallengeSchema).action(async ({ parsedInput }) => {
+export const updateChallengeAction = actionClient.inputSchema(challengeSchema).action(async ({ parsedInput }) => {
   const supabase = await createServer();
   const user = await getUser(supabase);
 

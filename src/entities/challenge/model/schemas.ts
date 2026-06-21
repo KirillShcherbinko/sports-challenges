@@ -14,8 +14,7 @@ import {
   MIN_DURATION,
   MAX_DURATION,
 } from './consts';
-
-export const challengeIdSchema = z.uuid('Невалидный ID');
+import { idSchema } from '@/shared';
 
 export const challengeFiltersSchema = z.object({
   search: z.string().trim().optional(),
@@ -27,7 +26,7 @@ export const challengeFiltersSchema = z.object({
   isPublished: z.boolean(),
 });
 
-export const createChallengeSchema = z.object({
+export const challengeSchema = z.object({
   title: z
     .string()
     .trim()
@@ -36,8 +35,8 @@ export const createChallengeSchema = z.object({
   description: z
     .string()
     .trim()
-    .min(MIN_TITLE_LENGTH, `Минимум символов: ${MIN_DESCRIPTION_LENGTH}`)
-    .max(MAX_TITLE_LENGTH, `Максимум символов: ${MAX_DESCRIPTION_LENGTH}`),
+    .min(MIN_DESCRIPTION_LENGTH, `Минимум символов: ${MIN_DESCRIPTION_LENGTH}`)
+    .max(MAX_DESCRIPTION_LENGTH, `Максимум символов: ${MAX_DESCRIPTION_LENGTH}`),
   coverImage: z
     .instanceof(File)
     .refine((file) => file.size <= MAX_FILE_SIZE, {
@@ -52,6 +51,6 @@ export const createChallengeSchema = z.object({
     .max(MAX_DURATION, `Максимальная длительность в днях: ${MAX_DURATION}`),
 });
 
-export const editChallengeSchema = createChallengeSchema.extend({
-  id: challengeIdSchema,
+export const challengeSchemaWithId = challengeSchema.extend({
+  id: idSchema,
 });
