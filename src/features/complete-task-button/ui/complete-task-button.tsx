@@ -22,6 +22,7 @@ export const CompleteTaskButton = () => {
         notifications.show({
           title: 'Успех',
           message: `Задание "${taskCompletion.dailyTask.title}" за ${taskCompletion.dailyTask.dayNumber} день выполнено`,
+          color: 'green',
         });
       }
     });

@@ -9,7 +9,7 @@ import { actionClient } from '@/shared/actions';
 import { createServer } from '@/shared/server';
 import { revalidatePath } from 'next/cache';
 
-export const deleteTaskAction = actionClient
+export const deleteDailyTaskAction = actionClient
   .inputSchema(challengeIdAndDayNumberSchema)
   .action(async ({ parsedInput }): Promise<TDailyTaskMutationDto> => {
     const supabase = await createServer();

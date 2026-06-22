@@ -10,7 +10,7 @@ import { revalidatePath } from 'next/cache';
 
 export const deleteCommentAction = actionClient
   .inputSchema(idSchema)
-  .action(async ({ parsedInput: challengeId }): Promise<void> => {
+  .action(async ({ parsedInput: challengeId }): Promise<boolean> => {
     const supabase = await createServer();
     const user = await getUser(supabase);
 
@@ -18,4 +18,6 @@ export const deleteCommentAction = actionClient
     await challengeCommentRepository.deleteChallengeComment(challengeId, user.id);
 
     revalidatePath(ERoutes.CHALLENGES);
+
+    return true;
   });

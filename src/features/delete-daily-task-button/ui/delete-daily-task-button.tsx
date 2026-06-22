@@ -2,26 +2,30 @@
 
 import { Button } from '@mantine/core';
 import { useParams } from 'next/navigation';
-import { deleteChallengeAction } from '../actions/delete-challenge';
+import { deleteDailyTaskAction } from '../actions/delete-daily-task';
 import { useTransition } from 'react';
 import { notifications } from '@mantine/notifications';
 
-export const DeleteChallengeButton = () => {
+type TDeleteChallengeButtonProps = {
+  dayNumber: number;
+};
+
+export const DeleteDailyTaskButton = ({ dayNumber }: TDeleteChallengeButtonProps) => {
   const { challengeId } = useParams<{ challengeId: string }>();
   const [isPending, startTransition] = useTransition();
 
   const handleChallengeDeletion = async () => {
     startTransition(async () => {
-      const { data: challenge, serverError } = await deleteChallengeAction(challengeId);
+      const { data: dailyTask, serverError } = await deleteDailyTaskAction({ challengeId, dayNumber });
 
       if (serverError) {
         notifications.show({ title: 'Ошибка', message: serverError, color: 'red' });
       }
 
-      if (challenge) {
+      if (dailyTask) {
         notifications.show({
           title: 'Успех',
-          message: `Челлендж ${challenge.title} успешно удалён`,
+          message: `Задание ${dailyTask.title} успешно удалёно`,
           color: 'green',
         });
       }
