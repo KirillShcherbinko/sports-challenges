@@ -30,14 +30,12 @@ export const SignInForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack gap="sm">
-        <TextInput error={formState.errors.email?.message} {...fields.email} {...register('email')} />
-        <PasswordInput error={formState.errors.password?.message} {...fields.password} {...register('password')} />
-        <Button type="submit" loading={formState.isSubmitting || isPending}>
-          Войти
-        </Button>
-      </Stack>
-    </form>
+    <Stack component="form" gap="sm" onSubmit={handleSubmit(onSubmit)}>
+      <TextInput error={formState.errors.email?.message} {...fields.email} {...register('email')} />
+      <PasswordInput error={formState.errors.password?.message} {...fields.password} {...register('password')} />
+      <Button type="submit" loading={formState.isSubmitting || isPending}>
+        Войти
+      </Button>
+    </Stack>
   );
 };

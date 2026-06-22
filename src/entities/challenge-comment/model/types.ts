@@ -1,4 +1,6 @@
 import type { ChallengeCommentGetPayload } from '@/shared/types';
+import type z from 'zod';
+import type { challengeCommentSchema } from './schemas';
 
 export type TChallengeCommentsFilters = {
   page: number;
@@ -8,3 +10,5 @@ export type TChallengeCommentsFilters = {
 export type TChallengeCommentWithAuthor = ChallengeCommentGetPayload<{
   include: { profile: true };
 }>;
+
+export type TChallengeCommentSchema = z.infer<typeof challengeCommentSchema>;

@@ -6,13 +6,14 @@ import type {
   ChallengeCommentWhereInput,
 } from '@/shared/types';
 import { mapToChallengeCommentDto } from '../lib/mappers';
-import type { TChallengeCommentDto, TGetChallengeCommentsResponse } from './dtos';
+import type { TChallengeCommentDto } from './dtos';
+import type { TGetPaginatedResponseDto } from '@/shared';
 
 class ChallengeCommentRepository {
   async getChallengeComments(
     challengeId: string,
     filters: TChallengeCommentsFilters
-  ): Promise<TGetChallengeCommentsResponse> {
+  ): Promise<TGetPaginatedResponseDto<TChallengeCommentDto>> {
     const { page, limit } = filters;
     const where: ChallengeCommentWhereInput = { challengeId };
 

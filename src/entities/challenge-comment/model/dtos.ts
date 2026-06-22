@@ -1,5 +1,3 @@
-import type { TPaginationResponse } from '@/shared';
-
 export type TChallengeCommentDto = {
   id: string;
   content: string;
@@ -11,7 +9,6 @@ export type TChallengeCommentDto = {
   };
 };
 
-export type TGetChallengeCommentsResponse = {
-  items: TChallengeCommentDto[];
-  pagination: TPaginationResponse;
+export type TEditChallengeCommentDto = {
+  content: string;
 };
