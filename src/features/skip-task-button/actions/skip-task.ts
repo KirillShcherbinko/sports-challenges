@@ -1,6 +1,7 @@
 'use server';
 
 import { getUser } from '@/entities/auth/server';
+import { challengeExistsAndPublished } from '@/entities/challenge/server';
 import { profileChallengeRepository } from '@/entities/profile-challenge/server';
 import type { TTaskCompletionMutationDto } from '@/entities/task-completion';
 import { taskCompletionRepository } from '@/entities/task-completion/server';
@@ -14,6 +15,8 @@ export const skipTaskAction = actionClient
   .action(async ({ parsedInput: challengeId }): Promise<TTaskCompletionMutationDto> => {
     const supabase = await createServer();
     const user = await getUser(supabase);
+
+    await challengeExistsAndPublished(challengeId);
 
     const profileChallenge = await profileChallengeRepository.getProfileChallengeById(challengeId, user.id);
     if (!profileChallenge) {

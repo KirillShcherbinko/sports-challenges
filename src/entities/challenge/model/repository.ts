@@ -2,7 +2,7 @@ import type { TChallengeFilters } from './types';
 import { DEFAULT_CHALLENGES_FILTERS_VALUES } from '../config/default-challenges-filters-values';
 import { prisma } from '@/shared/server';
 import type { ChallengeCreateInput, ChallengeUpdateInput, ChallengeWhereInput } from '@/shared/types';
-import type { TChallengeDetailDto, TChallengeDto, TChallengeMutationDto, TEditChallengeDto } from './dtos';
+import type { TChallengeDetailDto, TChallengeDto, TChallengeMutationDto, TEditChallengeDto, TIsChallengePublishedDto } from './dtos';
 import {
   mapChallengeDetailToDto,
   mapChallengeMutationToDto,
@@ -12,6 +12,14 @@ import {
 import type { TGetPaginatedResponseDto } from '@/shared';
 
 class ChallengeRepository {
+  async isChallengePublished(challengeId: string): Promise<TIsChallengePublishedDto | null> {
+    const challenge = await prisma.challenge.findUnique({
+      where: { id: challengeId },
+      select: { id: true, isPublished: true },
+    });
+    return challenge;
+  }
+
   async getChallenges(
     filters: TChallengeFilters = DEFAULT_CHALLENGES_FILTERS_VALUES
   ): Promise<TGetPaginatedResponseDto<TChallengeDto>> {

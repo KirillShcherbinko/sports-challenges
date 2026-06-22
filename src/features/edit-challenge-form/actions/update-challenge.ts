@@ -9,33 +9,28 @@ import { ERoutes } from '@/shared';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { challengeRepository } from '@/entities/challenge/server';
-import { dailyTaskRepository } from '@/entities/daily-task/server';
 import { challengeSchemaWithId } from '@/entities/challenge';
 
-export const updateChallengeAction = actionClient.inputSchema(challengeSchemaWithId).action(async ({ parsedInput }) => {
-  const supabase = await createServer();
-  await getUser(supabase);
+export const updateChallengeAction = actionClient
+  .inputSchema(challengeSchemaWithId)
+  .action(async ({ parsedInput }): Promise<void> => {
+    const supabase = await createServer();
+    await getUser(supabase);
 
-  const { id, title, description, coverImage, difficulty, categories, durationDays } = parsedInput;
-  const dailyTaskCount = await dailyTaskRepository.countDailyTasks(id);
+    const { id, title, description, coverImage, difficulty, categories } = parsedInput;
+    const updatedData: ChallengeUpdateInput = { title, description, difficulty, categories };
 
-  if (dailyTaskCount !== durationDays) {
-    throw new Error('Количество заданий должно совпадать с длительностью челленджа');
-  }
+    if (coverImage && coverImage.size > 0) {
+      const { coverImageUrl, coverImagePath } = await uploadCoverImage({ supabase, coverImage, challengeId: id });
+      updatedData.coverImageUrl = coverImageUrl;
+      updatedData.coverImagePath = coverImagePath;
+    }
 
-  const updatedData: ChallengeUpdateInput = { title, description, difficulty, categories, durationDays };
+    await challengeRepository.updateChallenge(id, updatedData);
 
-  if (coverImage && coverImage.size > 0) {
-    const { coverImageUrl, coverImagePath } = await uploadCoverImage({ supabase, coverImage, challengeId: id });
-    updatedData.coverImageUrl = coverImageUrl;
-    updatedData.coverImagePath = coverImagePath;
-  }
+    revalidatePath(ERoutes.CHALLENGES);
+    revalidatePath(ERoutes.MY_CHALLENGES);
+    revalidatePath(ERoutes.DISCOVER);
 
-  await challengeRepository.updateChallenge(id, updatedData);
-
-  revalidatePath(ERoutes.CHALLENGES);
-  revalidatePath(ERoutes.MY_CHALLENGES);
-  revalidatePath(ERoutes.DISCOVER);
-
-  redirect(ERoutes.MY_CHALLENGES);
-});
+    redirect(ERoutes.MY_CHALLENGES);
+  });

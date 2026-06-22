@@ -22,18 +22,15 @@ export const createDailyTaskAction = actionClient
       throw new Error('Челлендж не найден');
     }
 
-    const dayNumber = (await dailyTaskRepository.countDailyTasks(challengeId)) + 1;
-    if (dayNumber > challenge.durationDays) {
-      throw new Error('Количество заданий не может превышать длительность челленджа');
-    }
-
     const dailyTask = await dailyTaskRepository.createDailyTask({
       challenge: { connect: { id: challengeId } },
       title,
       description,
       exerciseType,
-      dayNumber,
+      dayNumber: challenge.durationDays + 1,
     });
+
+    await challengeRepository.updateChallenge(challengeId, { durationDays: { increment: 1 } });
 
     revalidatePath(ERoutes.MY_CHALLENGES);
 

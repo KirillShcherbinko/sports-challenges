@@ -11,8 +11,6 @@ import {
   MIN_DESCRIPTION_LENGTH,
   MAX_DESCRIPTION_LENGTH,
   MAX_FILE_SIZE,
-  MIN_DURATION,
-  MAX_DURATION,
 } from './consts';
 import { idSchema } from '@/shared';
 
@@ -45,10 +43,6 @@ export const challengeSchema = z.object({
     .nullish(),
   categories: z.array(z.enum(FitnessCategory)).default([]).optional(),
   difficulty: z.enum(ChallengeDifficulty),
-  durationDays: z.coerce
-    .number()
-    .min(MIN_DURATION, `Минимальная длительность в днях: ${MIN_DURATION}`)
-    .max(MAX_DURATION, `Максимальная длительность в днях: ${MAX_DURATION}`),
 });
 
 export const challengeSchemaWithId = challengeSchema.extend({

@@ -1,5 +1,10 @@
 import type { FitnessCategory, ChallengeDifficulty, FitnessLevel } from '@/shared/types';
 
+export type TIsChallengePublishedDto = {
+  id: string;
+  isPublished: boolean;
+}
+
 export type TChallengeDto = {
   id: string;
   title: string;

@@ -9,5 +9,3 @@ export const MAX_TITLE_LENGTH = 64;
 export const MIN_DESCRIPTION_LENGTH = 10;
 export const MAX_DESCRIPTION_LENGTH = 300;
 export const MAX_FILE_SIZE = 5 * 1024 * 1024;
-export const MIN_DURATION = 1;
-export const MAX_DURATION = 60;

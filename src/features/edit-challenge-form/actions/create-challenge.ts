@@ -11,38 +11,40 @@ import { redirect } from 'next/navigation';
 import { challengeRepository } from '@/entities/challenge/server';
 import { challengeSchema } from '@/entities/challenge';
 
-export const updateChallengeAction = actionClient.inputSchema(challengeSchema).action(async ({ parsedInput }) => {
-  const supabase = await createServer();
-  const user = await getUser(supabase);
+export const updateChallengeAction = actionClient
+  .inputSchema(challengeSchema)
+  .action(async ({ parsedInput }): Promise<void> => {
+    const supabase = await createServer();
+    const user = await getUser(supabase);
 
-  const { title, description, coverImage, difficulty, categories, durationDays } = parsedInput;
+    const { title, description, coverImage, difficulty, categories } = parsedInput;
 
-  const data: ChallengeCreateInput = {
-    creator: { connect: { id: user.id } },
-    title,
-    description,
-    difficulty,
-    categories,
-    durationDays,
-  };
+    const data: ChallengeCreateInput = {
+      creator: { connect: { id: user.id } },
+      title,
+      description,
+      difficulty,
+      categories,
+      durationDays: 0,
+    };
 
-  const challenge = await challengeRepository.createChallenge(data);
+    const challenge = await challengeRepository.createChallenge(data);
 
-  if (coverImage && coverImage.size > 0) {
-    const { coverImageUrl, coverImagePath } = await uploadCoverImage({
-      supabase,
-      coverImage,
-      challengeId: challenge.id,
-    });
-    await challengeRepository.updateChallenge(challenge.id, {
-      coverImageUrl,
-      coverImagePath,
-    });
-  }
+    if (coverImage && coverImage.size > 0) {
+      const { coverImageUrl, coverImagePath } = await uploadCoverImage({
+        supabase,
+        coverImage,
+        challengeId: challenge.id,
+      });
+      await challengeRepository.updateChallenge(challenge.id, {
+        coverImageUrl,
+        coverImagePath,
+      });
+    }
 
-  revalidatePath(ERoutes.CHALLENGES);
-  revalidatePath(ERoutes.MY_CHALLENGES);
-  revalidatePath(ERoutes.DISCOVER);
+    revalidatePath(ERoutes.CHALLENGES);
+    revalidatePath(ERoutes.MY_CHALLENGES);
+    revalidatePath(ERoutes.DISCOVER);
 
-  redirect(ERoutes.MY_CHALLENGES);
-});
+    redirect(ERoutes.MY_CHALLENGES);
+  });

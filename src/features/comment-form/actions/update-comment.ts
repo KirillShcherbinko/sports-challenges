@@ -3,6 +3,7 @@
 import { getUser } from '@/entities/auth/server';
 import { challengeCommentSchemaWithChallengeId } from '@/entities/challenge-comment';
 import { challengeCommentRepository } from '@/entities/challenge-comment/server';
+import { challengeExistsAndPublished } from '@/entities/challenge/server';
 import { ERoutes } from '@/shared';
 import { actionClient } from '@/shared/actions';
 import { createServer } from '@/shared/server';
@@ -15,6 +16,9 @@ export const updateCommentAction = actionClient
     const user = await getUser(supabase);
 
     const { challengeId, content } = parsedInput;
+
+    await challengeExistsAndPublished(challengeId);
+
     await challengeCommentRepository.updateChallengeComment(challengeId, user.id, { content });
 
     revalidatePath(ERoutes.CHALLENGES);

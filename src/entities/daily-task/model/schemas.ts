@@ -18,6 +18,13 @@ export const dailyTaskSchema = z.object({
   exerciseType: z.enum(FitnessCategory),
 });
 
+const dayNumberSchema = z.number()
+
 export const dailyTaskSchemaWithDayNumber = dailyTaskSchema.extend({
-  dayNumber: z.number(),
+  dayNumber: dayNumberSchema,
 });
+
+export const challengeIdAndDayNumberSchema = z.object({
+  challengeId: idSchema,
+  dayNumber: dayNumberSchema,
+})
