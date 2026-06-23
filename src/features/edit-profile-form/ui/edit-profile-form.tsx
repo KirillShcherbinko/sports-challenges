@@ -7,9 +7,8 @@ import { EDIT_PROFILE_DATA } from '../config/edit-profile-data';
 import type { TEditProfileDto, TEditProfileSchema } from '@/entities/profile';
 import { updateProfileAction } from '../actions/update-profile';
 import { notifications } from '@mantine/notifications';
-import { useAvatarField } from '../lib/use-avatar-field';
 import { useTransition } from 'react';
-import { FITNESS_CATEGORY_DATA, FITNESS_LEVEL_DATA } from '@/shared';
+import { FITNESS_CATEGORY_DATA, FITNESS_LEVEL_DATA, useFileField } from '@/shared';
 
 type TEditProfileFormProps = {
   initialData: TEditProfileDto;
@@ -26,7 +25,11 @@ export const EditProfileForm = ({ initialData }: TEditProfileFormProps) => {
     defaultValues: initialData,
   });
 
-  const { avatarPreview, onAvatarChange, onAvatarClear } = useAvatarField(avatarUrl || null, setValue);
+  const {
+    preview: avatarPreview,
+    onChange: onAvatarChange,
+    onClear: onAvatarClear,
+  } = useFileField('avatar', avatarUrl || null, setValue);
 
   const { field: usernameField, fieldState: usernameState } = useController({
     name: 'username',

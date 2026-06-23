@@ -4,7 +4,7 @@ import type { TEditChallengeCommentDto } from '@/entities/challenge-comment';
 import { COMMENT_DATA } from '../config/comment-data';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTransition } from 'react';
-import { useForm } from 'react-hook-form';
+import { useController, useForm } from 'react-hook-form';
 import { useParams } from 'next/navigation';
 import { updateCommentAction } from '../actions/update-comment';
 import { addCommentAction } from '../actions/add-comment';
@@ -19,11 +19,18 @@ export const CommentForm = ({ initialData }: TCommentFormProps) => {
   const { schema, fields, defaultValues } = COMMENT_DATA;
   const { challengeId } = useParams<{ challengeId: string }>();
 
+  const { content } = initialData || defaultValues;
   const [isPending, startTransition] = useTransition();
 
-  const { formState, handleSubmit, register } = useForm<TEditChallengeCommentDto>({
+  const { formState, handleSubmit, control } = useForm<TEditChallengeCommentDto>({
     resolver: zodResolver(schema),
     defaultValues: initialData || defaultValues,
+  });
+
+  const { field: contentField, fieldState: contentState } = useController({
+    name: 'content',
+    control,
+    defaultValue: content,
   });
 
   const onSubmit = async (formValues: TEditChallengeCommentDto) => {
@@ -44,7 +51,7 @@ export const CommentForm = ({ initialData }: TCommentFormProps) => {
 
   return (
     <Group component="form" gap="sm" maw={540} w="100%" align="start" onSubmit={handleSubmit(onSubmit)}>
-      <Textarea error={formState.errors.content?.message} {...fields.content} {...register('content')} />
+      <Textarea {...fields.content} error={contentState.error?.message} {...contentField} />
       <Button type="submit" loading={formState.isSubmitting || isPending}>
         {initialData ? 'Изменить' : 'Отправить'}
       </Button>

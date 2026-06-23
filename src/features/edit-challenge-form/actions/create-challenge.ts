@@ -11,7 +11,7 @@ import { redirect } from 'next/navigation';
 import { challengeRepository } from '@/entities/challenge/server';
 import { challengeSchema } from '@/entities/challenge';
 
-export const updateChallengeAction = actionClient
+export const createChallengeAction = actionClient
   .inputSchema(challengeSchema)
   .action(async ({ parsedInput }): Promise<void> => {
     const supabase = await createServer();

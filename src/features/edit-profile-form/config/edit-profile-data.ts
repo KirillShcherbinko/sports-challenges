@@ -1,5 +1,4 @@
 import { editProfileSchema } from '@/entities/profile';
-import { FITNESS_LEVEL_OPTIONS } from './fitness-level-options';
 
 export const EDIT_PROFILE_DATA = {
   schema: editProfileSchema,
@@ -17,7 +16,6 @@ export const EDIT_PROFILE_DATA = {
 
     fitnessLevel: {
       label: 'Уровень подготовки',
-      data: FITNESS_LEVEL_OPTIONS,
     },
 
     preferences: {
