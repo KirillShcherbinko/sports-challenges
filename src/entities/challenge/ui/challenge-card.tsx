@@ -1,5 +1,6 @@
 import type { ChallengeDifficulty, FitnessCategory } from '@/shared/types';
 import { Badge, Card, Group, Image, Stack, Text, Title } from '@mantine/core';
+import { IconUsersGroup } from '@tabler/icons-react';
 import type { ReactNode } from 'react';
 
 type TChallengeCardProps = {
@@ -8,7 +9,7 @@ type TChallengeCardProps = {
   coverImageUrl: string | null;
   category: FitnessCategory;
   difficulty: ChallengeDifficulty;
-  participantsCountSlot: ReactNode;
+  participantsCount: number;
   likesCountSlot: ReactNode;
 };
 
@@ -18,7 +19,7 @@ export const ChallengeCard = ({
   coverImageUrl,
   category,
   difficulty,
-  participantsCountSlot,
+  participantsCount,
   likesCountSlot,
 }: TChallengeCardProps) => {
   return (
@@ -35,7 +36,10 @@ export const ChallengeCard = ({
         <Text c="var(--mantine-color-dark-2)">{description}</Text>
       </Stack>
       <Group justify="between">
-        {participantsCountSlot}
+        <Group gap="sm">
+          <IconUsersGroup size={24} />
+          <Text c="var(--mantine-color-dark-2)">{participantsCount}</Text>
+        </Group>
         {likesCountSlot}
       </Group>
     </Card>
