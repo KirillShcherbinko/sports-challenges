@@ -9,6 +9,7 @@ export { FITNESS_LEVEL_LABELS } from './config/fitness-level-labels';
 export { FITNESS_CATEGORY_LABELS } from './config/fitness-category-labels';
 export { PROFILE_CHALLENGE_STATUS_LABELS } from './config/profile-challenge-status-labels';
 export { FITNESS_CATEGORY_DATA } from './config/fitness-category-data';
+export { FITNESS_LEVEL_DATA } from './config/fitness-level-data';
 export { ErrorAlert } from './ui/error-alert';
 export { EmptyListAlert } from './ui/empty-list-alert';
 export { idSchema } from './model/schemas';

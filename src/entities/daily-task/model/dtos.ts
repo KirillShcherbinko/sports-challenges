@@ -13,3 +13,5 @@ export type TDailyTaskMutationDto = {
   title: string;
   dayNumber: number;
 };
+
+export type TEditDailyTaskDto = Omit<TDailyTaskDto, 'id' | 'dayNumber'>

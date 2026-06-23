@@ -9,7 +9,7 @@ import { updateProfileAction } from '../actions/update-profile';
 import { notifications } from '@mantine/notifications';
 import { useAvatarField } from '../lib/use-avatar-field';
 import { useTransition } from 'react';
-import { FITNESS_CATEGORY_DATA } from '@/shared';
+import { FITNESS_CATEGORY_DATA, FITNESS_LEVEL_DATA } from '@/shared';
 
 type TEditProfileFormProps = {
   initialData: TEditProfileDto;
@@ -96,9 +96,9 @@ export const EditProfileForm = ({ initialData }: TEditProfileFormProps) => {
 
           <Select
             {...fields.fitnessLevel}
-            value={fitnessLevelField.value}
-            onChange={fitnessLevelField.onChange}
+            data={FITNESS_LEVEL_DATA}
             error={fitnessLevelState.error?.message}
+            {...fitnessLevelField}
           />
         </Stack>
       </Group>

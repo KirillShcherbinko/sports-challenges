@@ -4,7 +4,6 @@ import { FitnessCategory } from '@/shared/types';
 import { idSchema } from '@/shared';
 
 export const dailyTaskSchema = z.object({
-  challengeId: idSchema,
   title: z
     .string()
     .trim()
@@ -18,13 +17,14 @@ export const dailyTaskSchema = z.object({
   exerciseType: z.enum(FitnessCategory),
 });
 
-const dayNumberSchema = z.number()
+const dayNumberSchema = z.number();
 
-export const dailyTaskSchemaWithDayNumber = dailyTaskSchema.extend({
+export const dailyTaskSchemaWithIds = dailyTaskSchema.extend({
+  challengeId: idSchema,
   dayNumber: dayNumberSchema,
 });
 
 export const challengeIdAndDayNumberSchema = z.object({
   challengeId: idSchema,
   dayNumber: dayNumberSchema,
-})
+});
