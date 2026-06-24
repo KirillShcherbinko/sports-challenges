@@ -11,7 +11,6 @@ export type TProfileChallengeWithChallenge = ProfileChallengeGetPayload<{
 
 export type TProfileChallengesFilters = {
   search?: string;
-  creatorName?: string;
   status?: ProfileChallengeStatus;
   category?: FitnessCategory;
   difficulty?: ChallengeDifficulty;

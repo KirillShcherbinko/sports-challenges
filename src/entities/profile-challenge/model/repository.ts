@@ -3,7 +3,7 @@ import type {
   ProfileChallengeUpdateInput,
   ProfileChallengeWhereInput,
 } from '@/shared/types';
-import { DEFAULT_MY_CHALLENGES_FILTERS_VALUES } from '../config/default-my-challenges-filters-values';
+import { DEFAULT_PROFILE_CHALLENGES_FILTERS_VALUES } from '../config/default-profile-challenges-filters-values';
 import type { TProfileChallengesFilters } from './types';
 import type { TGetPaginatedResponseDto } from '@/shared';
 import type { TProfileChallengeDto, TProfileChallengeMutationDto } from './dtos';
@@ -12,17 +12,16 @@ import { mapProfileChallengeMutationToDto, mapProfileChallengeToDto } from '../l
 
 class ProfileChallengeRepository {
   async getProfileChallenges(
-    userId: string,
-    filters: TProfileChallengesFilters = DEFAULT_MY_CHALLENGES_FILTERS_VALUES
+    creatorName: string,
+    filters: TProfileChallengesFilters = DEFAULT_PROFILE_CHALLENGES_FILTERS_VALUES
   ): Promise<TGetPaginatedResponseDto<TProfileChallengeDto>> {
-    const { search, creatorName, status, category, difficulty, page, limit } = filters;
+    const { search, status, category, difficulty, page, limit } = filters;
 
     const where: ProfileChallengeWhereInput = {
-      profileId: userId,
+      profile: { username: creatorName },
       ...(status && { status }),
       challenge: {
         ...(search && { title: { contains: search } }),
-        ...(creatorName && { creator: { username: { contains: creatorName } } }),
         ...(category && { category }),
         ...(difficulty && { difficulty }),
         isPublished: true,
