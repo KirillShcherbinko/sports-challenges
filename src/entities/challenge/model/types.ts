@@ -9,12 +9,10 @@ export type TChallengeWithCreator = ChallengeGetPayload<{
 
 export type TChallengeFilters = {
   search?: string;
-  creatorName?: string;
   categories?: FitnessCategory[];
   difficulty?: ChallengeDifficulty;
   page: number;
   limit: number;
-  isPublished: boolean;
 };
 
 export type TChallengeFiltersSchema = z.infer<typeof challengeFiltersSchema>;

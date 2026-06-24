@@ -21,7 +21,7 @@ export const challengeFiltersSchema = z.object({
   difficulty: z.enum(ChallengeDifficulty).optional(),
   page: z.coerce.number().int().min(MIN_PAGE).default(DEFAULT_PAGE),
   limit: z.coerce.number().int().min(MIN_LIMIT).max(MAX_LIMIT).default(DEFAULT_LIMIT),
-  isPublished: z.boolean(),
+  isPublished: z.boolean().optional(),
 });
 
 export const challengeSchema = z.object({

@@ -3,10 +3,8 @@ import type { TChallengeFilters } from '../model/types';
 
 export const DEFAULT_CHALLENGES_FILTERS_VALUES: TChallengeFilters = {
   search: undefined,
-  creatorName: undefined,
-  category: undefined,
+  categories: undefined,
   difficulty: undefined,
   page: DEFAULT_PAGE,
   limit: DEFAULT_LIMIT,
-  isPublished: true,
 };

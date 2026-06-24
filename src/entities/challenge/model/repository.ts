@@ -21,9 +21,11 @@ class ChallengeRepository {
   }
 
   async getChallenges(
-    filters: TChallengeFilters = DEFAULT_CHALLENGES_FILTERS_VALUES
+    filters: TChallengeFilters = DEFAULT_CHALLENGES_FILTERS_VALUES,
+    creatorName?: string,
+    isPublished?: boolean,
   ): Promise<TGetPaginatedResponseDto<TChallengeDto>> {
-    const { search, creatorName, categories, difficulty, page, limit, isPublished } = filters;
+    const { search, categories, difficulty, page, limit } = filters;
 
     const where: ChallengeWhereInput = {
       ...(search && { title: { contains: search } }),
