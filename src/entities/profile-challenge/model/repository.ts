@@ -6,7 +6,7 @@ import type {
 import { DEFAULT_PROFILE_CHALLENGES_FILTERS_VALUES } from '../config/default-profile-challenges-filters-values';
 import type { TProfileChallengesFilters } from './types';
 import type { TGetPaginatedResponseDto } from '@/shared';
-import type { TProfileChallengeDto, TProfileChallengeMutationDto } from './dtos';
+import type { TProfileChallengeDto, TProfileChallengeMutationDto, TChallengeProgressDto } from './dtos';
 import { prisma } from '@/shared/server';
 import { mapProfileChallengeMutationToDto, mapProfileChallengeToDto } from '../lib/mappers';
 
@@ -74,6 +74,44 @@ class ProfileChallengeRepository {
     });
 
     return mapProfileChallengeMutationToDto(profileChallenge);
+  }
+
+  async getChallengeProgress(challengeId: string, profileId: string): Promise<TChallengeProgressDto> {
+    const [profileChallenge, taskCompletions] = await Promise.all([
+      prisma.profileChallenge.findUnique({
+        where: { profileId_challengeId: { profileId, challengeId } },
+        include: { challenge: { select: { durationDays: true } } },
+      }),
+      prisma.taskCompletion.findMany({
+        where: { challengeId, profileId },
+        orderBy: { dayNumber: 'asc' },
+      }),
+    ]);
+
+    if (!profileChallenge) {
+      return { daysCompleted: 0, daysMissed: 0, currentStreak: 0, completionPercentage: 0 };
+    }
+
+    const daysCompleted = taskCompletions.filter((t) => t.isCompleted).length;
+    const daysMissed = taskCompletions.filter((t) => !t.isCompleted).length;
+
+    let currentStreak = 0;
+    for (let i = taskCompletions.length - 1; i >= 0; i--) {
+      if (taskCompletions[i].isCompleted) {
+        currentStreak++;
+      } else {
+        break;
+      }
+    }
+
+    const completionPercentage = Math.round((profileChallenge.currentDay * 100) / profileChallenge.challenge.durationDays);
+
+    return {
+      daysCompleted,
+      daysMissed,
+      currentStreak,
+      completionPercentage,
+    };
   }
 }
 

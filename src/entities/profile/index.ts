@@ -10,4 +10,6 @@ export type {
   TEditProfileDto,
   TProfileDetailDto,
   TProfileMutationDto,
+  TProfileAnalyticsDto,
+  TCcreatorAnalyticsDto,
 } from './model/dtos';

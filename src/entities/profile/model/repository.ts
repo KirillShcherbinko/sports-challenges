@@ -3,7 +3,7 @@ import type { TProfileFilters } from './types';
 import { DEFAULT_PROFILE_FILTERS_VALUES } from '../config/default-profile-filters-values';
 import { prisma } from '@/shared/server';
 import { mapEditProfileToDto, mapProfileDetailToDto, mapProfileMutationToDto, mapProfileToDto } from '../lib/mappers';
-import type { TEditProfileDto, TProfileDetailDto, TProfileDto, TProfileMutationDto } from './dtos';
+import type { TEditProfileDto, TProfileDetailDto, TProfileDto, TProfileMutationDto, TProfileAnalyticsDto, TCcreatorAnalyticsDto } from './dtos';
 import type { TGetPaginatedResponseDto } from '@/shared';
 
 class ProfileRepository {
@@ -57,6 +57,59 @@ class ProfileRepository {
   async updateProfile(profileId: string, data: ProfileUpdateInput): Promise<TProfileMutationDto> {
     const profile = await prisma.profile.update({ data, where: { id: profileId } });
     return mapProfileMutationToDto(profile);
+  }
+
+  async getProfileAnalytics(profileId: string): Promise<TProfileAnalyticsDto> {
+    const profile = await prisma.profile.findUnique({
+      where: { id: profileId },
+      select: { totalCompletedTasks: true },
+    });
+
+    const [challengesCompleted, createdChallenges, achievementsCount] = await Promise.all([
+      prisma.profileChallenge.count({ where: { profileId, status: 'Completed' } }),
+      prisma.challenge.count({ where: { creatorId: profileId } }),
+      prisma.profileAchievement.count({ where: { profileId } }),
+    ]);
+
+    return {
+      challengesCompleted,
+      completedTasks: profile?.totalCompletedTasks ?? 0,
+      createdChallenges,
+      achievementsCount,
+    };
+  }
+
+  async getCreatorAnalytics(username: string): Promise<TCcreatorAnalyticsDto> {
+    const profile = await prisma.profile.findUnique({
+      where: { username },
+      select: { id: true },
+    });
+
+    if (!profile) {
+      return { challengesCount: 0, avgCompletionRate: 0, achievementsCount: 0 };
+    }
+
+    const [challengesCount, achievementsCount, profileChallenges] = await Promise.all([
+      prisma.challenge.count({ where: { creatorId: profile.id } }),
+      prisma.profileAchievement.count({ where: { profileId: profile.id } }),
+      prisma.profileChallenge.findMany({
+        where: { challenge: { creatorId: profile.id } },
+        include: { challenge: { select: { durationDays: true } } },
+      }),
+    ]);
+
+    const avgCompletionRate = profileChallenges.length > 0
+      ? Math.round(
+          profileChallenges.reduce((sum, pc) => sum + Math.round((pc.currentDay * 100) / pc.challenge.durationDays), 0) /
+            profileChallenges.length,
+        )
+      : 0;
+
+    return {
+      challengesCount,
+      avgCompletionRate,
+      achievementsCount,
+    };
   }
 }
 

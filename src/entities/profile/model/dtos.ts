@@ -23,3 +23,16 @@ export type TEditProfileDto = TProfileDto & {
 export type TProfileMutationDto = {
   id: string;
 };
+
+export type TProfileAnalyticsDto = {
+  challengesCompleted: number;
+  completedTasks: number;
+  createdChallenges: number;
+  achievementsCount: number;
+};
+
+export type TCcreatorAnalyticsDto = {
+  challengesCount: number;
+  avgCompletionRate: number;
+  achievementsCount: number;
+};

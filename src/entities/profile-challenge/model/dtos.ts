@@ -19,3 +19,10 @@ export type TProfileChallengeMutationDto = {
     title: string;
   };
 };
+
+export type TChallengeProgressDto = {
+  daysCompleted: number;
+  daysMissed: number;
+  currentStreak: number;
+  completionPercentage: number;
+};
