@@ -3,7 +3,7 @@ import type { TProfileFilters } from './types';
 import { DEFAULT_PROFILE_FILTERS_VALUES } from '../config/default-profile-filters-values';
 import { prisma } from '@/shared/server';
 import { mapEditProfileToDto, mapProfileDetailToDto, mapProfileMutationToDto, mapProfileToDto } from '../lib/mappers';
-import type { TEditProfileDto, TProfileDetailDto, TProfileDto, TProfileMutationDto, TProfileAnalyticsDto, TCcreatorAnalyticsDto } from './dtos';
+import type { TEditProfileDto, TProfileDetailDto, TProfileDto, TProfileMutationDto, TProfileAnalyticsDto, TCreatorAnalyticsDto } from './dtos';
 import type { TGetPaginatedResponseDto } from '@/shared';
 
 class ProfileRepository {
@@ -65,33 +65,30 @@ class ProfileRepository {
       select: { totalCompletedTasks: true },
     });
 
-    const [challengesCompleted, createdChallenges, achievementsCount] = await Promise.all([
+    const [challengesCompleted, createdChallenges] = await Promise.all([
       prisma.profileChallenge.count({ where: { profileId, status: 'Completed' } }),
       prisma.challenge.count({ where: { creatorId: profileId } }),
-      prisma.profileAchievement.count({ where: { profileId } }),
     ]);
 
     return {
       challengesCompleted,
       completedTasks: profile?.totalCompletedTasks ?? 0,
       createdChallenges,
-      achievementsCount,
     };
   }
 
-  async getCreatorAnalytics(username: string): Promise<TCcreatorAnalyticsDto> {
+  async getCreatorAnalytics(username: string): Promise<TCreatorAnalyticsDto> {
     const profile = await prisma.profile.findUnique({
       where: { username },
       select: { id: true },
     });
 
     if (!profile) {
-      return { challengesCount: 0, avgCompletionRate: 0, achievementsCount: 0 };
+      return { challengesCount: 0, avgCompletionRate: 0 };
     }
 
-    const [challengesCount, achievementsCount, profileChallenges] = await Promise.all([
+    const [challengesCount, profileChallenges] = await Promise.all([
       prisma.challenge.count({ where: { creatorId: profile.id } }),
-      prisma.profileAchievement.count({ where: { profileId: profile.id } }),
       prisma.profileChallenge.findMany({
         where: { challenge: { creatorId: profile.id } },
         include: { challenge: { select: { durationDays: true } } },
@@ -108,7 +105,6 @@ class ProfileRepository {
     return {
       challengesCount,
       avgCompletionRate,
-      achievementsCount,
     };
   }
 }

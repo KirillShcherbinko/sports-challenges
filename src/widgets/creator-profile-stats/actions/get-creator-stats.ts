@@ -5,13 +5,13 @@ import { actionClient } from '@/shared/actions';
 import { cacheLife, cacheTag } from 'next/cache';
 import { retryResult } from '@/shared';
 import { z } from 'zod';
-import type { TCcreatorAnalyticsDto } from '@/entities/profile';
+import type { TCreatorAnalyticsDto } from '@/entities/profile';
 
 const getCreatorStatsSchema = z.object({
   username: z.string(),
 });
 
-const getCachedCreatorStats = async (username: string): Promise<TCcreatorAnalyticsDto> => {
+const getCachedCreatorStats = async (username: string): Promise<TCreatorAnalyticsDto> => {
   'use cache';
   cacheTag(`creator_stats_${username}`);
   cacheLife('hours');
@@ -21,6 +21,6 @@ const getCachedCreatorStats = async (username: string): Promise<TCcreatorAnalyti
 
 export const getCreatorStatsAction = actionClient
   .inputSchema(getCreatorStatsSchema)
-  .action(async ({ parsedInput: { username } }): Promise<TCcreatorAnalyticsDto> => {
+  .action(async ({ parsedInput: { username } }): Promise<TCreatorAnalyticsDto> => {
     return await getCachedCreatorStats(username);
   });

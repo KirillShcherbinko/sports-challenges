@@ -28,11 +28,9 @@ export type TProfileAnalyticsDto = {
   challengesCompleted: number;
   completedTasks: number;
   createdChallenges: number;
-  achievementsCount: number;
 };
 
-export type TCcreatorAnalyticsDto = {
+export type TCreatorAnalyticsDto = {
   challengesCount: number;
   avgCompletionRate: number;
-  achievementsCount: number;
 };

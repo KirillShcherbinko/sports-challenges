@@ -11,5 +11,5 @@ export type {
   TProfileDetailDto,
   TProfileMutationDto,
   TProfileAnalyticsDto,
-  TCcreatorAnalyticsDto,
+  TCreatorAnalyticsDto,
 } from './model/dtos';
