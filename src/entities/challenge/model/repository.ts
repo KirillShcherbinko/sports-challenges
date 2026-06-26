@@ -9,7 +9,9 @@ import {
   mapChallengeToDto,
   mapEditChallengeToDto,
 } from '../lib/mappers';
+import { sortByPersonalization } from '../lib/personalization';
 import type { TGetPaginatedResponseDto } from '@/shared';
+import type { FitnessCategory, FitnessLevel } from '@/shared/types';
 
 class ChallengeRepository {
   async isChallengePublished(challengeId: string): Promise<TIsChallengePublishedDto | null> {
@@ -24,6 +26,9 @@ class ChallengeRepository {
     filters: TChallengeFilters = DEFAULT_CHALLENGES_FILTERS_VALUES,
     creatorName?: string,
     isPublished?: boolean,
+    personalize?: boolean,
+    userPreferences?: FitnessCategory[],
+    userFitnessLevel?: FitnessLevel
   ): Promise<TGetPaginatedResponseDto<TChallengeDto>> {
     const { search, categories, difficulty, page, limit } = filters;
 
@@ -34,6 +39,24 @@ class ChallengeRepository {
       ...(difficulty && { difficulty }),
       ...(isPublished && { isPublished }),
     };
+
+    if (personalize && userPreferences && userFitnessLevel) {
+      const allItems = await prisma.challenge.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        include: { creator: true },
+      });
+
+      const mapped = allItems.map(mapChallengeToDto);
+      const sorted = sortByPersonalization(mapped, userPreferences, userFitnessLevel);
+      const total = sorted.length;
+      const paginated = sorted.slice((page - 1) * limit, page * limit);
+
+      return {
+        items: paginated,
+        pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
+      };
+    }
 
     const [rawItems, total] = await prisma.$transaction([
       prisma.challenge.findMany({

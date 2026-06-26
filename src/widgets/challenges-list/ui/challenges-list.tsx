@@ -9,20 +9,21 @@ type TChallengesListProps = {
   searchParams: TChallengeFilters;
   creatorName?: string;
   isPublished?: boolean;
+  personalize?: boolean;
 };
 
-export const ChallengesList = async ({ searchParams, creatorName, isPublished }: TChallengesListProps) => {
+export const ChallengesList = async ({ searchParams, creatorName, isPublished, personalize }: TChallengesListProps) => {
   const {
     data: challenges,
     serverError,
     validationErrors,
-  } = await getChallengesAction({ ...searchParams, creatorName, isPublished });
+  } = await getChallengesAction({ ...searchParams, creatorName, isPublished, personalize });
 
   if (serverError) {
     return (
       <ErrorAlert
         errorMessage={serverError}
-        retryFn={async () => await getChallengesAction({ ...searchParams, creatorName, isPublished })}
+        retryFn={async () => await getChallengesAction({ ...searchParams, creatorName, isPublished, personalize })}
       />
     );
   }
@@ -31,7 +32,7 @@ export const ChallengesList = async ({ searchParams, creatorName, isPublished }:
     return (
       <ErrorAlert
         errorMessage="Неверные параметры фильтрации"
-        retryFn={async () => await getChallengesAction({ creatorName, isPublished })}
+        retryFn={async () => await getChallengesAction({ creatorName, isPublished, personalize })}
       />
     );
   }

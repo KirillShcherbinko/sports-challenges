@@ -7,4 +7,5 @@ export const DEFAULT_CHALLENGES_FILTERS_VALUES: TChallengeFilters = {
   difficulty: undefined,
   page: DEFAULT_PAGE,
   limit: DEFAULT_LIMIT,
+  personalize: false,
 };

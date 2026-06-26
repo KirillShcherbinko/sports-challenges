@@ -13,6 +13,7 @@ export type TChallengeFilters = {
   difficulty?: ChallengeDifficulty;
   page: number;
   limit: number;
+  personalize?: boolean;
 };
 
 export type TChallengeFiltersSchema = z.infer<typeof challengeFiltersSchema>;

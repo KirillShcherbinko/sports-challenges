@@ -11,5 +11,5 @@ type TProfilesPaginationProps = {
 export const ListPagination = ({ total, totalPages }: TProfilesPaginationProps) => {
   const { pageValue, handleChange } = usePaginationFilter();
 
-  return totalPages === 1 && <Pagination value={pageValue} onChange={handleChange} total={total} />;
+  return totalPages > 1 && <Pagination value={pageValue} onChange={handleChange} total={total} />;
 };
