@@ -3,7 +3,14 @@ import type { TProfileFilters } from './types';
 import { DEFAULT_PROFILE_FILTERS_VALUES } from '../config/default-profile-filters-values';
 import { prisma } from '@/shared/server';
 import { mapEditProfileToDto, mapProfileDetailToDto, mapProfileMutationToDto, mapProfileToDto } from '../lib/mappers';
-import type { TEditProfileDto, TProfileDetailDto, TProfileDto, TProfileMutationDto, TProfileAnalyticsDto, TCreatorAnalyticsDto } from './dtos';
+import type {
+  TEditProfileDto,
+  TProfileDetailDto,
+  TProfileDto,
+  TProfileMutationDto,
+  TProfileAnalyticsDto,
+  TCreatorAnalyticsDto,
+} from './dtos';
 import type { TGetPaginatedResponseDto } from '@/shared';
 
 class ProfileRepository {
@@ -42,6 +49,11 @@ class ProfileRepository {
   async getProfileById(profileId: string): Promise<TProfileDetailDto | null> {
     const profile = await prisma.profile.findUnique({ where: { id: profileId } });
     return profile ? mapProfileDetailToDto(profile) : null;
+  }
+
+  async getProfileAvatar(profileId: string): Promise<string | null> {
+    const data = await prisma.profile.findUnique({ where: { id: profileId }, select: { avatarUrl: true } });
+    return data ? data.avatarUrl : null;
   }
 
   async getProfileByUsername(username: string): Promise<TProfileDetailDto | null> {
@@ -95,12 +107,15 @@ class ProfileRepository {
       }),
     ]);
 
-    const avgCompletionRate = profileChallenges.length > 0
-      ? Math.round(
-          profileChallenges.reduce((sum, pc) => sum + Math.round((pc.currentDay * 100) / pc.challenge.durationDays), 0) /
-            profileChallenges.length,
-        )
-      : 0;
+    const avgCompletionRate =
+      profileChallenges.length > 0
+        ? Math.round(
+            profileChallenges.reduce(
+              (sum, pc) => sum + Math.round((pc.currentDay * 100) / pc.challenge.durationDays),
+              0
+            ) / profileChallenges.length
+          )
+        : 0;
 
     return {
       challengesCount,
