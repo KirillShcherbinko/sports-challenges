@@ -8,13 +8,13 @@ type TEditCommentContentProps = {
 };
 
 export const EditCommentContent = async ({ challengeId }: TEditCommentContentProps) => {
-  const { data, serverError } = await getEditCommentFormDataAction({ challengeId });
+  const { data, serverError } = await getEditCommentFormDataAction(challengeId);
 
   if (serverError) {
     return (
       <ErrorAlert
         errorMessage={`Ошибка: ${serverError}`}
-        retryFn={async () => await getEditCommentFormDataAction({ challengeId })}
+        retryFn={async () => await getEditCommentFormDataAction(challengeId)}
       />
     );
   }
