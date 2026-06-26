@@ -8,15 +8,14 @@ export enum ERoutes {
   PROFILE = '/profile',
   PROFILE_EDIT = '/profile/edit',
 
-  DISCOVER = '/discover',
-
   CHALLENGES = '/challenges',
+  CHALLENGES_PROGRESS = '/challenges/progress',
+
   CREATORS = '/creators',
 
   MY_CHALLENGES = '/my-challenges',
 
   CREATE_CHALLENGE = '/create-challenge',
-  CHALLENGE_EDIT = '/challenges/edit',
 
   ACHIEVEMENTS = '/achievements',
 }

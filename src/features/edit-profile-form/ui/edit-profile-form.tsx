@@ -8,7 +8,8 @@ import type { TEditProfileDto, TEditProfileSchema } from '@/entities/profile';
 import { updateProfileAction } from '../actions/update-profile';
 import { notifications } from '@mantine/notifications';
 import { useTransition } from 'react';
-import { FITNESS_CATEGORY_DATA, FITNESS_LEVEL_DATA, useFileField } from '@/shared';
+import { FITNESS_CATEGORY_DATA, FITNESS_LEVEL_DATA } from '@/shared';
+import { useFileField } from '@/shared/hooks';
 
 type TEditProfileFormProps = {
   initialData: TEditProfileDto;

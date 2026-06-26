@@ -18,18 +18,13 @@ export const ProfileChallengesList = async ({ creatorName, searchParams }: TProf
   } = await getProfileChallengesAction({ creatorName, ...searchParams });
 
   if (serverError) {
-    return (
-      <ErrorAlert errorMessage={serverError} retryFn={async () => await getProfileChallengesAction({ creatorName })} />
-    );
+    const retryFn = getProfileChallengesAction.bind(null, { creatorName });
+    return <ErrorAlert errorMessage={serverError} retryFn={retryFn} />;
   }
 
   if (validationErrors) {
-    return (
-      <ErrorAlert
-        errorMessage="Неверные параметры фильтрации"
-        retryFn={async () => await getProfileChallengesAction({ creatorName })}
-      />
-    );
+    const retryFn = getProfileChallengesAction.bind(null, { creatorName });
+    return <ErrorAlert errorMessage="Неверные параметры фильтрации" retryFn={retryFn} />;
   }
 
   if (!profileChallenges || profileChallenges.pagination.total === 0) {

@@ -2,7 +2,13 @@ import type { TChallengeFilters } from './types';
 import { DEFAULT_CHALLENGES_FILTERS_VALUES } from '../config/default-challenges-filters-values';
 import { prisma } from '@/shared/server';
 import type { ChallengeCreateInput, ChallengeUpdateInput, ChallengeWhereInput } from '@/shared/types';
-import type { TChallengeDetailDto, TChallengeDto, TChallengeMutationDto, TEditChallengeDto, TIsChallengePublishedDto } from './dtos';
+import type {
+  TChallengeDetailDto,
+  TChallengeDto,
+  TChallengeMutationDto,
+  TEditChallengeDto,
+  TIsChallengePublishedDto,
+} from './dtos';
 import {
   mapChallengeDetailToDto,
   mapChallengeMutationToDto,
@@ -20,6 +26,11 @@ class ChallengeRepository {
       select: { id: true, isPublished: true },
     });
     return challenge;
+  }
+
+  async getChallengeTitle(challengeId: string): Promise<string | null> {
+    const challenge = await prisma.challenge.findUnique({ where: { id: challengeId }, select: { title: true } });
+    return challenge?.title ?? null;
   }
 
   async getChallenges(

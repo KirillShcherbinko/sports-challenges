@@ -19,9 +19,11 @@ const getProfileChallengesSchema = z.object({
   limit: z.coerce.number().int().min(1).max(50).default(DEFAULT_LIMIT),
 });
 
+type TProfileChallengesFilters = z.infer<typeof getProfileChallengesSchema>;
+
 const getCachedProfileChallenges = async (
   creatorName: string,
-  filters: z.infer<typeof getProfileChallengesSchema>
+  filters: Omit<TProfileChallengesFilters, 'creatorName'>
 ): Promise<TGetPaginatedResponseDto<TProfileChallengeDto>> => {
   'use cache';
   cacheTag(`profile_challenges_${creatorName}_${Object.values(filters).join('_')}`);

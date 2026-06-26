@@ -12,7 +12,7 @@ type TTaskCompletionsListContentProps = {
 const INITIAL_VISIBLE_COUNT = 4;
 
 export const TaskCompletionsListContent = ({ items }: TTaskCompletionsListContentProps) => {
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState<boolean>(false);
 
   const visibleItems = showAll ? items : items.slice(0, INITIAL_VISIBLE_COUNT);
   const hasMoreItems = items.length > INITIAL_VISIBLE_COUNT;

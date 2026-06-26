@@ -11,12 +11,8 @@ export const EditCommentContent = async ({ challengeId }: TEditCommentContentPro
   const { data, serverError } = await getEditCommentFormDataAction(challengeId);
 
   if (serverError) {
-    return (
-      <ErrorAlert
-        errorMessage={`Ошибка: ${serverError}`}
-        retryFn={async () => await getEditCommentFormDataAction(challengeId)}
-      />
-    );
+    const retryFn = getEditCommentFormDataAction.bind(null, challengeId);
+    return <ErrorAlert errorMessage={`Ошибка: ${serverError}`} retryFn={retryFn} />;
   }
 
   if (!data) {

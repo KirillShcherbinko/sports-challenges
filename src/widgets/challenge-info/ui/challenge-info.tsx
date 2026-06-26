@@ -22,12 +22,8 @@ export const ChallengeInfo = async ({ challengeId }: TChallengeInfoProps) => {
   const { data, serverError } = await getChallengeAction(challengeId);
 
   if (serverError) {
-    return (
-      <ErrorAlert
-        errorMessage={serverError}
-        retryFn={async () => await getChallengeAction(challengeId)}
-      />
-    );
+    const retryFn = getChallengeAction.bind(null, challengeId);
+    return <ErrorAlert errorMessage={serverError} retryFn={retryFn} />;
   }
 
   if (!data) {
@@ -59,7 +55,7 @@ export const ChallengeInfo = async ({ challengeId }: TChallengeInfoProps) => {
             <Group gap="xs">
               <Badge
                 component={Link}
-                href={ERoutes.CHALLENGE_EDIT}
+                href={`${ERoutes.CHALLENGES}/${challengeId}/edit`}
                 variant="outline"
                 size="lg"
                 radius="sm"

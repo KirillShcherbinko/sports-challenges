@@ -1,3 +1,5 @@
+import { CreateChallengePage } from '@/views/create-challenge-page';
+
 export default function CreateChallengeRoute() {
-  return <div>Создать челлендж</div>;
+  return <CreateChallengePage />;
 }

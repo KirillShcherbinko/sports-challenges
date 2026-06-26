@@ -7,9 +7,8 @@ export const EditProfileContent = async () => {
   const { data, serverError } = await getEditProfileFormDataAction();
 
   if (serverError) {
-    return (
-      <ErrorAlert errorMessage={`Ошибка: ${serverError}`} retryFn={async () => await getEditProfileFormDataAction()} />
-    );
+    const retryFn = getEditProfileFormDataAction.bind(null);
+    return <ErrorAlert errorMessage={`Ошибка: ${serverError}`} retryFn={retryFn} />;
   }
 
   if (!data) {

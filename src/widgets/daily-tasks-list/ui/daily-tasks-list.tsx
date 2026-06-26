@@ -15,13 +15,13 @@ export const DailyTasksList = async ({ challengeId }: TDailyTasksListProps) => {
   const { data: dailyTasks, serverError, validationErrors } = await getDailyTasksAction(challengeId);
 
   if (serverError) {
-    return <ErrorAlert errorMessage={serverError} retryFn={async () => await getDailyTasksAction(challengeId)} />;
+    const retryFn = getDailyTasksAction.bind(null, challengeId);
+    return <ErrorAlert errorMessage={serverError} retryFn={retryFn} />;
   }
 
   if (validationErrors) {
-    return (
-      <ErrorAlert errorMessage="Неверные параметры" retryFn={async () => await getDailyTasksAction(challengeId)} />
-    );
+    const retryFn = getDailyTasksAction.bind(null, challengeId);
+    return <ErrorAlert errorMessage="Неверные параметры" retryFn={retryFn} />;
   }
 
   if (!dailyTasks || dailyTasks.length === 0) {

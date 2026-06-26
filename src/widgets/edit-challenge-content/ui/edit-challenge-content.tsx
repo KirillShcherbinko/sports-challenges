@@ -11,12 +11,8 @@ export const EditChallengeContent = async ({ challengeId }: TEditChallengeConten
   const { data, serverError } = await getEditChallengeFormDataAction(challengeId);
 
   if (serverError) {
-    return (
-      <ErrorAlert
-        errorMessage={`Ошибка: ${serverError}`}
-        retryFn={async () => await getEditChallengeFormDataAction(challengeId)}
-      />
-    );
+    const retryFn = getEditChallengeFormDataAction.bind(null, challengeId);
+    return <ErrorAlert errorMessage={`Ошибка: ${serverError}`} retryFn={retryFn} />;
   }
 
   if (!data) {

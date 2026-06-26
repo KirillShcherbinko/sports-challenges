@@ -1,5 +1,4 @@
-import type { FitnessCategory, ChallengeDifficulty } from '@/shared/client';
-import type { ChallengeGetPayload } from '@/shared/types';
+import type { ChallengeDifficulty, ChallengeGetPayload, FitnessCategory } from '@/shared/types';
 import type { challengeFiltersSchema, challengeSchema } from './schemas';
 import type z from 'zod';
 

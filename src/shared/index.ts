@@ -7,8 +7,6 @@ export { idSchema } from './model/schemas';
 export { createClient } from './lib/supabase/client';
 export { retryResult } from './lib/utils/retry';
 export { isOlderThan24Hours } from './lib/utils/is-older-than-24-hours';
-export { useFileField } from './lib/hooks/use-file-field';
-export { useDebouncedSearchParamsUpdate } from './lib/hooks/use-debounced-search-params-update';
 
 export { CHALLENGE_DIFFICULTY_LABELS } from './config/challenge-difficulty-labels';
 export { FITNESS_LEVEL_LABELS } from './config/fitness-level-labels';

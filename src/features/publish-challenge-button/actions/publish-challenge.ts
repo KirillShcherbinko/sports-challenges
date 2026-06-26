@@ -26,7 +26,7 @@ export const publishChallengeAction = actionClient
 
     revalidatePath(ERoutes.CHALLENGES);
     revalidatePath(ERoutes.MY_CHALLENGES);
-    revalidatePath(ERoutes.DISCOVER);
+    revalidatePath(ERoutes.HOME);
 
     redirect(ERoutes.MY_CHALLENGES);
   });

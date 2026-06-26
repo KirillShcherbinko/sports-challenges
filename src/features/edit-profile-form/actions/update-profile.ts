@@ -28,7 +28,7 @@ export const updateProfileAction = actionClient.inputSchema(editProfileSchema).a
 
   revalidatePath(ERoutes.PROFILE);
   revalidatePath(ERoutes.PROFILE_EDIT);
-  revalidatePath(ERoutes.DISCOVER);
+  revalidatePath(ERoutes.CREATORS);
 
   redirect(ERoutes.PROFILE);
 });

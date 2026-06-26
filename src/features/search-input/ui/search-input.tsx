@@ -4,7 +4,11 @@ import { TextInput } from '@mantine/core';
 import { IconSearchFilled } from '@tabler/icons-react';
 import { useSearchFilter } from '../lib/use-search-filter';
 
-export const SearchInput = () => {
+type SearchInputProps = {
+  placeholder?: string;
+};
+
+export const SearchInput = ({ placeholder = 'Поиск профилей' }: SearchInputProps) => {
   const { searchValue, handleChange } = useSearchFilter();
 
   return (
@@ -13,7 +17,7 @@ export const SearchInput = () => {
       w="100%"
       value={searchValue}
       onChange={handleChange}
-      placeholder="Поиск профилей"
+      placeholder={placeholder}
       leftSection={<IconSearchFilled size={24} />}
     />
   );

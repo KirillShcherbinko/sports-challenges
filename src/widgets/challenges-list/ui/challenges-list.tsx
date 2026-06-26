@@ -20,21 +20,13 @@ export const ChallengesList = async ({ searchParams, creatorName, isPublished, p
   } = await getChallengesAction({ ...searchParams, creatorName, isPublished, personalize });
 
   if (serverError) {
-    return (
-      <ErrorAlert
-        errorMessage={serverError}
-        retryFn={async () => await getChallengesAction({ ...searchParams, creatorName, isPublished, personalize })}
-      />
-    );
+    const retryFn = getChallengesAction.bind(null, { ...searchParams, creatorName, isPublished, personalize });
+    return <ErrorAlert errorMessage={serverError} retryFn={retryFn} />;
   }
 
   if (validationErrors) {
-    return (
-      <ErrorAlert
-        errorMessage="Неверные параметры фильтрации"
-        retryFn={async () => await getChallengesAction({ creatorName, isPublished, personalize })}
-      />
-    );
+    const retryFn = getChallengesAction.bind(null, { ...searchParams, creatorName, isPublished, personalize });
+    return <ErrorAlert errorMessage="Неверные параметры фильтрации" retryFn={retryFn} />;
   }
 
   if (!challenges || challenges.pagination.total === 0) {
@@ -53,6 +45,7 @@ export const ChallengesList = async ({ searchParams, creatorName, isPublished, p
         {challenges.items.map((challenge) => (
           <ChallengeCard
             key={challenge.id}
+            id={challenge.id}
             title={challenge.title}
             description={challenge.description}
             coverImageUrl={challenge.coverImageUrl}

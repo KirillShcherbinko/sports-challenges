@@ -4,32 +4,23 @@ import { EmptyListAlert, ErrorAlert } from '@/shared';
 
 type TTaskCompletionsListProps = {
   challengeId: string;
-  profileId: string;
 };
 
-export const TaskCompletionsList = async ({ challengeId, profileId }: TTaskCompletionsListProps) => {
+export const TaskCompletionsList = async ({ challengeId }: TTaskCompletionsListProps) => {
   const {
     data: completions,
     serverError,
     validationErrors,
-  } = await getTaskCompletionsAction({ challengeId, profileId });
+  } = await getTaskCompletionsAction({ challengeId });
 
   if (serverError) {
-    return (
-      <ErrorAlert
-        errorMessage={serverError}
-        retryFn={async () => await getTaskCompletionsAction({ challengeId, profileId })}
-      />
-    );
+    const retryFn = getTaskCompletionsAction.bind(null, { challengeId });
+    return <ErrorAlert errorMessage={serverError} retryFn={retryFn} />;
   }
 
   if (validationErrors) {
-    return (
-      <ErrorAlert
-        errorMessage="Неверные параметры"
-        retryFn={async () => await getTaskCompletionsAction({ challengeId, profileId })}
-      />
-    );
+    const retryFn = getTaskCompletionsAction.bind(null, { challengeId });
+    return <ErrorAlert errorMessage="Неверные параметры" retryFn={retryFn} />;
   }
 
   if (!completions || completions.length === 0) {

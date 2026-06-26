@@ -3,7 +3,7 @@ import type { TDailyTaskDto, TDailyTaskMutationDto } from '../model/dtos';
 
 export const mapToDailyTaskDto = (data: DailyTask): TDailyTaskDto => {
   return {
-    id: data.id,
+    id: `${data.challengeId}-${data.dayNumber}`,
     title: data.title,
     description: data.description,
     exerciseType: data.exerciseType,
@@ -13,7 +13,7 @@ export const mapToDailyTaskDto = (data: DailyTask): TDailyTaskDto => {
 
 export const mapToDailyTaskMutationDto = (data: DailyTask): TDailyTaskMutationDto => {
   return {
-    id: data.id,
+    id: `${data.challengeId}-${data.dayNumber}`,
     title: data.title,
     dayNumber: data.dayNumber,
   };

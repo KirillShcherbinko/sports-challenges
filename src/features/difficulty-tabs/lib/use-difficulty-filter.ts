@@ -1,4 +1,4 @@
-import { useDebouncedSearchParamsUpdate } from '@/shared';
+import { useDebouncedSearchParamsUpdate } from '@/shared/hooks';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 

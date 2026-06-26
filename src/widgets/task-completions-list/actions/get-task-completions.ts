@@ -5,10 +5,11 @@ import { actionClient } from '@/shared/actions';
 import { cacheTag, cacheLife } from 'next/cache';
 import { taskCompletionRepository } from '@/entities/task-completion/server';
 import type { TTaskCompletionDto } from '@/entities/task-completion';
+import { getUser } from '@/entities/auth/server';
+import { createServer } from '@/shared/server';
 
 const getTaskCompletionsSchema = z.object({
   challengeId: z.string(),
-  profileId: z.string(),
 });
 
 const getCachedTaskCompletions = async (challengeId: string, profileId: string): Promise<TTaskCompletionDto[]> => {
@@ -22,5 +23,8 @@ const getCachedTaskCompletions = async (challengeId: string, profileId: string):
 export const getTaskCompletionsAction = actionClient
   .inputSchema(getTaskCompletionsSchema)
   .action(async ({ parsedInput }): Promise<TTaskCompletionDto[]> => {
-    return await getCachedTaskCompletions(parsedInput.challengeId, parsedInput.profileId);
+    const supabase = await createServer();
+    const user = await getUser(supabase);
+
+    return await getCachedTaskCompletions(parsedInput.challengeId, user.id);
   });

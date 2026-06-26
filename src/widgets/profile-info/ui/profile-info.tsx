@@ -16,14 +16,10 @@ export const ProfileInfo = async ({ profileUsername }: TProfileInfoProps) => {
     : await getMyProfileAction();
 
   if (serverError) {
-    return (
-      <ErrorAlert
-        errorMessage={serverError}
-        retryFn={async () =>
-          profileUsername ? await getUserProfileAction(profileUsername) : await getMyProfileAction()
-        }
-      />
-    );
+    const retryFn = profileUsername
+      ? getUserProfileAction.bind(null, profileUsername)
+      : getMyProfileAction.bind(null);
+    return <ErrorAlert errorMessage={serverError} retryFn={retryFn} />;
   }
 
   if (!data) {

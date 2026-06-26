@@ -3,6 +3,7 @@
 import { AppShell } from '@mantine/core';
 import { useHeadroom } from '@mantine/hooks';
 import type { PropsWithChildren } from 'react';
+import { Suspense } from 'react';
 import { Header } from '@/widgets/header';
 
 export const MainLayout = ({ children }: PropsWithChildren) => {
@@ -13,7 +14,7 @@ export const MainLayout = ({ children }: PropsWithChildren) => {
         <Header />
       </AppShell.Header>
       <AppShell.Main maw={1280} w="100%" mih="100vh - 64px">
-        {children}
+        <Suspense>{children}</Suspense>
       </AppShell.Main>
     </AppShell>
   );

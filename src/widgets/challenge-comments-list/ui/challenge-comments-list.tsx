@@ -16,21 +16,13 @@ export const ChallengeCommentsList = async ({ challengeId }: TChallengeCommentsL
   } = await getChallengeCommentsAction({ challengeId, page: 1 });
 
   if (serverError) {
-    return (
-      <ErrorAlert
-        errorMessage={serverError}
-        retryFn={async () => await getChallengeCommentsAction({ challengeId, page: 1 })}
-      />
-    );
+    const retryFn = getChallengeCommentsAction.bind(null, { challengeId, page: 1 });
+    return <ErrorAlert errorMessage={serverError} retryFn={retryFn} />;
   }
 
   if (validationErrors) {
-    return (
-      <ErrorAlert
-        errorMessage="Неверные параметры"
-        retryFn={async () => await getChallengeCommentsAction({ challengeId, page: 1 })}
-      />
-    );
+    const retryFn = getChallengeCommentsAction.bind(null, { challengeId, page: 1 });
+    return <ErrorAlert errorMessage="Неверные параметры" retryFn={retryFn} />;
   }
 
   if (!initialData || initialData.items.length === 0) {

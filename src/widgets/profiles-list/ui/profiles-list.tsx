@@ -12,15 +12,13 @@ export const ProfilesList = async ({ searchParams }: TProfilesListProps) => {
   const { data: profiles, serverError, validationErrors } = await getProfilesAction(searchParams);
 
   if (serverError) {
-    return (
-      <ErrorAlert errorMessage={`Ошибка ${serverError}`} retryFn={async () => await getProfilesAction(searchParams)} />
-    );
+    const retryFn = getProfilesAction.bind(null, searchParams);
+    return <ErrorAlert errorMessage={`Ошибка ${serverError}`} retryFn={retryFn} />;
   }
 
   if (validationErrors) {
-    return (
-      <ErrorAlert errorMessage="Неверные параметры фильтрации" retryFn={async () => await getProfilesAction({})} />
-    );
+    const retryFn = getProfilesAction.bind(null, {});
+    return <ErrorAlert errorMessage="Неверные параметры фильтрации" retryFn={retryFn} />;
   }
 
   if (!profiles) {
