@@ -1,33 +1,17 @@
 'use server';
 
-import type { AuthError } from '@supabase/supabase-js';
-import { EActionStatus, type TErrorFields, type TFormActionState } from '@/shared';
 import { createServer } from '@/shared/server';
+import { actionClient } from '@/shared/actions';
+import { redirect } from 'next/navigation';
+import { ERoutes } from '@/shared';
 
-const mapSignOutErrors = (error: AuthError | null): TErrorFields<Record<string, never>> | null => {
-  if (!error) return null;
-
-  return {
-    root: 'Ошибка выхода из аккаунта',
-  };
-};
-
-export const signOutAction = async (): Promise<TFormActionState<Record<string, never>>> => {
+export const signOutAction = actionClient.action(async () => {
   const supabase = await createServer();
+  const { error: authError } = await supabase.auth.signOut();
 
-  const { error } = await supabase.auth.signOut();
-
-  const mappedError = mapSignOutErrors(error);
-
-  if (mappedError) {
-    return {
-      status: EActionStatus.Error,
-      errors: mappedError,
-    };
+  if (authError) {
+    throw new Error('Не удалось выйти из системы');
   }
 
-  return {
-    status: EActionStatus.Success,
-    redirect: '/sign-in',
-  };
-};
+  redirect(ERoutes.SIGN_IN);
+});

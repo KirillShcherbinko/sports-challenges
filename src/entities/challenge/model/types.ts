@@ -1,32 +1,19 @@
-// src/entities/challenge/model/types.ts
+import type { ChallengeDifficulty, ChallengeGetPayload, FitnessCategory } from '@/shared/types';
+import type { challengeFiltersSchema, challengeSchema } from './schemas';
+import type z from 'zod';
 
-import type { ChallengeCategory, ChallengeDifficulty } from '@/shared/client';
-
-// src/entities/challenge/model/types.ts
-
-import type { Prisma } from '@/shared/client';
-
-export type TChallengeWithCreator = Prisma.ChallengeGetPayload<{
-  include: {
-    creator: true;
-  };
+export type TChallengeWithCreator = ChallengeGetPayload<{
+  include: { creator: true };
 }>;
 
 export type TChallengeFilters = {
   search?: string;
-  creatorId?: string;
-  category?: ChallengeCategory;
+  categories?: FitnessCategory[];
   difficulty?: ChallengeDifficulty;
-  page?: number;
-  limit?: number;
+  page: number;
+  limit: number;
+  personalize?: boolean;
 };
 
-export type TChallengesData = {
-  items: TChallengeWithCreator[];
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
-};
+export type TChallengeFiltersSchema = z.infer<typeof challengeFiltersSchema>;
+export type TChallengeSchema = z.infer<typeof challengeSchema>;

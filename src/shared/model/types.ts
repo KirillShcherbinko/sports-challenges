@@ -1,14 +1,11 @@
-import type { ERoutes } from '../routes/enums';
-
-export type TResult<TData> = {
-  success: boolean;
-  data?: TData;
-  error?: string;
-  redirect?: ERoutes;
+export type TPaginationResponse = {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
 };
 
-export type RetryOptions<TData> = {
-  retries?: number;
-  delayMs?: number;
-  shouldRetry?: (result: TResult<TData>) => boolean;
+export type TGetPaginatedResponseDto<T> = {
+  items: T[];
+  pagination: TPaginationResponse;
 };

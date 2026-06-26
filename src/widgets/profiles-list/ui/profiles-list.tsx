@@ -1,35 +1,36 @@
 import { ProfileCard, type TProfileFilters } from '@/entities/profile';
-import { EActionStatus } from '@/shared';
-import { fetchProfiles } from '../actions/fetch-profiles';
-import { Button, Stack, Text } from '@mantine/core';
-import { ProfilesPagination } from '@/features/profiles-pagination';
+import { getProfilesAction } from '../actions/get-profiles';
+import { EmptyListAlert, ErrorAlert } from '@/shared';
+import { ProfilesListLayout } from './profiles-list-layout';
+import { ListPagination } from '@/features/list-pagination';
 
 type TProfilesListProps = {
   searchParams: TProfileFilters;
 };
 
 export const ProfilesList = async ({ searchParams }: TProfilesListProps) => {
-  const { status, data, error } = await fetchProfiles(searchParams);
+  const { data: profiles, serverError, validationErrors } = await getProfilesAction(searchParams);
 
-  if (status === EActionStatus.Error) {
-    return (
-      <Stack align="center">
-        <Text c="var(--mantine-color-dark-2)">{error || 'Не удалось получить список профилей'}</Text>
-        <Button>Повторить</Button>
-      </Stack>
-    );
+  if (serverError) {
+    const retryFn = getProfilesAction.bind(null, searchParams);
+    return <ErrorAlert errorMessage={`Ошибка ${serverError}`} retryFn={retryFn} />;
   }
 
-  if (status === EActionStatus.Success && data?.items.length === 0) {
-    return <Text c="var(--mantine-color-dark-2)">Список профилей пуст</Text>;
+  if (validationErrors) {
+    const retryFn = getProfilesAction.bind(null, {});
+    return <ErrorAlert errorMessage="Неверные параметры фильтрации" retryFn={retryFn} />;
+  }
+
+  if (!profiles) {
+    return <EmptyListAlert message="Список профилей пуст" />;
   }
 
   return (
-    <Stack maw={800} w="100%" align="center" gap={12}>
-      {data?.items.map(({ id, username, fitnessLevel, avatarUrl }) => (
+    <ProfilesListLayout>
+      {profiles.items.map(({ id, username, fitnessLevel, avatarUrl }) => (
         <ProfileCard key={id} username={username} fitnessLevel={fitnessLevel} avatarUrl={avatarUrl} />
       ))}
-      <ProfilesPagination total={data?.pagination.totalPages || 1} />
-    </Stack>
+      <ListPagination total={profiles.pagination.totalPages} totalPages={profiles.pagination.totalPages} />
+    </ProfilesListLayout>
   );
 };

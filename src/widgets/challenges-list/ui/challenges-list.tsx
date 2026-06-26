@@ -1,73 +1,62 @@
-// src/widgets/challenges-list/ui/challenges-list.tsx
+import { SimpleGrid, Stack } from '@mantine/core';
+import { getChallengesAction } from '../actions/get-challenges';
+import { ChallengeCard, type TChallengeFilters } from '@/entities/challenge';
+import { LikeButton } from '@/features/like-button';
+import { EmptyListAlert, ErrorAlert } from '@/shared';
+import { ListPagination } from '@/features/list-pagination';
 
-import { Badge, Card, Group, Image, SimpleGrid, Stack, Text } from '@mantine/core';
-
-import { getChallenges } from '../actions/get-challenges';
-
-type Props = {
-  searchParams?: {
-    search?: string;
-    category?: any;
-    difficulty?: any;
-    creatorId?: string;
-    page?: string;
-  };
+type TChallengesListProps = {
+  searchParams: TChallengeFilters;
+  creatorName?: string;
+  isPublished?: boolean;
+  personalize?: boolean;
 };
 
-export const ChallengesList = async ({ searchParams }: Props) => {
-  const result = await getChallenges({
-    search: searchParams?.search,
-    creatorId: searchParams?.creatorId,
-    category: searchParams?.category,
-    difficulty: searchParams?.difficulty,
-    page: searchParams?.page ? Number(searchParams.page) : 1,
-  });
+export const ChallengesList = async ({ searchParams, creatorName, isPublished, personalize }: TChallengesListProps) => {
+  const {
+    data: challenges,
+    serverError,
+    validationErrors,
+  } = await getChallengesAction({ ...searchParams, creatorName, isPublished, personalize });
 
-  if (!result.success || !result.data) {
-    return <Text c="red">{result.error ?? 'Ошибка загрузки челленджей'}</Text>;
+  if (serverError) {
+    const retryFn = getChallengesAction.bind(null, { ...searchParams, creatorName, isPublished, personalize });
+    return <ErrorAlert errorMessage={serverError} retryFn={retryFn} />;
   }
 
-  if (!result.data.items.length) {
-    return <Text>Челленджи не найдены</Text>;
+  if (validationErrors) {
+    const retryFn = getChallengesAction.bind(null, { ...searchParams, creatorName, isPublished, personalize });
+    return <ErrorAlert errorMessage="Неверные параметры фильтрации" retryFn={retryFn} />;
+  }
+
+  if (!challenges || challenges.pagination.total === 0) {
+    return <EmptyListAlert message="Челлленджи не найдены" />;
   }
 
   return (
-    <SimpleGrid
-      cols={{
-        base: 1,
-        sm: 2,
-        lg: 3,
-      }}
-    >
-      {result.data.items.map((challenge) => (
-        <Card key={challenge.id} withBorder radius="lg" padding="lg">
-          <Stack mt="md">
-            <Group justify="space-between">
-              <Badge>{challenge.category}</Badge>
-
-              <Badge variant="light">{challenge.difficulty}</Badge>
-            </Group>
-
-            <Text fw={700} size="lg">
-              {challenge.title}
-            </Text>
-
-            <Text size="sm" c="dimmed" lineClamp={3}>
-              {challenge.description}
-            </Text>
-
-            <Group justify="space-between">
-              <Text size="sm">🔥 {challenge.likesCount}</Text>
-
-              <Text size="sm">👥 {challenge.participantsCount}</Text>
-            </Group>
-
-            <Text size="xs" c="dimmed">
-              @{challenge.creator?.username ?? 'unknown'}
-            </Text>
-          </Stack>
-        </Card>
-      ))}
-    </SimpleGrid>
+    <Stack>
+      <SimpleGrid
+        cols={{
+          base: 1,
+          sm: 2,
+          lg: 3,
+        }}
+      >
+        {challenges.items.map((challenge) => (
+          <ChallengeCard
+            key={challenge.id}
+            id={challenge.id}
+            title={challenge.title}
+            description={challenge.description}
+            coverImageUrl={challenge.coverImageUrl}
+            difficulty={challenge.difficulty}
+            category={challenge.categories[0]}
+            participantsCount={challenge.participantsCount}
+            likesCountSlot={<LikeButton challengeId={challenge.id} />}
+          />
+        ))}
+      </SimpleGrid>
+      <ListPagination total={challenges.pagination.totalPages} totalPages={challenges.pagination.totalPages} />
+    </Stack>
   );
 };

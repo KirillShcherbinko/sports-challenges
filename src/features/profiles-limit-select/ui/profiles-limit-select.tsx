@@ -9,7 +9,7 @@ export const ProfilesLimitSelect = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const currentLimit = searchParams.get('limit') ?? '10';
+  const currentLimit = searchParams.get('limit');
 
   const handleChange = (value: string | null) => {
     if (!value) return;

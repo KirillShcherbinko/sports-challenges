@@ -1,197 +1,121 @@
-// src/entities/challenge/model/repository.ts
-
-import type {
-  Challenge
-} from '@/shared/client';
-
-import type { TResult } from '@/shared';
-
-import type {
-  TChallengeFilters,
-  TChallengesData,
-} from './types';
-
-import { DEFAULT_CHALLENGE_FILTERS_VALUES } from '../config/default-challenge-filters-values';
-
+import type { TChallengeFilters } from './types';
+import { DEFAULT_CHALLENGES_FILTERS_VALUES } from '../config/default-challenges-filters-values';
 import { prisma } from '@/shared/server';
 import type { ChallengeCreateInput, ChallengeUpdateInput, ChallengeWhereInput } from '@/shared/types';
+import type {
+  TChallengeDetailDto,
+  TChallengeDto,
+  TChallengeMutationDto,
+  TEditChallengeDto,
+  TIsChallengePublishedDto,
+} from './dtos';
+import {
+  mapChallengeDetailToDto,
+  mapChallengeMutationToDto,
+  mapChallengeToDto,
+  mapEditChallengeToDto,
+} from '../lib/mappers';
+import { sortByPersonalization } from '../lib/personalization';
+import type { TGetPaginatedResponseDto } from '@/shared';
+import type { FitnessCategory, FitnessLevel } from '@/shared/types';
 
 class ChallengeRepository {
+  async isChallengePublished(challengeId: string): Promise<TIsChallengePublishedDto | null> {
+    const challenge = await prisma.challenge.findUnique({
+      where: { id: challengeId },
+      select: { id: true, isPublished: true },
+    });
+    return challenge;
+  }
+
+  async getChallengeTitle(challengeId: string): Promise<string | null> {
+    const challenge = await prisma.challenge.findUnique({ where: { id: challengeId }, select: { title: true } });
+    return challenge?.title ?? null;
+  }
+
   async getChallenges(
-    filters: TChallengeFilters = DEFAULT_CHALLENGE_FILTERS_VALUES
-  ): Promise<TResult<TChallengesData>> {
-    try {
-      const {
-        search,
-        creatorId,
-        category,
-        difficulty,
-        page = 1,
-        limit = 12,
-      } = filters;
+    filters: TChallengeFilters = DEFAULT_CHALLENGES_FILTERS_VALUES,
+    creatorName?: string,
+    isPublished?: boolean,
+    personalize?: boolean,
+    userPreferences?: FitnessCategory[],
+    userFitnessLevel?: FitnessLevel
+  ): Promise<TGetPaginatedResponseDto<TChallengeDto>> {
+    const { search, categories, difficulty, page, limit } = filters;
 
-      const where: ChallengeWhereInput = {
-        ...(search && {
-          title: {
-            contains: search,
-            mode: 'insensitive',
-          },
-        }),
+    const where: ChallengeWhereInput = {
+      ...(search && { title: { contains: search } }),
+      ...(creatorName && { creator: { username: { contains: creatorName } } }),
+      ...(categories && { categories: { hasSome: categories } }),
+      ...(difficulty && { difficulty }),
+      ...(isPublished && { isPublished }),
+    };
 
-        ...(creatorId && {
-          creatorId,
-        }),
-
-        ...(category && {
-          category,
-        }),
-
-        ...(difficulty && {
-          difficulty,
-        }),
-      };
-
-      const [items, total] = await prisma.$transaction([
-        prisma.challenge.findMany({
-          where,
-          skip: (page - 1) * limit,
-          take: limit,
-          orderBy: {
-            createdAt: 'desc',
-          },
-
-          include: {
-            creator: true,
-          },
-        }),
-
-        prisma.challenge.count({
-          where,
-        }),
-      ]);
-
-      return {
-        success: true,
-        data: {
-          items,
-          pagination: {
-            page,
-            limit,
-            total,
-            totalPages: Math.ceil(total / limit),
-          },
-        },
-      };
-    } catch (error) {
-      console.error(error);
-
-      return {
-        success: false,
-        error: 'Ошибка получения челленджей',
-      };
-    }
-  }
-
-  async createChallenge(
-    data: ChallengeCreateInput
-  ): Promise<TResult<Challenge>> {
-    try {
-      const challenge = await prisma.challenge.create({
-        data,
+    if (personalize && userPreferences && userFitnessLevel) {
+      const allItems = await prisma.challenge.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        include: { creator: true },
       });
 
-      return {
-        success: true,
-        data: challenge,
-      };
-    } catch (error) {
-      console.error(error);
+      const mapped = allItems.map(mapChallengeToDto);
+      const sorted = sortByPersonalization(mapped, userPreferences, userFitnessLevel);
+      const total = sorted.length;
+      const paginated = sorted.slice((page - 1) * limit, page * limit);
 
       return {
-        success: false,
-        error: 'Ошибка создания челленджа',
+        items: paginated,
+        pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
       };
     }
+
+    const [rawItems, total] = await prisma.$transaction([
+      prisma.challenge.findMany({
+        where,
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+        include: { creator: true },
+      }),
+
+      prisma.challenge.count({ where }),
+    ]);
+
+    const items = rawItems.map(mapChallengeToDto);
+
+    return {
+      items,
+      pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
+    };
   }
 
-  async getChallengeById(
-    challengeId: string
-  ): Promise<TResult<Challenge | null>> {
-    try {
-      const challenge = await prisma.challenge.findUnique({
-        where: {
-          id: challengeId,
-        },
-
-        include: {
-          creator: true,
-          dailyTasks: true,
-        },
-      });
-
-      return {
-        success: true,
-        data: challenge,
-      };
-    } catch (error) {
-      console.error(error);
-
-      return {
-        success: false,
-        error: 'Ошибка получения челленджа',
-      };
-    }
+  async createChallenge(data: ChallengeCreateInput): Promise<TChallengeMutationDto> {
+    const challenge = await prisma.challenge.create({ data });
+    return mapChallengeMutationToDto(challenge);
   }
 
-  async updateChallenge(
-    challengeId: string,
-    data: ChallengeUpdateInput
-  ): Promise<TResult<Challenge>> {
-    try {
-      const challenge = await prisma.challenge.update({
-        where: {
-          id: challengeId,
-        },
+  async getChallengeById(challengeId: string): Promise<TChallengeDetailDto | null> {
+    const challenge = await prisma.challenge.findUnique({
+      where: { id: challengeId },
+      include: { creator: true },
+    });
 
-        data,
-      });
-
-      return {
-        success: true,
-        data: challenge,
-      };
-    } catch (error) {
-      console.error(error);
-
-      return {
-        success: false,
-        error: 'Ошибка обновления челленджа',
-      };
-    }
+    return challenge ? mapChallengeDetailToDto(challenge) : null;
   }
 
-  async deleteChallenge(
-    challengeId: string
-  ): Promise<TResult<Challenge>> {
-    try {
-      const challenge = await prisma.challenge.delete({
-        where: {
-          id: challengeId,
-        },
-      });
+  async getEditChallengeById(challengeId: string): Promise<TEditChallengeDto | null> {
+    const challenge = await prisma.challenge.findUnique({ where: { id: challengeId } });
+    return challenge ? mapEditChallengeToDto(challenge) : null;
+  }
 
-      return {
-        success: true,
-        data: challenge,
-      };
-    } catch (error) {
-      console.error(error);
+  async updateChallenge(challengeId: string, data: ChallengeUpdateInput): Promise<TChallengeMutationDto> {
+    const challenge = await prisma.challenge.update({ where: { id: challengeId }, data });
+    return mapChallengeMutationToDto(challenge);
+  }
 
-      return {
-        success: false,
-        error: 'Ошибка удаления челленджа',
-      };
-    }
+  async deleteChallenge(challengeId: string): Promise<TChallengeMutationDto> {
+    const challenge = await prisma.challenge.delete({ where: { id: challengeId } });
+    return mapChallengeMutationToDto(challenge);
   }
 }
 

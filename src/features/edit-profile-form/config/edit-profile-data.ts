@@ -1,36 +1,9 @@
 import { editProfileSchema } from '@/entities/profile';
-import { FitnessLevel } from '@/shared/types';
-
-export const FITNESS_LEVEL_OPTIONS = [
-  {
-    value: FitnessLevel.beginner,
-    label: 'Новичок',
-  },
-
-  {
-    value: FitnessLevel.intermediate,
-    label: 'Средний',
-  },
-
-  {
-    value: FitnessLevel.advanced,
-    label: 'Продвинутый',
-  },
-];
 
 export const EDIT_PROFILE_DATA = {
   schema: editProfileSchema,
-
-  defaultValues: {
-    username: '',
-    bio: '',
-    fitnessLevel: FitnessLevel.beginner,
-    avatar: null,
-  },
-
   fields: {
     username: {
-      required: true,
       label: 'Имя пользователя',
       placeholder: 'Введите username',
     },
@@ -38,19 +11,23 @@ export const EDIT_PROFILE_DATA = {
     bio: {
       label: 'О себе',
       placeholder: 'Расскажите о себе',
-      autosize: true,
-      minRows: 4,
-      maxRows: 8,
+      rows: 6,
     },
 
     fitnessLevel: {
       label: 'Уровень подготовки',
-      data: FITNESS_LEVEL_OPTIONS,
+    },
+
+    preferences: {
+      label: 'Индивидуальные предпочтения',
+      placeholder: 'Введите ваши интересы',
+      searchable: true,
+      clearable: true,
+      maxDropdownHeight: 400,
     },
 
     avatar: {
       accept: 'image/png,image/jpeg',
-      description: 'PNG или JPG',
     },
   },
 };

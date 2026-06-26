@@ -1,87 +1,126 @@
 import type { ProfileCreateInput, ProfileUpdateInput } from '@/shared/types';
-import type { TResult } from '@/shared';
-import type { TProfileFilters, TProfilesData } from './types';
+import type { TProfileFilters } from './types';
 import { DEFAULT_PROFILE_FILTERS_VALUES } from '../config/default-profile-filters-values';
 import { prisma } from '@/shared/server';
-import type { Profile } from '@/shared/client';
+import { mapEditProfileToDto, mapProfileDetailToDto, mapProfileMutationToDto, mapProfileToDto } from '../lib/mappers';
+import type {
+  TEditProfileDto,
+  TProfileDetailDto,
+  TProfileDto,
+  TProfileMutationDto,
+  TProfileAnalyticsDto,
+  TCreatorAnalyticsDto,
+} from './dtos';
+import type { TGetPaginatedResponseDto } from '@/shared';
 
 class ProfileRepository {
-  async getProfiles(filters: TProfileFilters = DEFAULT_PROFILE_FILTERS_VALUES): Promise<TResult<TProfilesData>> {
-    try {
-      const { search, fitnessLevel, page, limit } = filters;
+  async getProfiles(
+    filters: TProfileFilters = DEFAULT_PROFILE_FILTERS_VALUES
+  ): Promise<TGetPaginatedResponseDto<TProfileDto>> {
+    const { search, fitnessLevel, page, limit } = filters;
 
-      const where = {
-        ...(search && {
-          username: { contains: search, mode: 'insensitive' as const },
-        }),
-        ...(fitnessLevel && { fitnessLevel }),
-      };
+    const where = {
+      ...(search && { username: { contains: search } }),
+      ...(fitnessLevel && { fitnessLevel }),
+    };
 
-      const [items, total] = await prisma.$transaction([
-        prisma.profile.findMany({
-          where,
-          skip: (page - 1) * limit,
-          take: limit,
-        }),
-        prisma.profile.count({ where }),
-      ]);
+    const [rawItems, total] = await prisma.$transaction([
+      prisma.profile.findMany({
+        where,
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+      prisma.profile.count({ where }),
+    ]);
 
-      return {
-        success: true,
-        data: {
-          items,
-          pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
-        },
-      };
-    } catch (error) {
-      console.error(error);
-      return { success: false, error: 'Ошибка получения профилей' };
-    }
+    const items = rawItems.map(mapProfileToDto);
+
+    return {
+      items,
+      pagination: { page, limit, total, totalPages: Math.ceil(total / limit) },
+    };
   }
 
-  async createProfile(data: ProfileCreateInput): Promise<TResult<Profile>> {
-    try {
-      const profile = await prisma.profile.create({ data });
-      return { success: true, data: profile };
-    } catch {
-      return { success: false, error: 'Ошибка создания профиля' };
-    }
+  async createProfile(data: ProfileCreateInput): Promise<TProfileMutationDto> {
+    const profile = await prisma.profile.create({ data });
+    return mapProfileMutationToDto(profile);
   }
 
-  async getProfileById(profileId: string): Promise<TResult<Profile | null>> {
-    try {
-      const profile = await prisma.profile.findUnique({ where: { id: profileId } });
-      return { success: true, data: profile };
-    } catch {
-      return { success: false, error: 'Ошибка получения профиля' };
-    }
+  async getProfileById(profileId: string): Promise<TProfileDetailDto | null> {
+    const profile = await prisma.profile.findUnique({ where: { id: profileId } });
+    return profile ? mapProfileDetailToDto(profile) : null;
   }
 
-  async getProfileByUsername(username: string): Promise<TResult<Profile | null>> {
-    try {
-      const profile = await prisma.profile.findUnique({ where: { username } });
-      return { success: true, data: profile };
-    } catch {
-      return { success: false, error: 'Ошибка получения профиля' };
-    }
+  async getProfileAvatar(profileId: string): Promise<string | null> {
+    const data = await prisma.profile.findUnique({ where: { id: profileId }, select: { avatarUrl: true } });
+    return data ? data.avatarUrl : null;
   }
 
-  async updateProfile(profileId: string, data: ProfileUpdateInput): Promise<TResult<Profile>> {
-    try {
-      const profile = await prisma.profile.update({ data, where: { id: profileId } });
-      return { success: true, data: profile };
-    } catch {
-      return { success: false, error: 'Ошибка обновления профиля' };
-    }
+  async getProfileByUsername(username: string): Promise<TProfileDetailDto | null> {
+    const profile = await prisma.profile.findUnique({ where: { username } });
+    return profile ? mapProfileDetailToDto(profile) : null;
   }
 
-  async deleteProfile(profileId: string): Promise<TResult<Profile>> {
-    try {
-      const profile = await prisma.profile.delete({ where: { id: profileId } });
-      return { success: true, data: profile };
-    } catch {
-      return { success: false, error: 'Ошибка удаления профиля' };
+  async getEditProfileById(profileId: string): Promise<TEditProfileDto | null> {
+    const profile = await prisma.profile.findUnique({ where: { id: profileId } });
+    return profile ? mapEditProfileToDto(profile) : null;
+  }
+
+  async updateProfile(profileId: string, data: ProfileUpdateInput): Promise<TProfileMutationDto> {
+    const profile = await prisma.profile.update({ data, where: { id: profileId } });
+    return mapProfileMutationToDto(profile);
+  }
+
+  async getProfileAnalytics(profileId: string): Promise<TProfileAnalyticsDto> {
+    const profile = await prisma.profile.findUnique({
+      where: { id: profileId },
+      select: { totalCompletedTasks: true },
+    });
+
+    const [challengesCompleted, createdChallenges] = await Promise.all([
+      prisma.profileChallenge.count({ where: { profileId, status: 'Completed' } }),
+      prisma.challenge.count({ where: { creatorId: profileId } }),
+    ]);
+
+    return {
+      challengesCompleted,
+      completedTasks: profile?.totalCompletedTasks ?? 0,
+      createdChallenges,
+    };
+  }
+
+  async getCreatorAnalytics(username: string): Promise<TCreatorAnalyticsDto> {
+    const profile = await prisma.profile.findUnique({
+      where: { username },
+      select: { id: true },
+    });
+
+    if (!profile) {
+      return { challengesCount: 0, avgCompletionRate: 0 };
     }
+
+    const [challengesCount, profileChallenges] = await Promise.all([
+      prisma.challenge.count({ where: { creatorId: profile.id } }),
+      prisma.profileChallenge.findMany({
+        where: { challenge: { creatorId: profile.id } },
+        include: { challenge: { select: { durationDays: true } } },
+      }),
+    ]);
+
+    const avgCompletionRate =
+      profileChallenges.length > 0
+        ? Math.round(
+            profileChallenges.reduce(
+              (sum, pc) => sum + Math.round((pc.currentDay * 100) / pc.challenge.durationDays),
+              0
+            ) / profileChallenges.length
+          )
+        : 0;
+
+    return {
+      challengesCount,
+      avgCompletionRate,
+    };
   }
 }
 
