@@ -46,6 +46,7 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
 SUPABASE_SERVICE_ROLE_KEY=sb_secret_...
 DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres
 PORT=3000
+HOSTNAME=0.0.0.0
 ```
 
 > ⚠️ `NEXT_PUBLIC_SUPABASE_URL` и порты зависят от окружения:
