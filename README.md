@@ -1,127 +1,145 @@
-# 🏃‍♂️ Sports Challenge Platform
+# Sports Challenge Platform
 
-Полнофункциональная full-stack веб-платформа для создания, прохождения и отслеживания спортивных челленджей. Приложение ориентировано на социальное взаимодействие, пользовательский контент и адаптивный интерфейс, корректно работающий на мобильных и десктопных устройствах.
+Full-stack веб-платформа для создания, прохождения и отслеживания спортивных челленджей.
 
----
+## Tech Stack
 
-## ✨ Ключевые особенности
-- 👤 **Управление пользователями**: регистрация, авторизация, редактирование профиля, указание уровня подготовки
-- 🎯 **Челленджи**: создание, редактирование, публикация, каталог с фильтрацией
-- 📅 **Ежедневные задания**: детальная структура тренировок, инструкции, целевые показатели
-- 📊 **Прогресс-трекинг**: фиксация выполнения/пропуска, визуализация истории, статусы прохождения
-- 💬 **Социальные механики**: лайки, комментарии с ветвлением, статистика популярности контента
-- 🏆 **Геймификация**: система достижений, критерии получения, привязка к аккаунту
-- 📱 **Адаптивный интерфейс**: корректное отображение от `360px`, оптимизированный мобильный UX
-- 🔒 **Безопасность**: JWT-сессии, ролевая модель, серверная валидация (Zod), защита от инъекций
-
----
-
-## 🛠 Технологический стек
 | Категория | Технологии |
 |-----------|------------|
-| **Фреймворк** | Next.js 14+ (App Router, Server Actions) |
-| **Язык / Рантайм** | TypeScript + Bun |
-| **UI** | Mantine UI |
-| **Формы & Валидация** | React Hook Form + Zod |
+| **Фреймворк** | Next.js 16.2.1 (App Router, Server Actions, React Compiler) |
+| **Язык** | TypeScript |
+| **UI** | Mantine v9.2.1 |
+| **Формы** | React Hook Form + Zod |
 | **База данных** | PostgreSQL |
-| **ORM** | Prisma |
-| **Облачные сервисы** | Supabase (Auth, Storage, Managed PostgreSQL) |
-| **Линтинг & Формат** | BiomeJS |
-| **Деплой** | Vercel |
-| **Контроль версий** | Git + GitHub |
+| **ORM** | Prisma 7.8.0 |
+| **Auth / Storage** | Supabase |
+| **Линтинг** | BiomeJS |
+| **Тестирование** | Vitest 4.1.9 + fast-check 4.8.0 |
+| **Контейнеризация** | Docker |
 
----
+## Архитектура
 
-## 🏗 Архитектура и методология
-- **Архитектурный стиль**: монолитная клиент-серверная модель (3 уровня)
-- **Паттерн организации кода**: `Feature-Sliced Design (FSD)`
-  - Чёткое разделение на слои: `app`, `pages`, `widgets`, `features`, `entities`, `shared`
-  - Запрет циклических зависимостей, устойчивая эволюция кодовой базы
-- **Взаимодействие компонентов**: клиент ↔ Next.js Server Actions ↔ Prisma ↔ PostgreSQL / Supabase Services
-- **Файловое хранилище**: загрузка через `Signed URLs` (бинарные данные не проходят через серверную логику)
-- **Аутентификация**: Supabase Auth + `@supabase/ssr`, управление сессиями на стороне сервера
+Feature-Sliced Design: `app` → `views` → `widgets` → `features` → `entities` → `shared`.
 
----
-
-## 📦 Установка и локальный запуск
+## Установка и локальный запуск
 
 ### 1. Клонирование репозитория
 ```bash
-git clone https://github.com/KirillShcherbinko/sports-challenge-platform.git
-cd sports-challenge-platform
+git clone https://github.com/KirillShcherbinko/sports-challenges
+cd sports-challenges
 ```
 
-### 2. Установка зависимостей (Bun)
+### 2. Зависимости
+
 ```bash
-bun install
+npm install
 ```
 
-### 3. Настройка переменных окружения
-Создайте файл `.env.local` в корне проекта:
+### 3. Переменные окружения
+
+Актуальный набор переменных:
+
 ```env
-# Supabase & Database
-DATABASE_URL="postgresql://user:password@db.supabase.co:5432/postgres?pgbouncer=true"
-DIRECT_URL="postgresql://user:password@db.supabase.co:5432/postgres"
-
-NEXT_PUBLIC_SUPABASE_URL="https://your-project.supabase.co"
-NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
-SUPABASE_SERVICE_ROLE_KEY="your-service-role-key"
-
-# Security
-JWT_SECRET="your-super-secret-jwt-key"
+# Local development (supabase start)
+NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
+SUPABASE_SERVICE_ROLE_KEY=sb_secret_...
+DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres
+PORT=3000
+HOSTNAME=0.0.0.0
 ```
-> ⚠️ Получите URL и ключи в панели управления [Supabase Dashboard](https://supabase.com/dashboard).
 
-### 4. Инициализация базы данных
+> ⚠️ `NEXT_PUBLIC_SUPABASE_URL` и порты зависят от окружения:
+> - **Локально** (`supabase start`): `127.0.0.1:54321` / БД `127.0.0.1:54322`
+> - **Production** (hosted Supabase): ваш проект `.supabase.co`
+
+Ключи получите в [Supabase Dashboard](https://supabase.com/dashboard).
+
+Локальный Supabase:
+
 ```bash
-bunx prisma generate
-bunx prisma db push        # Синхронизация схемы (для разработки)
+npx supabase start     # поднимет PostgreSQL + GoTrue + Storage
+npm run dev            # http://localhost:3000
 ```
 
-### 5. Запуск в режиме разработки
+### 3. База данных
+
 ```bash
-bun run dev
+npx prisma generate
+npx prisma db push
 ```
-Приложение будет доступно по адресу: `http://localhost:3000`
 
----
+## Docker
 
-## ⚙️ Основные команды (Bun)
+**Development:**
+
+```bash
+docker compose up --build
+```
+
+Для локального Supabase параллельно выполните `npx supabase start`.
+
+## Команды
+
 | Команда | Описание |
 |---------|----------|
-| `bun run dev` | Запуск сервера разработки с hot-reload |
-| `bun run build` | Продакшн-сборка (клиент + сервер) |
-| `bun run start` | Запуск собранного приложения |
-| `bun run lint` | Проверка кода через BiomeJS |
-| `bun run format` | Автоматическое форматирование кода |
-| `bunx prisma studio` | Визуальный редактор схемы БД |
-| `bunx prisma generate` | Генерация типизированного Prisma-клиента |
+| `npm run dev` | Dev-сервер |
+| `npm run build` | Production-сборка |
+| `npm run start` | Запуск собранного |
+| `npm test` | Запуск тестов |
+| `npm run test:watch` | Тесты в watch-режиме |
+| `npm run test:coverage` | Тесты + покрытие |
+| `npm run test:coverage:save` | Тесты + сохранение отчёта в `coverage/report.txt` |
+| `npm run lint` | Проверка BiomeJS |
+| `npm run format` | Форматирование BiomeJS |
 
----
+## Тестирование
 
-## 🌐 Деплой в облако
-Проект оптимизирован для развёртывания на **Vercel**:
-1. Подключите репозиторий к Vercel через GitHub
-2. В настройках проекта добавьте переменные окружения из `.env.local`
-3. Vercel автоматически детектирует `bun` и использует его для сборки
-4. При каждом push в ветку `review` создаётся preview-окружение
-5. При слиянии в `main` автоматически запускается production-сборка и деплой
+175 тестов в 26 файлах:
 
-Supabase (БД, Auth, Storage) разворачивается отдельно и подключается через прокси-соединения с пулингом соединений.
+| Группа | Описание | Тестов |
+|--------|----------|-------|
+| A — Foundations | `isOlderThan24Hours`, `retry`, `idSchema` | 17 |
+| B — Labels | Маппинги label/value для enum'ов | 23 |
+| C — Schemas | Zod-схемы auth, profile, challenge, daily-task, comment | 57 |
+| D — Mappers | Мапперы сущностей | 42 |
+| E — Business Logic | Персонализация, route-guards | 16 |
+| F — Config | Консистентность конфигов, роуты | 14 |
+| G — Server Actions | Авторизация (Prisma mock) | 6 |
 
----
+```bash
+npm test
+```
 
-## 🔀 Git-воркфлоу
-В проекте используется двухветочная модель контроля версий:
-- 🌿 `main` — стабильная ветка, содержащая готовую к развёртыванию версию. Принимает изменения только через Pull Request после код-ревью.
-- 🛠 `review` — основная ветка разработки. Все новые фичи, багфиксы и эксперименты вносятся сюда. Перед вливанием в `main` код проходит проверку на конфликты, линтинг и ревью.
+### Покрытие
 
-Такой подход изолирует процесс разработки от production-окружения, минимизирует риск поломок рабочей версии и обеспечивает контроль качества на каждом этапе интеграции.
+```bash
+npm run test:coverage:save
+```
 
----
+Результат — `coverage/report.txt` (трекается в git).
 
-## 🧪 Тестирование и качество кода
-- Валидация клиентских и серверных форм через `Zod` + `React Hook Form`
-- Фаззинг-тестирование критических эндпоинтов (аутентификация, создание челленджей, фиксация выполнения)
-- Статический анализ и форматирование через `BiomeJS` в локальном окружении и CI
-- Типобезопасная работа с БД через Prisma + TypeScript
+## Fuzzing
+
+Инфраструктура в `fuzz_tests/`:
+
+- `scenarios.json` — 13 сценариев
+- `ffuzz-all.ps1` — ffuf (55 команд)
+- `zap-scan.ps1` — OWASP ZAP активный скан
+- `wordlists/` — 11 файлов payload'ов
+
+Результаты: fuzzing/production — 0 matches (все SQLi/XSS блокируются UUID-валидацией). ZAP — 0 High, Medium = CSP (Next.js).
+
+## Безопасность
+
+- UUID-валидация всех ID в роутах → `notFound()`
+- Server actions защищены `assertChallengeOwner` / `assertCommentOwner`
+- CSP-заголовки, X-Frame-Options, X-Content-Type-Options
+- Route guards для авторизованных/гостевых маршрутов
+
+## Окружения
+
+- `review` — основная ветка разработки
+- `main` — стабильная (через PR)
+- Preview на Vercel при push в `review`
+- Production на Vercel при merge в `main`

@@ -11,9 +11,12 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     include: ['src/**/*.test.{ts,tsx}', 'tests/**/*.test.ts'],
+    reporters: ['default', ['json', { outputFile: './coverage/test-results.json' }]],
     coverage: {
       provider: 'v8',
       include: ['src/shared/**', 'src/entities/**', 'src/features/**'],
+      reporter: ['text', 'html', 'lcov', 'json-summary'],
+      reportsDirectory: './coverage',
     },
   },
 });

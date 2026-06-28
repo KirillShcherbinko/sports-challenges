@@ -9,7 +9,6 @@ describe('isAuthRoute', () => {
     expect(isAuthRoute(ERoutes.PROFILE_EDIT)).toBe(true);
     expect(isAuthRoute(ERoutes.MY_CHALLENGES)).toBe(true);
     expect(isAuthRoute(ERoutes.CREATE_CHALLENGE)).toBe(true);
-    expect(isAuthRoute(ERoutes.ACHIEVEMENTS)).toBe(true);
     expect(isAuthRoute(ERoutes.CHALLENGES_PROGRESS)).toBe(true);
   });
 

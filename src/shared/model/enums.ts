@@ -17,7 +17,6 @@ export enum ERoutes {
 
   CREATE_CHALLENGE = '/create-challenge',
 
-  ACHIEVEMENTS = '/achievements',
 }
 
 ////////// Хранилища файлов //////////

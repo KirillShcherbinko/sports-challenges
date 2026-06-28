@@ -25,7 +25,8 @@ describe('isOlderThan24Hours', () => {
   it('any Date more than 24h in the past → true', () => {
     fc.assert(
       fc.property(
-        fc.date({ min: new Date('2020-01-01T00:00:00.000Z'), max: new Date('2026-06-27T11:59:59.999Z') }),
+        fc.date({ min: new Date('2020-01-01T00:00:00.000Z'), max: new Date('2026-06-27T11:59:59.999Z') })
+          .filter((d) => !Number.isNaN(d.getTime())),
         (date) => {
           expect(isOlderThan24Hours(date)).toBe(true);
         },
