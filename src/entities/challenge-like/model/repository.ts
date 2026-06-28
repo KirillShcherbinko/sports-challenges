@@ -12,13 +12,19 @@ class ChallengeLikeRepository {
     return mapChallengeLikeToDto(!!like, data?.likesCount || 0);
   }
 
+  async getLikeCount(challengeId: string): Promise<TChallengeLikeDto> {
+    const data = await challengeRepository.getChallengeById(challengeId);
+    return { isLiked: false, likesCount: data?.likesCount || 0 };
+  }
+
   async toggleLike(profileId: string, challengeId: string): Promise<boolean> {
     const like = await this.getLike(profileId, challengeId);
-    const result = like.isLiked
-      ? await prisma.challengeLike.delete({ where: { profileId_challengeId: { profileId, challengeId } } })
-      : await prisma.challengeLike.create({ data: { profileId, challengeId } });
-
-    return !!result;
+    if (like.isLiked) {
+      await prisma.challengeLike.delete({ where: { profileId_challengeId: { profileId, challengeId } } });
+      return false;
+    }
+    await prisma.challengeLike.create({ data: { profileId, challengeId } });
+    return true;
   }
 }
 

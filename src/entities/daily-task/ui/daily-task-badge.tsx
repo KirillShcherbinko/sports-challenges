@@ -1,4 +1,4 @@
-import { Badge, Card, Group, Stack, Text } from '@mantine/core';
+import { Badge, Group, Stack, Text } from '@mantine/core';
 import type { ReactNode } from 'react';
 import type { TDailyTaskDto } from '../model/dtos';
 
@@ -8,20 +8,24 @@ type TDailyTaskBadgeProps = TDailyTaskDto & {
 
 export const DailyTaskBadge = ({ title, description, exerciseType, dayNumber, actionSlot }: TDailyTaskBadgeProps) => {
   return (
-    <Card p="md">
-      <Group justify="space-between" align="flex-start">
-        <Stack gap="xs">
-          <Group gap="sm">
-            <Badge variant="default">День {dayNumber}</Badge>
-            <Badge variant="light">{exerciseType}</Badge>
-          </Group>
-          <Text fw={600}>{title}</Text>
-          <Text c="var(--mantine-color-dark-2)" size="sm">
-            {description}
-          </Text>
-        </Stack>
-        {actionSlot}
-      </Group>
-    </Card>
+    <Group
+      justify="space-between"
+      align="flex-start"
+      p="md"
+      bg="var(--mantine-color-dark-8)"
+      style={{ borderRadius: 'var(--mantine-radius-md)', border: '1px solid var(--mantine-color-dark-6)' }}
+    >
+      <Stack gap={8}>
+        <Group gap={8}>
+          <Badge color="var(--mantine-color-dark-6)" radius="xl" variant="filled">День {dayNumber}</Badge>
+          <Badge color="var(--mantine-color-brand-6)" radius="xl" variant="filled">{exerciseType}</Badge>
+        </Group>
+        <Text fw={600} c="var(--mantine-color-dark-0)">{title}</Text>
+        <Text c="var(--mantine-color-dark-4)" size="sm">
+          {description}
+        </Text>
+      </Stack>
+      {actionSlot}
+    </Group>
   );
 };

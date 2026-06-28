@@ -2,6 +2,7 @@ import type { ProfileChallengeStatus } from '@/shared/types';
 
 export type TProfileChallengeDto = {
   id: string;
+  challengeId: string;
   status: ProfileChallengeStatus;
   currentDay: number;
   challenge: {
@@ -10,6 +11,7 @@ export type TProfileChallengeDto = {
     durationDays: number;
   };
   percentage: number;
+  createdAt: Date;
   updatedAt: Date;
 };
 

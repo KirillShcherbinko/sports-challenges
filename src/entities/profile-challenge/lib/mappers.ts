@@ -4,6 +4,7 @@ import type { TProfileChallengeWithChallenge } from '../model/types';
 export const mapProfileChallengeToDto = (data: TProfileChallengeWithChallenge): TProfileChallengeDto => {
   return {
     id: `${data.profileId}_${data.challengeId}`,
+    challengeId: data.challengeId,
     status: data.status,
     currentDay: data.currentDay,
     challenge: {
@@ -11,7 +12,8 @@ export const mapProfileChallengeToDto = (data: TProfileChallengeWithChallenge): 
       coverImageUrl: data.challenge.coverImageUrl,
       durationDays: data.challenge.durationDays,
     },
-    percentage: Math.round((data.currentDay * 100) / data.challenge.durationDays),
+    percentage: Math.round(((data.currentDay) * 100) / data.challenge.durationDays),
+    createdAt: data.createdAt,
     updatedAt: data.updatedAt,
   };
 };

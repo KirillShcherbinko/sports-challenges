@@ -2,22 +2,28 @@
 
 import { getUser } from '@/entities/auth/server';
 import { challengeCommentRepository } from '@/entities/challenge-comment/server';
-import { challengeExistsAndPublished } from '@/entities/challenge/server';
 import { ERoutes, idSchema } from '@/shared';
 import { actionClient } from '@/shared/actions';
+import { assertCommentOwner } from '@/shared/lib/auth/authorize';
 import { createServer } from '@/shared/server';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 export const deleteCommentAction = actionClient
   .inputSchema(idSchema)
-  .action(async ({ parsedInput: challengeId }): Promise<boolean> => {
+  .action(async ({ parsedInput: commentId }): Promise<boolean> => {
     const supabase = await createServer();
     const user = await getUser(supabase);
 
-    await challengeExistsAndPublished(challengeId);
-    await challengeCommentRepository.deleteChallengeComment(challengeId, user.id);
+    const comment = await challengeCommentRepository.getChallengeCommentById(commentId);
 
-    revalidatePath(ERoutes.CHALLENGES);
+    await assertCommentOwner(commentId, user.id);
+
+    await challengeCommentRepository.deleteChallengeComment(commentId);
+
+    if (comment) {
+      revalidatePath(`${ERoutes.CHALLENGES}/${comment.challengeId}`);
+      revalidateTag(`comments_${comment.challengeId}`, 'default');
+    }
 
     return true;
   });

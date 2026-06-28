@@ -1,15 +1,17 @@
-import { RedirectButton } from '@/features/redirect-button';
 import { SignOutButton } from '@/features/sign-out-button';
-import { ERoutes } from '@/shared';
 import { ProfileInfo } from '@/widgets/profile-info';
 import { ProfileStats } from '@/widgets/profile-stats';
 import { ChallengesList } from '@/widgets/challenges-list';
 import { Center, Loader, Stack, Text } from '@mantine/core';
 import { Suspense } from 'react';
 
-export const ProfilePage = () => {
+type TProfilePageProps = {
+  searchParams: Record<string, string | undefined>;
+};
+
+export const ProfilePage = ({ searchParams }: TProfilePageProps) => {
   return (
-    <Stack maw={800} w="100%" p={24} gap={24}>
+    <Stack w="100%" py={32} px={48} gap={24}>
       <Suspense
         fallback={
           <Center h={200}>
@@ -20,7 +22,6 @@ export const ProfilePage = () => {
         <ProfileInfo />
       </Suspense>
 
-      <RedirectButton buttonText="Редактировать" route={ERoutes.PROFILE_EDIT} />
       <SignOutButton />
 
       <Suspense
@@ -43,7 +44,7 @@ export const ProfilePage = () => {
           </Center>
         }
       >
-        <ChallengesList searchParams={{ page: 1, limit: 6 }} />
+        <ChallengesList searchParams={searchParams} useCurrentUser />
       </Suspense>
     </Stack>
   );

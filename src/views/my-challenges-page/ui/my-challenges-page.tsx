@@ -1,39 +1,33 @@
 import { SearchInput } from '@/features/search-input';
+import { DifficultyTabs } from '@/features/difficulty-tabs';
 import { ChallengesList } from '@/widgets/challenges-list';
-import { getMyProfileAction } from '@/widgets/profile-info/actions/get-my-profile';
 import { Button, Group, Stack, Text } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import Link from 'next/link';
 import { ERoutes } from '@/shared';
-import type { TChallengeFilters } from '@/entities/challenge';
 
 type TMyChallengesPageProps = {
   searchParams: Record<string, string | undefined>;
 };
 
-export const MyChallengesPage = async ({ searchParams }: TMyChallengesPageProps) => {
-  const { data: profile } = await getMyProfileAction();
-
-  const filters: TChallengeFilters = {
-    search: searchParams.search,
-    page: searchParams.page ? Number(searchParams.page) : 1,
-    limit: 12,
-  };
-
+export const MyChallengesPage = ({ searchParams }: TMyChallengesPageProps) => {
   return (
-    <Stack maw={1200} w="100%" p={24} gap={24}>
+    <Stack maw={1200} w="100%" py={32} px={48} gap={24}>
       <Group justify="space-between" align="center">
         <Text fw={700} fz={28}>
           Мои челленджи
         </Text>
-        <Button component={Link} href={ERoutes.CREATE_CHALLENGE} leftSection={<IconPlus size={16} />}>
-          Создать
-        </Button>
+        <Link href={ERoutes.CREATE_CHALLENGE}>
+          <Button leftSection={<IconPlus size={16} />}>Создать</Button>
+        </Link>
       </Group>
 
-      <SearchInput placeholder="Поиск челленджей" />
+      <Stack gap={12}>
+        <DifficultyTabs />
+        <SearchInput placeholder="Поиск челленджей" />
+      </Stack>
 
-      <ChallengesList searchParams={filters} creatorName={profile?.username} />
+      <ChallengesList searchParams={searchParams} useCurrentUser route={ERoutes.MY_CHALLENGES} />
     </Stack>
   );
 };

@@ -17,6 +17,11 @@ export const participateInChallengeAction = actionClient
 
     await challengeExistsAndPublished(challengeId);
 
+    const existing = await profileChallengeRepository.getProfileChallengeById(challengeId, user.id);
+    if (existing) {
+      redirect(`${ERoutes.MY_CHALLENGES}/${challengeId}`);
+    }
+
     await profileChallengeRepository.createProfileChallenge({
       profile: { connect: { id: user.id } },
       challenge: { connect: { id: challengeId } },

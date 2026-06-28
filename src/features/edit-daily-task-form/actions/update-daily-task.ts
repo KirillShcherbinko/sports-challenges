@@ -7,6 +7,7 @@ import type { TDailyTaskMutationDto } from '@/entities/daily-task/model/dtos';
 import { dailyTaskRepository } from '@/entities/daily-task/server';
 import { ERoutes } from '@/shared';
 import { actionClient } from '@/shared/actions';
+import { assertChallengeOwner } from '@/shared/lib/auth/authorize';
 import { createServer } from '@/shared/server';
 import { revalidatePath } from 'next/cache';
 
@@ -14,17 +15,19 @@ export const updateDailyTaskAction = actionClient
   .inputSchema(dailyTaskSchemaWithIds)
   .action(async ({ parsedInput }): Promise<TDailyTaskMutationDto> => {
     const supabase = await createServer();
-    await getUser(supabase);
+    const user = await getUser(supabase);
 
     const { challengeId, dayNumber, ...updatedData } = parsedInput;
 
     await challengeExistsAndNotPublished(challengeId);
+    await assertChallengeOwner(challengeId, user.id);
 
     const dailyTask = await dailyTaskRepository.updateDailyTask(challengeId, dayNumber, {
       challenge: { connect: { id: challengeId } },
       ...updatedData,
     });
 
+    revalidatePath(`${ERoutes.MY_CHALLENGES}/${challengeId}/publish`);
     revalidatePath(ERoutes.MY_CHALLENGES);
 
     return dailyTask;

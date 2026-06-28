@@ -6,6 +6,7 @@ import { createServer } from '@/shared/server';
 import type { ChallengeUpdateInput } from '@/shared/types';
 import { uploadCoverImage } from './upload-cover-image';
 import { ERoutes } from '@/shared';
+import { assertChallengeOwner } from '@/shared/lib/auth/authorize';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { challengeRepository } from '@/entities/challenge/server';
@@ -15,9 +16,11 @@ export const updateChallengeAction = actionClient
   .inputSchema(challengeSchemaWithId)
   .action(async ({ parsedInput }): Promise<void> => {
     const supabase = await createServer();
-    await getUser(supabase);
+    const user = await getUser(supabase);
 
     const { id, title, description, coverImage, difficulty, categories } = parsedInput;
+
+    await assertChallengeOwner(id, user.id);
     const updatedData: ChallengeUpdateInput = { title, description, difficulty, categories };
 
     if (coverImage && coverImage.size > 0) {

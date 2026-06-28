@@ -25,6 +25,7 @@ export type AggregateChallengeComment = {
 }
 
 export type ChallengeCommentMinAggregateOutputType = {
+  id: string | null
   challengeId: string | null
   profileId: string | null
   content: string | null
@@ -33,6 +34,7 @@ export type ChallengeCommentMinAggregateOutputType = {
 }
 
 export type ChallengeCommentMaxAggregateOutputType = {
+  id: string | null
   challengeId: string | null
   profileId: string | null
   content: string | null
@@ -41,6 +43,7 @@ export type ChallengeCommentMaxAggregateOutputType = {
 }
 
 export type ChallengeCommentCountAggregateOutputType = {
+  id: number
   challengeId: number
   profileId: number
   content: number
@@ -51,6 +54,7 @@ export type ChallengeCommentCountAggregateOutputType = {
 
 
 export type ChallengeCommentMinAggregateInputType = {
+  id?: true
   challengeId?: true
   profileId?: true
   content?: true
@@ -59,6 +63,7 @@ export type ChallengeCommentMinAggregateInputType = {
 }
 
 export type ChallengeCommentMaxAggregateInputType = {
+  id?: true
   challengeId?: true
   profileId?: true
   content?: true
@@ -67,6 +72,7 @@ export type ChallengeCommentMaxAggregateInputType = {
 }
 
 export type ChallengeCommentCountAggregateInputType = {
+  id?: true
   challengeId?: true
   profileId?: true
   content?: true
@@ -148,6 +154,7 @@ export type ChallengeCommentGroupByArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 export type ChallengeCommentGroupByOutputType = {
+  id: string
   challengeId: string
   profileId: string
   content: string
@@ -177,6 +184,7 @@ export type ChallengeCommentWhereInput = {
   AND?: Prisma.ChallengeCommentWhereInput | Prisma.ChallengeCommentWhereInput[]
   OR?: Prisma.ChallengeCommentWhereInput[]
   NOT?: Prisma.ChallengeCommentWhereInput | Prisma.ChallengeCommentWhereInput[]
+  id?: Prisma.UuidFilter<"ChallengeComment"> | string
   challengeId?: Prisma.UuidFilter<"ChallengeComment"> | string
   profileId?: Prisma.UuidFilter<"ChallengeComment"> | string
   content?: Prisma.StringFilter<"ChallengeComment"> | string
@@ -187,6 +195,7 @@ export type ChallengeCommentWhereInput = {
 }
 
 export type ChallengeCommentOrderByWithRelationInput = {
+  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   profileId?: Prisma.SortOrder
   content?: Prisma.SortOrder
@@ -197,7 +206,7 @@ export type ChallengeCommentOrderByWithRelationInput = {
 }
 
 export type ChallengeCommentWhereUniqueInput = Prisma.AtLeast<{
-  challengeId_profileId?: Prisma.ChallengeCommentChallengeIdProfileIdCompoundUniqueInput
+  id?: string
   AND?: Prisma.ChallengeCommentWhereInput | Prisma.ChallengeCommentWhereInput[]
   OR?: Prisma.ChallengeCommentWhereInput[]
   NOT?: Prisma.ChallengeCommentWhereInput | Prisma.ChallengeCommentWhereInput[]
@@ -208,9 +217,10 @@ export type ChallengeCommentWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"ChallengeComment"> | Date | string
   challenge?: Prisma.XOR<Prisma.ChallengeScalarRelationFilter, Prisma.ChallengeWhereInput>
   profile?: Prisma.XOR<Prisma.ProfileScalarRelationFilter, Prisma.ProfileWhereInput>
-}, "challengeId_profileId">
+}, "id">
 
 export type ChallengeCommentOrderByWithAggregationInput = {
+  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   profileId?: Prisma.SortOrder
   content?: Prisma.SortOrder
@@ -225,6 +235,7 @@ export type ChallengeCommentScalarWhereWithAggregatesInput = {
   AND?: Prisma.ChallengeCommentScalarWhereWithAggregatesInput | Prisma.ChallengeCommentScalarWhereWithAggregatesInput[]
   OR?: Prisma.ChallengeCommentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ChallengeCommentScalarWhereWithAggregatesInput | Prisma.ChallengeCommentScalarWhereWithAggregatesInput[]
+  id?: Prisma.UuidWithAggregatesFilter<"ChallengeComment"> | string
   challengeId?: Prisma.UuidWithAggregatesFilter<"ChallengeComment"> | string
   profileId?: Prisma.UuidWithAggregatesFilter<"ChallengeComment"> | string
   content?: Prisma.StringWithAggregatesFilter<"ChallengeComment"> | string
@@ -233,6 +244,7 @@ export type ChallengeCommentScalarWhereWithAggregatesInput = {
 }
 
 export type ChallengeCommentCreateInput = {
+  id?: string
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -241,6 +253,7 @@ export type ChallengeCommentCreateInput = {
 }
 
 export type ChallengeCommentUncheckedCreateInput = {
+  id?: string
   challengeId: string
   profileId: string
   content: string
@@ -249,6 +262,7 @@ export type ChallengeCommentUncheckedCreateInput = {
 }
 
 export type ChallengeCommentUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -257,6 +271,7 @@ export type ChallengeCommentUpdateInput = {
 }
 
 export type ChallengeCommentUncheckedUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   profileId?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
@@ -265,6 +280,7 @@ export type ChallengeCommentUncheckedUpdateInput = {
 }
 
 export type ChallengeCommentCreateManyInput = {
+  id?: string
   challengeId: string
   profileId: string
   content: string
@@ -273,12 +289,14 @@ export type ChallengeCommentCreateManyInput = {
 }
 
 export type ChallengeCommentUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ChallengeCommentUncheckedUpdateManyInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   profileId?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
@@ -296,12 +314,8 @@ export type ChallengeCommentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type ChallengeCommentChallengeIdProfileIdCompoundUniqueInput = {
-  challengeId: string
-  profileId: string
-}
-
 export type ChallengeCommentCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   profileId?: Prisma.SortOrder
   content?: Prisma.SortOrder
@@ -310,6 +324,7 @@ export type ChallengeCommentCountOrderByAggregateInput = {
 }
 
 export type ChallengeCommentMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   profileId?: Prisma.SortOrder
   content?: Prisma.SortOrder
@@ -318,6 +333,7 @@ export type ChallengeCommentMaxOrderByAggregateInput = {
 }
 
 export type ChallengeCommentMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
   challengeId?: Prisma.SortOrder
   profileId?: Prisma.SortOrder
   content?: Prisma.SortOrder
@@ -410,6 +426,7 @@ export type ChallengeCommentUncheckedUpdateManyWithoutChallengeNestedInput = {
 }
 
 export type ChallengeCommentCreateWithoutProfileInput = {
+  id?: string
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -417,6 +434,7 @@ export type ChallengeCommentCreateWithoutProfileInput = {
 }
 
 export type ChallengeCommentUncheckedCreateWithoutProfileInput = {
+  id?: string
   challengeId: string
   content: string
   createdAt?: Date | string
@@ -453,6 +471,7 @@ export type ChallengeCommentScalarWhereInput = {
   AND?: Prisma.ChallengeCommentScalarWhereInput | Prisma.ChallengeCommentScalarWhereInput[]
   OR?: Prisma.ChallengeCommentScalarWhereInput[]
   NOT?: Prisma.ChallengeCommentScalarWhereInput | Prisma.ChallengeCommentScalarWhereInput[]
+  id?: Prisma.UuidFilter<"ChallengeComment"> | string
   challengeId?: Prisma.UuidFilter<"ChallengeComment"> | string
   profileId?: Prisma.UuidFilter<"ChallengeComment"> | string
   content?: Prisma.StringFilter<"ChallengeComment"> | string
@@ -461,6 +480,7 @@ export type ChallengeCommentScalarWhereInput = {
 }
 
 export type ChallengeCommentCreateWithoutChallengeInput = {
+  id?: string
   content: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -468,6 +488,7 @@ export type ChallengeCommentCreateWithoutChallengeInput = {
 }
 
 export type ChallengeCommentUncheckedCreateWithoutChallengeInput = {
+  id?: string
   profileId: string
   content: string
   createdAt?: Date | string
@@ -501,6 +522,7 @@ export type ChallengeCommentUpdateManyWithWhereWithoutChallengeInput = {
 }
 
 export type ChallengeCommentCreateManyProfileInput = {
+  id?: string
   challengeId: string
   content: string
   createdAt?: Date | string
@@ -508,6 +530,7 @@ export type ChallengeCommentCreateManyProfileInput = {
 }
 
 export type ChallengeCommentUpdateWithoutProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -515,6 +538,7 @@ export type ChallengeCommentUpdateWithoutProfileInput = {
 }
 
 export type ChallengeCommentUncheckedUpdateWithoutProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -522,6 +546,7 @@ export type ChallengeCommentUncheckedUpdateWithoutProfileInput = {
 }
 
 export type ChallengeCommentUncheckedUpdateManyWithoutProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   challengeId?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -529,6 +554,7 @@ export type ChallengeCommentUncheckedUpdateManyWithoutProfileInput = {
 }
 
 export type ChallengeCommentCreateManyChallengeInput = {
+  id?: string
   profileId: string
   content: string
   createdAt?: Date | string
@@ -536,6 +562,7 @@ export type ChallengeCommentCreateManyChallengeInput = {
 }
 
 export type ChallengeCommentUpdateWithoutChallengeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -543,6 +570,7 @@ export type ChallengeCommentUpdateWithoutChallengeInput = {
 }
 
 export type ChallengeCommentUncheckedUpdateWithoutChallengeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   profileId?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -550,6 +578,7 @@ export type ChallengeCommentUncheckedUpdateWithoutChallengeInput = {
 }
 
 export type ChallengeCommentUncheckedUpdateManyWithoutChallengeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   profileId?: Prisma.StringFieldUpdateOperationsInput | string
   content?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -559,6 +588,7 @@ export type ChallengeCommentUncheckedUpdateManyWithoutChallengeInput = {
 
 
 export type ChallengeCommentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   challengeId?: boolean
   profileId?: boolean
   content?: boolean
@@ -569,6 +599,7 @@ export type ChallengeCommentSelect<ExtArgs extends runtime.Types.Extensions.Inte
 }, ExtArgs["result"]["challengeComment"]>
 
 export type ChallengeCommentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   challengeId?: boolean
   profileId?: boolean
   content?: boolean
@@ -579,6 +610,7 @@ export type ChallengeCommentSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
 }, ExtArgs["result"]["challengeComment"]>
 
 export type ChallengeCommentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
+  id?: boolean
   challengeId?: boolean
   profileId?: boolean
   content?: boolean
@@ -589,6 +621,7 @@ export type ChallengeCommentSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
 }, ExtArgs["result"]["challengeComment"]>
 
 export type ChallengeCommentSelectScalar = {
+  id?: boolean
   challengeId?: boolean
   profileId?: boolean
   content?: boolean
@@ -596,7 +629,7 @@ export type ChallengeCommentSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ChallengeCommentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"challengeId" | "profileId" | "content" | "createdAt" | "updatedAt", ExtArgs["result"]["challengeComment"]>
+export type ChallengeCommentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "challengeId" | "profileId" | "content" | "createdAt" | "updatedAt", ExtArgs["result"]["challengeComment"]>
 export type ChallengeCommentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   challenge?: boolean | Prisma.ChallengeDefaultArgs<ExtArgs>
   profile?: boolean | Prisma.ProfileDefaultArgs<ExtArgs>
@@ -617,6 +650,7 @@ export type $ChallengeCommentPayload<ExtArgs extends runtime.Types.Extensions.In
     profile: Prisma.$ProfilePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
+    id: string
     challengeId: string
     profileId: string
     content: string
@@ -705,8 +739,8 @@ export interface ChallengeCommentDelegate<ExtArgs extends runtime.Types.Extensio
    * // Get first 10 ChallengeComments
    * const challengeComments = await prisma.challengeComment.findMany({ take: 10 })
    * 
-   * // Only select the `challengeId`
-   * const challengeCommentWithChallengeIdOnly = await prisma.challengeComment.findMany({ select: { challengeId: true } })
+   * // Only select the `id`
+   * const challengeCommentWithIdOnly = await prisma.challengeComment.findMany({ select: { id: true } })
    * 
    */
   findMany<T extends ChallengeCommentFindManyArgs>(args?: Prisma.SelectSubset<T, ChallengeCommentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChallengeCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -750,9 +784,9 @@ export interface ChallengeCommentDelegate<ExtArgs extends runtime.Types.Extensio
    *   ]
    * })
    * 
-   * // Create many ChallengeComments and only return the `challengeId`
-   * const challengeCommentWithChallengeIdOnly = await prisma.challengeComment.createManyAndReturn({
-   *   select: { challengeId: true },
+   * // Create many ChallengeComments and only return the `id`
+   * const challengeCommentWithIdOnly = await prisma.challengeComment.createManyAndReturn({
+   *   select: { id: true },
    *   data: [
    *     // ... provide data here
    *   ]
@@ -841,9 +875,9 @@ export interface ChallengeCommentDelegate<ExtArgs extends runtime.Types.Extensio
    *   ]
    * })
    * 
-   * // Update zero or more ChallengeComments and only return the `challengeId`
-   * const challengeCommentWithChallengeIdOnly = await prisma.challengeComment.updateManyAndReturn({
-   *   select: { challengeId: true },
+   * // Update zero or more ChallengeComments and only return the `id`
+   * const challengeCommentWithIdOnly = await prisma.challengeComment.updateManyAndReturn({
+   *   select: { id: true },
    *   where: {
    *     // ... provide filter here
    *   },
@@ -1047,6 +1081,7 @@ export interface Prisma__ChallengeCommentClient<T, Null = never, ExtArgs extends
  * Fields of the ChallengeComment model
  */
 export interface ChallengeCommentFieldRefs {
+  readonly id: Prisma.FieldRef<"ChallengeComment", 'String'>
   readonly challengeId: Prisma.FieldRef<"ChallengeComment", 'String'>
   readonly profileId: Prisma.FieldRef<"ChallengeComment", 'String'>
   readonly content: Prisma.FieldRef<"ChallengeComment", 'String'>

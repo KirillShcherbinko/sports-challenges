@@ -6,11 +6,12 @@ import { Suspense } from 'react';
 
 type TCreatorPageProps = {
   params: { username: string };
+  searchParams: Record<string, string | undefined>;
 };
 
-export const CreatorPage = ({ params }: TCreatorPageProps) => {
+export const CreatorPage = ({ params, searchParams }: TCreatorPageProps) => {
   return (
-    <Stack maw={800} w="100%" p={24} gap={24}>
+    <Stack w="100%" py={32} px={48} gap={24}>
       <Suspense
         fallback={
           <Center h={200}>
@@ -41,11 +42,7 @@ export const CreatorPage = ({ params }: TCreatorPageProps) => {
           </Center>
         }
       >
-        <ChallengesList
-          searchParams={{ page: 1, limit: 6 }}
-          creatorName={params.username}
-          isPublished={true}
-        />
+        <ChallengesList searchParams={searchParams} creatorName={params.username} isPublished={true} />
       </Suspense>
     </Stack>
   );

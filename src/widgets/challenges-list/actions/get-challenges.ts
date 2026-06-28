@@ -42,21 +42,25 @@ const getCachedChallenges = async (
 export const getChallengesAction = actionClient
   .inputSchema(challengeFiltersSchema)
   .action(async ({ parsedInput }): Promise<TGetPaginatedResponseDto<TChallengeDto>> => {
-    const { personalize: requestedPersonalize, ...filters } = parsedInput;
+    const { personalize: requestedPersonalize, useCurrentUser, isPublished, ...filters } = parsedInput;
 
     let userId: string | undefined;
+    let creatorName: string | undefined = filters.creatorName;
 
-    if (requestedPersonalize) {
-      try {
-        const supabase = await createServer();
-        const user = await getUser(supabase);
-        userId = user.id;
-      } catch {
-        userId = undefined;
+    try {
+      const supabase = await createServer();
+      const user = await getUser(supabase);
+      userId = user.id;
+
+      if (useCurrentUser && !creatorName) {
+        const profile = await profileRepository.getProfileById(user.id);
+        creatorName = profile?.username;
       }
+    } catch {
+      userId = undefined;
     }
 
     const personalize = requestedPersonalize && !!userId;
 
-    return await getCachedChallenges(filters, undefined, undefined, personalize, userId);
+    return await getCachedChallenges(filters, creatorName, isPublished, personalize, userId);
   });

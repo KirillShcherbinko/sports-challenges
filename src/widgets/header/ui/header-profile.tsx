@@ -8,20 +8,22 @@ export const HeaderProfile = async () => {
 
   if (!data?.isAuthenticated) {
     return (
-      <Button component={Link} href={ERoutes.SIGN_IN} variant="subtle" size="compact-md">
-        Войти
-      </Button>
+      <Link href={ERoutes.SIGN_IN}>
+        <Button variant="subtle" size="compact-md">
+          Войти
+        </Button>
+      </Link>
     );
   }
 
   return (
-    <Avatar
-      src={data.avatarUrl}
-      size={36}
-      radius="xl"
-      styles={{ root: { backgroundColor: 'var(--mantine-color-brand-6)' } }}
-    >
-      A
-    </Avatar>
+    <Link href={ERoutes.PROFILE}>
+      <Avatar
+        src={data.avatarUrl}
+        size={36}
+        radius="xl"
+        styles={{ root: { backgroundColor: 'var(--mantine-color-brand-6)' } }}
+      />
+    </Link>
   );
 };

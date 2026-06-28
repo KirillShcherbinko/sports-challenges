@@ -1,0 +1,207 @@
+{
+  "meta": {
+    "app": "sports-challenges",
+    "baseUrl": "http://localhost:3000",
+    "tools": ["ffuf", "OWASP ZAP"],
+    "wordlistDir": "./fuzz_tests/wordlists",
+    "scripts": {
+      "ffuf": "./fuzz_tests/ffuzz-all.ps1",
+      "zap":  "./fuzz_tests/zap-scan.ps1"
+    }
+  },
+
+  "scenarios": {
+    "FFUF_URL_DISCOVERY": {
+      "tool": "ffuf",
+      "description": "Поиск скрытых/недокументированных путей через брутфорс URL",
+      "routes": ["/", "/FUZZ", "/challenges/FUZZ", "/my-challenges/FUZZ", "/creators/FUZZ"],
+      "payloads": ["common-paths.txt", "tech-stack.txt"],
+      "filters": "mc 200,301,302,403,404,405,500",
+      "rationale": "Обнаружение скрытых эндпоинтов, бэкапов, конфигов, debug-панелей"
+    },
+
+    "FFUF_GET_PARAMS_CHALLENGES": {
+      "tool": "ffuf",
+      "description": "Фаззинг GET-параметров на /challenges (фильтры, пагинация)",
+      "url": "http://localhost:3000/challenges?search=FUZZ&categories=FUZZ&difficulty=FUZZ&page=FUZZ&limit=FUZZ",
+      "mode": "параллельный фаззинг каждого параметра отдельно",
+      "payloads": {
+        "search": ["xss.txt", "sql-injection.txt", "noSQL-injection.txt", "long-strings.txt"],
+        "categories": ["enum-mutation.txt", "xss.txt"],
+        "difficulty": ["enum-mutation.txt"],
+        "page": ["negative-numbers.txt", "zero.txt", "large-numbers.txt", "float.txt", "strings.txt"],
+        "limit": ["negative-numbers.txt", "zero.txt", "large-numbers.txt", "out-of-range.txt", "strings.txt"]
+      },
+      "expected": "400/422 для невалидных значений, 200 для валидных",
+      "rationale": "Проверка валидации Zod на фильтрах: page≥1, limit∈[10,50], difficulty∈enum, categories∈enum"
+    },
+
+    "FFUF_GET_PARAMS_CREATORS": {
+      "tool": "ffuf",
+      "description": "Фаззинг GET-параметров на /creators",
+      "url": "http://localhost:3000/creators?search=FUZZ&fitnessLevel=FUZZ&page=FUZZ&limit=FUZZ",
+      "payloads": {
+        "search": ["xss.txt", "sql-injection.txt", "long-strings.txt"],
+        "fitnessLevel": ["enum-mutation.txt"],
+        "page": ["negative-numbers.txt", "zero.txt", "large-numbers.txt"],
+        "limit": ["negative-numbers.txt", "zero.txt", "out-of-range.txt"]
+      },
+      "rationale": "Проверка валидации profileFiltersSchema"
+    },
+
+    "FFUF_PATH_PARAM_CHALLENGE_ID": {
+      "tool": "ffuf",
+      "description": "Фаззинг path-параметра challengeId на всех страницах челленджей",
+      "urls": [
+        "http://localhost:3000/challenges/FUZZ",
+        "http://localhost:3000/challenges/FUZZ/edit",
+        "http://localhost:3000/challenges/FUZZ/progress",
+        "http://localhost:3000/my-challenges/FUZZ",
+        "http://localhost:3000/my-challenges/FUZZ/publish",
+        "http://localhost:3000/challenges/progress/FUZZ"
+      ],
+      "payloads": ["invalid-uuids.txt", "path-traversal.txt", "xss.txt", "sql-injection.txt", "object-injection.txt"],
+      "filters": "mc 200,301,302,403,404,500",
+      "rationale": "Проверка корректности обработки невалидных ID: idSchema требует непустую строку, UUID проверяется Prisma/БД"
+    },
+
+    "FFUF_PATH_PARAM_USERNAME": {
+      "tool": "ffuf",
+      "description": "Фаззинг path-параметра username на странице создателя",
+      "url": "http://localhost:3000/creators/FUZZ",
+      "payloads": ["xss.txt", "sql-injection.txt", "path-traversal.txt", "unicode-normalization.txt", "special-chars.txt"],
+      "rationale": "Проверка: username проходит через Zod (2-32 символа), но SQL LIKE с contains может быть уязвим"
+    },
+
+    "FFUF_POST_AUTH_FORMS": {
+      "tool": "ffuf",
+      "description": "Фаззинг POST-полей на страницах входа и регистрации",
+      "urls": [
+        "http://localhost:3000/sign-in",
+        "http://localhost:3000/sign-up"
+      ],
+      "method": "POST (имитация Server Action через X-Next-Action)",
+      "fields": {
+        "email": ["sql-injection.txt", "xss.txt", "long-strings.txt", "special-chars.txt"],
+        "password": ["sql-injection.txt", "xss.txt", "long-strings.txt"],
+        "username": ["xss.txt", "sql-injection.txt", "unicode-normalization.txt"]
+      },
+      "rationale": "Проверка валидации auth-схем: email (z.email), password (regex /[0-9]/ и /[A-Z]/), username (2-32 символа)"
+    },
+
+    "FFUF_POST_CHALLENGE_FORM": {
+      "tool": "ffuf",
+      "description": "Фаззинг полей формы создания/редактирования челленджа",
+      "urls": [
+        "http://localhost:3000/create-challenge",
+        "http://localhost:3000/my-challenges/{id}/edit"
+      ],
+      "requireAuth": true,
+      "fields": {
+        "title": ["xss.txt", "sql-injection.txt", "long-strings.txt", "empty.txt"],
+        "description": ["xss.txt", "sql-injection.txt", "long-strings.txt", "empty.txt"],
+        "difficulty": ["enum-mutation.txt"],
+        "categories": ["enum-mutation.txt", "xss.txt"]
+      },
+      "rationale": "Проверка: title∈[2,64], description∈[10,300], difficulty∈enum, categories∈enum[]"
+    },
+
+    "FFUF_POST_COMMENT_FORM": {
+      "tool": "ffuf",
+      "description": "Фаззинг полей формы комментария",
+      "url": "http://localhost:3000/challenges/{id}",
+      "requireAuth": true,
+      "fields": {
+        "content": ["xss.txt", "sql-injection.txt", "long-strings.txt", "empty.txt"]
+      },
+      "rationale": "Проверка: content∈[1,200], xss через comment body"
+    },
+
+    "FFUF_POST_PROFILE_FORM": {
+      "tool": "ffuf",
+      "description": "Фаззинг полей формы редактирования профиля",
+      "url": "http://localhost:3000/profile/edit",
+      "requireAuth": true,
+      "fields": {
+        "username": ["xss.txt", "sql-injection.txt", "unicode-normalization.txt", "long-strings.txt"],
+        "bio": ["xss.txt", "sql-injection.txt", "long-strings.txt"],
+        "fitnessLevel": ["enum-mutation.txt"],
+        "preferences": ["enum-mutation.txt", "xss.txt"]
+      },
+      "rationale": "Проверка: username∈[2,32], bio≤300, fitnessLevel∈enum, preferences∈enum[]"
+    },
+
+    "ZAP_ACTIVE_SCAN": {
+      "tool": "OWASP ZAP",
+      "description": "Полное активное сканирование приложения",
+      "mode": "authenticated (через login ZAP)",
+      "policies": [
+        "directory-browsing",
+        "xss",
+        "sql-injection",
+        "path-traversal",
+        "remote-file-inclusion",
+        "server-side-template-injection",
+        "command-injection",
+        "crlf-injection",
+        "format-string",
+        "parameter-pollution"
+      ],
+      "rationale": "Комплексная проверка Top-10 OWASP уязвимостей"
+    },
+
+    "ZAP_FUZZER": {
+      "tool": "OWASP ZAP",
+      "description": "Фаззинг всех GET/POST параметров через ZAP Fuzzer",
+      "targets": "все страницы с формами и query-параметрами",
+      "payloads": ["xss-payloads", "sql-injection-payloads", "large-values"],
+      "rationale": "Продвинутый фаззинг с детекцией аномалий в ответах (тайминги, размеры, коды)"
+    },
+
+    "ZAP_AUTH_BYPASS": {
+      "tool": "OWASP ZAP",
+      "description": "Проверка обхода авторизации",
+      "urls": [
+        "/profile, /profile/edit, /my-challenges, /create-challenge, /achievements, /challenges/progress"
+      ],
+      "method": "запросы без auth cookie",
+      "expected": "302 redirect на /sign-in или 401/403",
+      "rationale": "Проверка middleware и assertAuthenticated во всех server actions"
+    },
+
+    "ZAP_OWNERSHIP_BYPASS": {
+      "tool": "OWASP ZAP",
+      "description": "Проверка обхода проверок владения ресурсами",
+      "urls": [
+        "/challenges/{otherId}/edit",
+        "/my-challenges/{otherId}",
+        "/my-challenges/{otherId}/publish"
+      ],
+      "requireAuth": true,
+      "expected": "403/ошибка при попытке редактировать чужой челлендж",
+      "rationale": "Проверка assertChallengeOwner в update/delete/publish/daily-task actions"
+    }
+  },
+
+  "payloadTypes": {
+    "common-paths.txt": ["/admin", "/api", "/.env", "/.git/config", "/config", "/backup", "/debug", "/test", "/health", "/metrics", "/swagger", "/graphql", "/_next/static/"],
+    "tech-stack.txt": ["/prisma", "/supabase", "/_next", "/__nextjs_original-stack-frame"],
+    "xss.txt": ["<script>alert(1)</script>", "\"><script>alert(1)</script>", "<img src=x onerror=alert(1)>", "javascript:alert(1)", "{{constructor.constructor('alert(1)')()}}"],
+    "sql-injection.txt": ["' OR '1'='1", "'; DROP TABLE challenges; --", "' UNION SELECT * FROM profiles --", "1; SELECT pg_sleep(5)", "'/**/OR/**/1=1--"],
+    "noSQL-injection.txt": ["{\"$gt\": \"\"}", "{\"$ne\": null}", "{\"$where\": \"1==1\"}"],
+    "path-traversal.txt": ["../../../etc/passwd", "..\\..\\..\\windows\\win.ini", "%2e%2e%2f%2e%2e%2fetc%2fpasswd"],
+    "invalid-uuids.txt": ["not-a-uuid", "", "123", "00000000-0000-0000-0000-000000000000", "ffffffff-ffff-ffff-ffff-ffffffffffff", "../../etc/passwd", "' OR '1'='1"],
+    "enum-mutation.txt": ["InvalidValue", "", "123", "  Beginner  ", "BEGINNER", "beginner", "<script>alert(1)</script>"],
+    "long-strings.txt": ["A", "A".repeat(100), "A".repeat(1000), "A".repeat(10000)],
+    "empty.txt": [""],
+    "negative-numbers.txt": ["-1", "-100", "-999999999999"],
+    "zero.txt": ["0"],
+    "large-numbers.txt": ["999999", "999999999999", "1.7976931348623157e+308"],
+    "out-of-range.txt": ["9", "51", "100", "0", "-1"],
+    "float.txt": ["1.5", "0.1", "3.14", "NaN", "Infinity"],
+    "strings.txt": ["abc", "null", "undefined", "true", "false", "[]", "{}", "<script>"],
+    "special-chars.txt": ["!@#$%^&*()", "\\n\\r\\t", "\\0", "\\\\", "; rm -rf /", "| cat /etc/passwd", "`id`", "$(id)"],
+    "unicode-normalization.txt": ["ℌℯ𝓁𝓁ℴ", "Ạpplication", "test💩user", "日本語", "Привет"],
+    "object-injection.txt": ["[object Object]", "__proto__", "constructor", "prototype"]
+  }
+}

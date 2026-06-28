@@ -13,3 +13,7 @@ export const challengeCommentSchema = z.object({
 export const challengeCommentSchemaWithChallengeId = challengeCommentSchema.extend({
   challengeId: idSchema,
 });
+
+export const challengeCommentSchemaWithCommentId = challengeCommentSchema.extend({
+  commentId: idSchema,
+});

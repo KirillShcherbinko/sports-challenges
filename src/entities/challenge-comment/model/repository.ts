@@ -42,9 +42,9 @@ class ChallengeCommentRepository {
     return !!challengeComment;
   }
 
-  async getChallengeCommentById(challengeId: string, profileId: string): Promise<TChallengeCommentDto | null> {
+  async getChallengeCommentById(commentId: string): Promise<TChallengeCommentDto | null> {
     const challengeComment = await prisma.challengeComment.findUnique({
-      where: { challengeId_profileId: { challengeId, profileId } },
+      where: { id: commentId },
       include: { profile: true },
     });
 
@@ -52,21 +52,20 @@ class ChallengeCommentRepository {
   }
 
   async updateChallengeComment(
-    challengeId: string,
-    profileId: string,
+    commentId: string,
     data: ChallengeCommentUpdateInput
   ): Promise<boolean> {
     const challengeComment = await prisma.challengeComment.update({
-      where: { challengeId_profileId: { challengeId, profileId } },
+      where: { id: commentId },
       data,
     });
 
     return !!challengeComment;
   }
 
-  async deleteChallengeComment(challengeId: string, profileId: string): Promise<boolean> {
+  async deleteChallengeComment(commentId: string): Promise<boolean> {
     const challengeComment = await prisma.challengeComment.delete({
-      where: { challengeId_profileId: { challengeId, profileId } },
+      where: { id: commentId },
     });
 
     return !!challengeComment;

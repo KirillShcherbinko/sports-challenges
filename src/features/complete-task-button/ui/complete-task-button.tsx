@@ -29,7 +29,7 @@ export const CompleteTaskButton = () => {
   };
 
   return (
-    <Button variant="filled" onClick={handleTaskCompletion} loading={isPending}>
+    <Button variant="filled" color="success" onClick={handleTaskCompletion} loading={isPending}>
       Выполнить
     </Button>
   );

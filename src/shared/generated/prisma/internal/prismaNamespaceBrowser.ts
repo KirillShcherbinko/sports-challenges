@@ -164,6 +164,7 @@ export type ChallengeLikeScalarFieldEnum = (typeof ChallengeLikeScalarFieldEnum)
 
 
 export const ChallengeCommentScalarFieldEnum = {
+  id: 'id',
   challengeId: 'challengeId',
   profileId: 'profileId',
   content: 'content',

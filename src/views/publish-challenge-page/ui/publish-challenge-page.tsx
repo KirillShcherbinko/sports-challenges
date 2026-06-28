@@ -10,7 +10,7 @@ type TPublishChallengePageProps = {
 
 export const PublishChallengePage = ({ challengeId }: TPublishChallengePageProps) => {
   return (
-    <Stack maw={700} w="100%" p={24} gap={24} align="center">
+    <Stack maw={600} w="100%" py={24} px={48} gap={24}>
       <Text fw={700} fz={28}>
         Настроить задания
       </Text>

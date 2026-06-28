@@ -1,0 +1,19 @@
+﻿тЦ▓ Next.js 16.2.1
+- Local:         http://localhost:3001
+- Network:       http://192.168.1.37:3001
+тЬУ Ready in 362ms
+node.exe : тЪа Warning: Next.js inferred your workspace root, but it may not be correct.
+C:\Program Files\nodejs\npx.ps1:16 знак:5
++     & "$basedir/node$exe"  "$basedir/node_modules/npm/bin/npx-cli.js" ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (тЪа Warning: Ne...not be correct.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ We detected multiple lockfiles and selected the directory of C:\Users\Kirill\bun.lock as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles
+ if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * C:\Users\Kirill\sports-challenges\package-lock.json
+
+тЪа "next start" does not work with "output: standalone" configuration. Use "node .next/standalone/server.js" instead.

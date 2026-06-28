@@ -1,5 +1,10 @@
 import { ProfilePage } from '@/views/profile-page';
 
-export default function ProfileRoute() {
-  return <ProfilePage />;
+type Props = {
+  searchParams: Promise<Record<string, string | undefined>>;
+};
+
+export default async function ProfileRoute({ searchParams }: Props) {
+  const params = await searchParams;
+  return <ProfilePage searchParams={params} />;
 }

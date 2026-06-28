@@ -29,7 +29,7 @@ export const SkipTaskButton = () => {
   };
 
   return (
-    <Button variant="filled" onClick={handleTaskSkip} loading={isPending}>
+    <Button variant="default" onClick={handleTaskSkip} loading={isPending}>
       Пропустить
     </Button>
   );

@@ -12,7 +12,7 @@ type TChallengeProgressPageProps = {
 
 export const ChallengeProgressPage = ({ challengeId }: TChallengeProgressPageProps) => {
   return (
-    <Stack maw={800} w="100%" p={24} gap={24}>
+    <Stack maw={600} w="100%" py={24} px={48} gap={24}>
       <Text fw={700} fz={28}>
         Прогресс челленджа
       </Text>

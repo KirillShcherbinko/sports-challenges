@@ -13,7 +13,7 @@ type TUserChallengePageProps = {
 
 export const UserChallengePage = ({ challengeId }: TUserChallengePageProps) => {
   return (
-    <Stack maw={520} w="100%" p={24} gap={24}>
+    <Stack maw={520} w="100%" py={32} px={48} gap={24}>
       <Suspense
         fallback={
           <Center h={200}>
@@ -24,14 +24,11 @@ export const UserChallengePage = ({ challengeId }: TUserChallengePageProps) => {
         <ChallengeInfo challengeId={challengeId} />
       </Suspense>
 
-      <Button
-        component={Link}
-        href={`/my-challenges/${challengeId}/publish`}
-        variant="outline"
-        leftSection={<IconSettings size={16} />}
-      >
-        Настроить задания
-      </Button>
+      <Link href={`/my-challenges/${challengeId}/publish`}>
+        <Button variant="outline" leftSection={<IconSettings size={16} />}>
+          Настроить задания
+        </Button>
+      </Link>
 
       <Text fw={600} fz={18}>
         Прогресс
@@ -56,7 +53,7 @@ export const UserChallengePage = ({ challengeId }: TUserChallengePageProps) => {
           </Center>
         }
       >
-        <EditCommentContent challengeId={challengeId} />
+        <EditCommentContent />
       </Suspense>
       <Suspense
         fallback={
