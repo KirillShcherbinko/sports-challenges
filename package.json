@@ -8,6 +8,8 @@
     "start": "next start",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:coverage:save": "vitest run --coverage && node scripts/coverage-report.cjs",
     "lint": "biome check",
     "format": "biome format --write"
   },
@@ -42,6 +44,7 @@
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-mantine": "^1.18.0",
     "prisma": "^7.6.0",
+    "supabase": "^2.108.0",
     "typescript": "^5",
     "vitest": "^4.1.9"
   },

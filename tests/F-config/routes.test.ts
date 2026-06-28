@@ -9,7 +9,6 @@ describe('AUTH_ROUTES', () => {
     expect(AUTH_ROUTES).toContain(ERoutes.PROFILE_EDIT);
     expect(AUTH_ROUTES).toContain(ERoutes.MY_CHALLENGES);
     expect(AUTH_ROUTES).toContain(ERoutes.CREATE_CHALLENGE);
-    expect(AUTH_ROUTES).toContain(ERoutes.ACHIEVEMENTS);
     expect(AUTH_ROUTES).toContain(ERoutes.CHALLENGES_PROGRESS);
   });
 

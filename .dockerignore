@@ -6,3 +6,4 @@ node_modules
 *.md
 .vscode
 .idea
+fuzz_tests/results

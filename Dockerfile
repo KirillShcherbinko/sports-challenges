@@ -1,40 +1,21 @@
-FROM node:20-alpine AS base
+FROM node:20-alpine
 
-# Устанавливаем зависимости только для сборки
-FROM base AS deps
 WORKDIR /app
-COPY package.json bun.lock ./
-RUN npm ci
 
-# Сборка приложения
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+RUN apk add --no-cache openssl
+
+ARG DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres
+ENV DATABASE_URL=$DATABASE_URL
+
+COPY package.json package-lock.json ./
+RUN npm install
+
+COPY prisma ./prisma
+COPY prisma.config.ts ./
 RUN npx prisma generate
-RUN npm run build
 
-# Продакшен образ
-FROM base AS runner
-WORKDIR /app
-
-ENV NODE_ENV production
-
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-COPY --from=builder /app/public ./public
-
-RUN mkdir -p .next/static && chown -R nextjs:nodejs .next
-
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-USER nextjs
+COPY . .
 
 EXPOSE ${PORT}
 
-ENV PORT=${PORT}
-ENV HOSTNAME=${HOSTNAME}
-
-CMD ["node", "server.js"]
+CMD ["sh", "-c", "npx prisma generate && npm run dev"]
