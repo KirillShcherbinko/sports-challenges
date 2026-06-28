@@ -36,11 +36,18 @@ export const SignUpForm = () => {
   };
 
   return (
-    <Stack gap="sm" component="form" onSubmit={handleSubmit(onSubmit)}>
+    <Stack
+      gap="lg"
+      p="xl"
+      bg="var(--mantine-color-dark-8)"
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+      style={{ borderRadius: 'var(--mantine-radius-lg)', border: '1px solid var(--mantine-color-dark-6)' }}
+    >
       <TextInput error={formState.errors.username?.message} {...fields.username} {...register('username')} />
       <TextInput error={formState.errors.email?.message} {...fields.email} {...register('email')} />
       <PasswordInput error={formState.errors.password?.message} {...fields.password} {...register('password')} />
-      <Button type="submit" loading={formState.isSubmitting || isPendeing}>
+      <Button type="submit" fullWidth loading={formState.isSubmitting || isPendeing}>
         Зарегистрироваться
       </Button>
     </Stack>

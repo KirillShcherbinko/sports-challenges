@@ -1,6 +1,5 @@
 import { Group, Text } from '@mantine/core';
 import { getLikeDataAction } from '../actions/get-like-data';
-import { notifications } from '@mantine/notifications';
 import { LikeButton } from './like-button';
 
 type TLikeCounterProps = {
@@ -8,16 +7,12 @@ type TLikeCounterProps = {
 };
 
 export const LikeCounter = async ({ challengeId }: TLikeCounterProps) => {
-  const { data: likeData, serverError } = await getLikeDataAction(challengeId);
-
-  if (serverError) {
-    notifications.show({ title: 'Ошибка', message: serverError, color: 'red' });
-  }
+  const { data: likeData } = await getLikeDataAction(challengeId);
 
   return (
-    <Group gap="sm">
+    <Group gap={4}>
       <LikeButton challengeId={challengeId} isLiked={likeData?.isLiked ?? false} />
-      <Text c="var(--mantine-var-dark-2)">{likeData?.likesCount ?? 0}</Text>
+      <Text c="var(--mantine-color-dark-4)" size="xs">{likeData?.likesCount ?? 0}</Text>
     </Group>
   );
 };

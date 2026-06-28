@@ -23,9 +23,16 @@ class TaskCompletionRepository {
   }
 
   async completeTask(challengeId: string, profileId: string, dayNumber: number): Promise<TTaskCompletionMutationDto> {
-    const taskCompletion = await prisma.taskCompletion.update({
+    const taskCompletion = await prisma.taskCompletion.upsert({
       where: { profileId_challengeId_dayNumber: { profileId, challengeId, dayNumber } },
-      data: {
+      update: {
+        isCompleted: true,
+        completedAt: new Date(),
+      },
+      create: {
+        profileId,
+        challengeId,
+        dayNumber,
         isCompleted: true,
         completedAt: new Date(),
       },
@@ -36,9 +43,15 @@ class TaskCompletionRepository {
   }
 
   async skipTask(challengeId: string, profileId: string, dayNumber: number): Promise<TTaskCompletionMutationDto> {
-    const taskCompletion = await prisma.taskCompletion.update({
+    const taskCompletion = await prisma.taskCompletion.upsert({
       where: { profileId_challengeId_dayNumber: { profileId, challengeId, dayNumber } },
-      data: {
+      update: {
+        isCompleted: false,
+      },
+      create: {
+        profileId,
+        challengeId,
+        dayNumber,
         isCompleted: false,
       },
       include: { dailyTask: true },

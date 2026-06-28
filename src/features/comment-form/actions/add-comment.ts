@@ -7,7 +7,7 @@ import { challengeExistsAndPublished } from '@/entities/challenge/server';
 import { ERoutes } from '@/shared';
 import { actionClient } from '@/shared/actions';
 import { createServer } from '@/shared/server';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 export const addCommentAction = actionClient
   .inputSchema(challengeCommentSchemaWithChallengeId)
@@ -25,5 +25,6 @@ export const addCommentAction = actionClient
       content,
     });
 
-    revalidatePath(ERoutes.CHALLENGES);
+    revalidatePath(`${ERoutes.CHALLENGES}/${challengeId}`);
+    revalidateTag(`comments_${challengeId}`, 'default');
   });

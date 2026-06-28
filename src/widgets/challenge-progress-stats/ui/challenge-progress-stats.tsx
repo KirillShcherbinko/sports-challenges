@@ -1,4 +1,4 @@
-import { Card, Group, SimpleGrid, Stack, Text } from '@mantine/core';
+import { Group, Stack, Text } from '@mantine/core';
 import { getMyChallengeProgressAction } from '../actions';
 import { CHALLENGE_PROGRESS_STATS } from '../config/CHALLENGE_PROGRESS_STATS';
 
@@ -7,32 +7,28 @@ type TChallengeProgressStatsProps = {
 };
 
 export const ChallengeProgressStats = async ({ challengeId }: TChallengeProgressStatsProps) => {
-  const { data, serverError } = await getMyChallengeProgressAction({ challengeId });
+  const { data } = await getMyChallengeProgressAction({ challengeId });
 
-  if (serverError || !data) {
-    return null;
-  }
+  const stats = data ?? { daysCompleted: 0, daysMissed: 0, currentStreak: 0, completionPercentage: 0 };
 
   return (
-    <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }}>
+    <Group gap={16} wrap="wrap">
       {CHALLENGE_PROGRESS_STATS.map(({ icon: Icon, label, color, iconColor, key }) => {
-        const value = key === 'completionPercentage' ? `${data[key]}%` : data[key];
+        const value = key === 'completionPercentage' ? `${stats[key]}%` : stats[key];
         return (
-          <Card key={label} padding="lg">
-            <Group gap="sm">
-              <Icon size={28} color={iconColor} />
-              <Stack gap={0}>
-                <Text fw={700} fz="xl" c={color}>
-                  {value}
-                </Text>
-                <Text size="sm" c="var(--mantine-color-dark-3)">
-                  {label}
-                </Text>
-              </Stack>
-            </Group>
-          </Card>
+          <Group key={label} gap={12} p={16} bg="var(--mantine-color-dark-8)" style={{ flex: 1, borderRadius: 12, border: '1px solid var(--mantine-color-dark-6)' }}>
+            <Icon size={28} color={iconColor} />
+            <Stack gap={2}>
+              <Text fw={700} fz="xl" c={color}>
+                {value}
+              </Text>
+              <Text size="sm" c="var(--mantine-color-dark-4)">
+                {label}
+              </Text>
+            </Stack>
+          </Group>
         );
       })}
-    </SimpleGrid>
+    </Group>
   );
 };

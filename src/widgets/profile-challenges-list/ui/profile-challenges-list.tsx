@@ -42,7 +42,8 @@ export const ProfileChallengesList = async ({ creatorName, searchParams }: TProf
       >
         {profileChallenges.items.map((item) => (
           <ProfileChallengeCard
-            key={item.id}
+            key={item.challengeId}
+            challengeId={item.challengeId}
             title={item.challenge.title}
             coverImageUrl={item.challenge.coverImageUrl}
             currentDay={item.currentDay}

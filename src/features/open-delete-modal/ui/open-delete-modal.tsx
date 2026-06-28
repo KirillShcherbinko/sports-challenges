@@ -17,7 +17,7 @@ export const OpenDeleteModal = ({ modalContent }: TOpenDeleteModalProps) => {
       <ActionIcon variant="subtle" color="red" onClick={open}>
         <IconTrash size={18} />
       </ActionIcon>
-      <Modal opened={opened} onClose={close} title="Удаление задания">
+      <Modal opened={opened} onClose={close} title="Удаление задания" centered>
         {modalContent({ close })}
       </Modal>
     </>

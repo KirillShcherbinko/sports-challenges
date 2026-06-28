@@ -1,25 +1,30 @@
 'use server';
 
 import { getUser } from '@/entities/auth/server';
-import { challengeCommentSchemaWithChallengeId } from '@/entities/challenge-comment';
 import { challengeCommentRepository } from '@/entities/challenge-comment/server';
-import { challengeExistsAndPublished } from '@/entities/challenge/server';
+import { challengeCommentSchemaWithCommentId } from '@/entities/challenge-comment';
 import { ERoutes } from '@/shared';
 import { actionClient } from '@/shared/actions';
+import { assertCommentOwner } from '@/shared/lib/auth/authorize';
 import { createServer } from '@/shared/server';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 export const updateCommentAction = actionClient
-  .inputSchema(challengeCommentSchemaWithChallengeId)
+  .inputSchema(challengeCommentSchemaWithCommentId)
   .action(async ({ parsedInput }): Promise<void> => {
     const supabase = await createServer();
     const user = await getUser(supabase);
 
-    const { challengeId, content } = parsedInput;
+    const { commentId, content } = parsedInput;
 
-    await challengeExistsAndPublished(challengeId);
+    const comment = await challengeCommentRepository.getChallengeCommentById(commentId);
 
-    await challengeCommentRepository.updateChallengeComment(challengeId, user.id, { content });
+    await assertCommentOwner(commentId, user.id);
 
-    revalidatePath(ERoutes.CHALLENGES);
+    await challengeCommentRepository.updateChallengeComment(commentId, { content });
+
+    if (comment) {
+      revalidatePath(`${ERoutes.CHALLENGES}/${comment.challengeId}`);
+      revalidateTag(`comments_${comment.challengeId}`, 'default');
+    }
   });

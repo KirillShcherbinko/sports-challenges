@@ -17,11 +17,16 @@ import { idSchema } from '@/shared';
 export const challengeFiltersSchema = z.object({
   search: z.string().trim().optional(),
   creatorName: z.string().trim().optional(),
-  category: z.enum(FitnessCategory).optional(),
+  categories: z
+    .string()
+    .trim()
+    .optional()
+    .transform((val) => (val ? (val.split(',').filter(Boolean) as FitnessCategory[]) : undefined)),
   difficulty: z.enum(ChallengeDifficulty).optional(),
   page: z.coerce.number().int().min(MIN_PAGE).default(DEFAULT_PAGE),
   limit: z.coerce.number().int().min(MIN_LIMIT).max(MAX_LIMIT).default(DEFAULT_LIMIT),
   isPublished: z.boolean().optional(),
+  useCurrentUser: z.boolean().default(false),
   personalize: z.boolean().default(false),
 });
 

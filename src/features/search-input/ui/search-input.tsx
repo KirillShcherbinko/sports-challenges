@@ -1,7 +1,7 @@
 'use client';
 
 import { TextInput } from '@mantine/core';
-import { IconSearchFilled } from '@tabler/icons-react';
+import { IconSearch } from '@tabler/icons-react';
 import { useSearchFilter } from '../lib/use-search-filter';
 
 type SearchInputProps = {
@@ -18,7 +18,13 @@ export const SearchInput = ({ placeholder = 'Поиск профилей' }: Sea
       value={searchValue}
       onChange={handleChange}
       placeholder={placeholder}
-      leftSection={<IconSearchFilled size={24} />}
+      leftSection={<IconSearch size={20} color="var(--mantine-color-dark-4)" />}
+      styles={{
+        input: {
+          backgroundColor: 'var(--mantine-color-dark-8)',
+          border: '1px solid var(--mantine-color-dark-6)',
+        },
+      }}
     />
   );
 };

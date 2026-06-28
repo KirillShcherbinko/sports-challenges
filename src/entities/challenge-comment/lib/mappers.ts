@@ -3,7 +3,8 @@ import type { TChallengeCommentWithAuthor } from '../model/types';
 
 export const mapToChallengeCommentDto = (data: TChallengeCommentWithAuthor): TChallengeCommentDto => {
   return {
-    id: `${data.challengeId}_${data.profileId}`,
+    id: data.id,
+    challengeId: data.challengeId,
     content: data.content,
     createdAt: data.createdAt,
     updatedAt: data.updatedAt,

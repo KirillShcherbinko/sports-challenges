@@ -5,7 +5,7 @@ export const EditCommentContentLayout = ({ children }: PropsWithChildren) => {
   return (
     <Card maw={700} w="100%">
       <Stack gap="xl" w="100%" align="center">
-        <Title ta="center">Редактировать комментарий</Title>
+        <Title ta="center">Оставить комментарий</Title>
         {children}
       </Stack>
     </Card>

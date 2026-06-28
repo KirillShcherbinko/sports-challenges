@@ -8,8 +8,9 @@ import { useTransition } from 'react';
 import { FITNESS_CATEGORY_DATA } from '@/shared';
 import { EDIT_DAILY_TASK_DATA } from '../config/edit-daily-task-data';
 import type { TEditDailyTaskDto } from '@/entities/daily-task';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { updateDailyTaskAction } from '../actions/update-daily-task';
+import { createDailyTaskAction } from '../actions/create-daily-task';
 
 type TEditDailyTaskFormProps = {
   dayNumber: number;
@@ -21,6 +22,7 @@ export const EditDailyTaskForm = ({ dayNumber = 0, initialData }: TEditDailyTask
   const { title, description, exerciseType } = initialData || defaultValues;
 
   const { challengeId } = useParams<{ challengeId: string }>();
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const { handleSubmit, formState, control } = useForm<TEditDailyTaskDto>({
@@ -48,12 +50,17 @@ export const EditDailyTaskForm = ({ dayNumber = 0, initialData }: TEditDailyTask
 
   const onSubmit = async (formValues: TEditDailyTaskDto) => {
     startTransition(async () => {
-      const { serverError } = await updateDailyTaskAction({ challengeId, dayNumber, ...formValues });
+      const { serverError } = initialData
+        ? await updateDailyTaskAction({ challengeId, dayNumber, ...formValues })
+        : await createDailyTaskAction({ challengeId, dayNumber, ...formValues });
 
       if (serverError) {
         notifications.show({ title: 'Ошибка', message: serverError, color: 'red' });
         return;
       }
+
+      notifications.show({ title: 'Успех', message: initialData ? 'Задание обновлено' : 'Задание создано', color: 'green' });
+      router.refresh();
     });
   };
 

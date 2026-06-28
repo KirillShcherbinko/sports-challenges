@@ -1,0 +1,71 @@
+﻿{
+    "matches":  {
+
+                },
+    "mode":  "production",
+    "date":  "2026-06-28 14:58:11",
+    "summary":  {
+                    "totalScans":  8,
+                    "totalMatches":  0,
+                    "scansWithFindings":  0
+                },
+    "target":  "http://localhost:3000",
+    "scans":  [
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  },
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  },
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  },
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  },
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  },
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  },
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  },
+                  {
+                      "scan":  null,
+                      "url":  null,
+                      "wordlist":  null,
+                      "statusCodes":  null,
+                      "matchCount":  null
+                  }
+              ]
+}

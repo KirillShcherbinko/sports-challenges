@@ -1,0 +1,13 @@
+not-a-uuid
+123
+00000000-0000-0000-0000-000000000000
+ffffffff-ffff-ffff-ffff-ffffffffffff
+../../etc/passwd
+' OR '1'='1
+<script>alert(1)</script>
+null
+undefined
+NaN
+0
+-1
+550e8400-e29b-41d4-a716-446655440000

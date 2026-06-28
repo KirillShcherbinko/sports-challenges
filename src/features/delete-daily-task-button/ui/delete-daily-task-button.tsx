@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@mantine/core';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { deleteDailyTaskAction } from '../actions/delete-daily-task';
 import { useTransition } from 'react';
 import { notifications } from '@mantine/notifications';
@@ -12,6 +12,7 @@ type TDeleteChallengeButtonProps = {
 
 export const DeleteDailyTaskButton = ({ dayNumber }: TDeleteChallengeButtonProps) => {
   const { challengeId } = useParams<{ challengeId: string }>();
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const handleChallengeDeletion = async () => {
@@ -28,6 +29,7 @@ export const DeleteDailyTaskButton = ({ dayNumber }: TDeleteChallengeButtonProps
           message: `Задание ${dailyTask.title} успешно удалёно`,
           color: 'green',
         });
+        router.refresh();
       }
     });
   };

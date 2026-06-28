@@ -46,5 +46,7 @@ next-env.d.ts
 
 #ai
 .opencode
+.mimocode
 opencode.json
+mimocode.json
 *.pen

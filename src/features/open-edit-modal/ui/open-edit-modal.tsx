@@ -17,7 +17,7 @@ export const OpenEditModal = ({ modalContent }: TOpenEditModalProps) => {
       <ActionIcon variant="subtle" color="gray" onClick={open}>
         <IconPencil size={18} />
       </ActionIcon>
-      <Modal opened={opened} onClose={close} title="Редактирование задания">
+      <Modal opened={opened} onClose={close} title="Редактирование задания" centered>
         {modalContent({ close })}
       </Modal>
     </>

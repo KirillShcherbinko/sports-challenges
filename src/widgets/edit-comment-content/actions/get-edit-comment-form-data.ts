@@ -4,16 +4,14 @@ import { actionClient } from '@/shared/actions';
 import { cacheTag, cacheLife } from 'next/cache';
 import { challengeCommentRepository } from '@/entities/challenge-comment/server';
 import type { TEditChallengeCommentDto } from '@/entities/challenge-comment';
-import { getUser } from '@/entities/auth/server';
-import { createServer } from '@/shared/server';
 import { idSchema, retryResult } from '@/shared';
 
-const getCachedCommentData = async (challengeId: string, profileId: string): Promise<TEditChallengeCommentDto> => {
+const getCachedCommentData = async (commentId: string): Promise<TEditChallengeCommentDto> => {
   'use cache';
-  cacheTag(`comment edit ${challengeId}_${profileId}`);
+  cacheTag(`comment edit ${commentId}`);
   cacheLife('hours');
 
-  const comment = await retryResult(() => challengeCommentRepository.getChallengeCommentById(challengeId, profileId));
+  const comment = await retryResult(() => challengeCommentRepository.getChallengeCommentById(commentId));
 
   if (!comment) {
     throw new Error('Комментарий не найден');
@@ -26,9 +24,6 @@ const getCachedCommentData = async (challengeId: string, profileId: string): Pro
 
 export const getEditCommentFormDataAction = actionClient
   .inputSchema(idSchema)
-  .action(async ({ parsedInput: challengeId }): Promise<TEditChallengeCommentDto> => {
-    const supabase = await createServer();
-    const user = await getUser(supabase);
-
-    return await getCachedCommentData(challengeId, user.id);
+  .action(async ({ parsedInput: commentId }): Promise<TEditChallengeCommentDto> => {
+    return await getCachedCommentData(commentId);
   });

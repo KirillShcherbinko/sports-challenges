@@ -14,22 +14,25 @@ export const TaskCompletionCard = ({
   completedAt,
   title,
   dayNumber,
+  actionsSlot,
 }: TTaskCompletionCardProps) => {
   return (
-    <Group gap="sm" wrap="nowrap" align="flex-start">
-      <Stack>
-        <Text c="white" size="sm" fw={600}>
-          Day {dayNumber} — {isCompleted ? 'Выполнено' : 'Пропушено'}
+    <Group
+      gap="sm"
+      wrap="nowrap"
+      align="center"
+      p="sm"
+      bg="var(--mantine-color-dark-8)"
+      style={{ borderRadius: 'var(--mantine-radius-sm)', border: '1px solid var(--mantine-color-dark-6)' }}
+    >
+      <Stack gap={2} style={{ flex: 1 }}>
+        <Text c="var(--mantine-color-dark-0)" size="sm" fw={600}>
+          День {dayNumber} — {isCompleted ? 'Выполнено' : 'Пропущено'}
         </Text>
-        <Text c="var(--mantine-color-dark-2)" size="xs">
-          {title}
-        </Text>
-        {completedAt && (
-          <Text c="var(--mantine-color-dark-2)" size="xs">
-            {completedAt}
-          </Text>
-        )}
+        <Text c="var(--mantine-color-dark-4)" size="xs">{title}</Text>
+        {completedAt && <Text c="var(--mantine-color-dark-4)" size="xs">{completedAt}</Text>}
       </Stack>
+      {actionsSlot}
     </Group>
   );
 };

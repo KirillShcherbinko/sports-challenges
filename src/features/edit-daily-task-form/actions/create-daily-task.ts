@@ -7,6 +7,7 @@ import type { TDailyTaskMutationDto } from '@/entities/daily-task/model/dtos';
 import { dailyTaskRepository } from '@/entities/daily-task/server';
 import { ERoutes } from '@/shared';
 import { actionClient } from '@/shared/actions';
+import { assertChallengeOwner } from '@/shared/lib/auth/authorize';
 import { createServer } from '@/shared/server';
 import { revalidatePath } from 'next/cache';
 
@@ -14,9 +15,11 @@ export const createDailyTaskAction = actionClient
   .inputSchema(dailyTaskSchemaWithIds)
   .action(async ({ parsedInput }): Promise<TDailyTaskMutationDto> => {
     const supabase = await createServer();
-    await getUser(supabase);
+    const user = await getUser(supabase);
 
     const { challengeId, title, description, exerciseType } = parsedInput;
+
+    await assertChallengeOwner(challengeId, user.id);
     const challenge = await challengeRepository.getChallengeById(challengeId);
     if (!challenge) {
       throw new Error('Челлендж не найден');
@@ -32,6 +35,7 @@ export const createDailyTaskAction = actionClient
 
     await challengeRepository.updateChallenge(challengeId, { durationDays: { increment: 1 } });
 
+    revalidatePath(`${ERoutes.MY_CHALLENGES}/${challengeId}/publish`);
     revalidatePath(ERoutes.MY_CHALLENGES);
 
     return dailyTask;

@@ -23,7 +23,7 @@ export const completeTaskAction = actionClient
       throw new Error('Вы не начали выполнение этого челленджа');
     }
 
-    if (!isOlderThan24Hours(profileChallenge.updatedAt)) {
+    if (!isOlderThan24Hours(profileChallenge.updatedAt) && profileChallenge.createdAt !== profileChallenge.updatedAt) {
       throw new Error('Нельзя выполнять более 1-го челленджа в день');
     }
 

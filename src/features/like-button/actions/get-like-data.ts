@@ -10,8 +10,12 @@ import { createServer } from '@/shared/server';
 export const getLikeDataAction = actionClient
   .inputSchema(idSchema)
   .action(async ({ parsedInput: challengeId }): Promise<TChallengeLikeDto> => {
-    const supabase = await createServer();
-    const user = await getUser(supabase);
-
-    return await challengeLikeRepository.getLike(user.id, challengeId);
+    try {
+      const supabase = await createServer();
+      const user = await getUser(supabase);
+      return await challengeLikeRepository.getLike(user.id, challengeId);
+    } catch {
+      const challenge = await challengeLikeRepository.getLikeCount(challengeId);
+      return { isLiked: false, likesCount: challenge?.likesCount ?? 0 };
+    }
   });

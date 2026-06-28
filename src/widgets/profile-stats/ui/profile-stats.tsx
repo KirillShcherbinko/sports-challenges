@@ -1,4 +1,4 @@
-import { Card, Group, SimpleGrid, Stack, Text } from '@mantine/core';
+import { Group, Stack, Text } from '@mantine/core';
 import { getProfileStatsAction, getUserProfileStatsAction } from '../actions';
 import { PROFILE_STATS } from '../config/PROFILE_STATS';
 
@@ -16,22 +16,20 @@ export const ProfileStats = async ({ profileUsername }: TProfileStatsProps) => {
   }
 
   return (
-    <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }}>
+    <Group gap={16} wrap="wrap">
       {PROFILE_STATS.map(({ icon: Icon, label, color, iconColor, key }) => (
-        <Card key={label} padding="lg">
-          <Group gap="sm">
-            <Icon size={28} color={iconColor} />
-            <Stack gap={0}>
-              <Text fw={700} fz="xl" c={color}>
-                {data[key]}
-              </Text>
-              <Text size="sm" c="var(--mantine-color-dark-4)">
-                {label}
-              </Text>
-            </Stack>
-          </Group>
-        </Card>
+        <Group key={label} gap={12} p={16} bg="var(--mantine-color-dark-8)" style={{ flex: 1, borderRadius: 12, border: '1px solid var(--mantine-color-dark-6)' }}>
+          <Icon size={28} color={iconColor} />
+          <Stack gap={2}>
+            <Text fw={700} fz="xl" c={color}>
+              {data[key]}
+            </Text>
+            <Text size="sm" c="var(--mantine-color-dark-4)">
+              {label}
+            </Text>
+          </Stack>
+        </Group>
       ))}
-    </SimpleGrid>
+    </Group>
   );
 };

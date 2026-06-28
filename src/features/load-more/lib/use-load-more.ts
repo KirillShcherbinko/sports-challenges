@@ -1,4 +1,4 @@
-import { useState, useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 
 type TUseLoadMoreOptions<T> = {
   initialItems: T[];
@@ -11,6 +11,10 @@ export const useLoadMore = <T>({ initialItems, totalPages, loadMoreAction }: TUs
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<T[]>(initialItems);
   const [isError, setIsError] = useState<boolean>(false);
+
+  useEffect(() => {
+    setItems(initialItems);
+  }, [initialItems]);
 
   const hasMore = page < totalPages;
 

@@ -13,13 +13,13 @@ const getChallengeCommentsSchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
 });
 
-const getCachedChallengeComments = async (
+const getComments = async (
   challengeId: string,
   page: number
 ): Promise<TGetPaginatedResponseDto<TChallengeCommentDto>> => {
   'use cache';
-  cacheTag(`challenge_comments_${challengeId}_page_${page}`);
-  cacheLife('hours');
+  cacheTag(`comments_${challengeId}`);
+  cacheLife('minutes');
 
   return await retryResult(() =>
     challengeCommentRepository.getChallengeComments(challengeId, { page, limit: DEFAULT_LIMIT })
@@ -29,5 +29,5 @@ const getCachedChallengeComments = async (
 export const getChallengeCommentsAction = actionClient
   .inputSchema(getChallengeCommentsSchema)
   .action(async ({ parsedInput }): Promise<TGetPaginatedResponseDto<TChallengeCommentDto>> => {
-    return await getCachedChallengeComments(parsedInput.challengeId, parsedInput.page);
+    return await getComments(parsedInput.challengeId, parsedInput.page);
   });

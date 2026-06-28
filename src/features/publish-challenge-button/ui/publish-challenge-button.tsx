@@ -21,7 +21,7 @@ export const PublishChallengeButton = () => {
   };
 
   return (
-    <Button variant="filled" onClick={handleChallengePublication} loading={isPending}>
+    <Button variant="filled" color="success" onClick={handleChallengePublication} loading={isPending}>
       Опубликовать
     </Button>
   );

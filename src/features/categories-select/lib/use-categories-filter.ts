@@ -4,9 +4,9 @@ import { useState } from 'react';
 
 export const useCategoriesFilter = () => {
   const searchParams = useSearchParams();
-  const paramValue = searchParams.get('category') ?? '';
+  const paramValue = searchParams.get('categories') ?? '';
   const [categoriesValue, setCategoriesValue] = useState<string[]>(paramValue ? paramValue.split(',') : []);
-  const updateSearchParams = useDebouncedSearchParamsUpdate('category');
+  const updateSearchParams = useDebouncedSearchParamsUpdate('categories');
 
   const handleChange = (value: string[]) => {
     setCategoriesValue(value);

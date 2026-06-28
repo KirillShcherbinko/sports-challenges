@@ -16,12 +16,9 @@ export const likeAction = actionClient
 
     await challengeExistsAndPublished(challengeId);
 
-    const success = await challengeLikeRepository.toggleLike(user.id, challengeId);
-    if (!success) {
-      throw new Error('Не удалось обновить состояние лайка');
-    }
+    const like = await challengeLikeRepository.toggleLike(user.id, challengeId);
 
-    await challengeRepository.updateChallenge(challengeId, { likesCount: { increment: 1 } });
+    await challengeRepository.updateChallenge(challengeId, { likesCount: like ? { increment: 1 } : { decrement: 1 } });
 
     revalidatePath(ERoutes.CHALLENGES);
     revalidatePath(ERoutes.MY_CHALLENGES);

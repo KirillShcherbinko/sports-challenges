@@ -1,5 +1,5 @@
 import type { FitnessCategory } from '@/shared/types';
-import { Badge, Card, Group, Stack, Text } from '@mantine/core';
+import { Badge, Group, Stack, Text } from '@mantine/core';
 
 type TDailyTaskCardProps = {
   title: string;
@@ -15,19 +15,18 @@ export const DailyTaskCard = ({
   dayNumber,
 }: TDailyTaskCardProps) => {
   return (
-    <Card p="md">
-      <Stack>
-        <Group gap="sm" align="center">
-          <Badge variant="default">Day {dayNumber}</Badge>
-          <Badge variant="light">{exerciseType}</Badge>
-        </Group>
-        <Text component="h3" fw={600}>
-          {title}
-        </Text>
-        <Text c="var(--mantine-color-dark-2)" size="sm">
-          {description}
-        </Text>
-      </Stack>
-    </Card>
+    <Stack
+      p="md"
+      gap={8}
+      bg="var(--mantine-color-dark-8)"
+      style={{ borderRadius: 'var(--mantine-radius-md)', border: '1px solid var(--mantine-color-dark-6)' }}
+    >
+      <Group gap={8} align="center">
+        <Badge color="var(--mantine-color-dark-6)" radius="xl" size="sm" variant="filled">Day {dayNumber}</Badge>
+        <Badge color="var(--mantine-color-brand-6)" radius="xl" size="sm" variant="filled">{exerciseType}</Badge>
+      </Group>
+      <Text fw={600} fz="md" c="var(--mantine-color-dark-0)">{title}</Text>
+      <Text c="var(--mantine-color-dark-4)" size="sm">{description}</Text>
+    </Stack>
   );
 };

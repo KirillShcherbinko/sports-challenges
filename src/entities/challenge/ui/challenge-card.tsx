@@ -1,12 +1,12 @@
 import type { ChallengeDifficulty, FitnessCategory } from '@/shared/types';
-import { ERoutes } from '@/shared';
-import { Badge, Card, Group, Image, Stack, Text, Title } from '@mantine/core';
-import { IconUsersGroup } from '@tabler/icons-react';
+import { Badge, Group, Image, Stack, Text } from '@mantine/core';
+import { IconUsers } from '@tabler/icons-react';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 
 type TChallengeCardProps = {
   id: string;
+  route: string;
   title: string;
   description: string;
   coverImageUrl: string | null;
@@ -18,6 +18,7 @@ type TChallengeCardProps = {
 
 export const ChallengeCard = ({
   id,
+  route,
   title,
   description,
   coverImageUrl,
@@ -27,27 +28,41 @@ export const ChallengeCard = ({
   likesCountSlot,
 }: TChallengeCardProps) => {
   return (
-    <Link href={`${ERoutes.CHALLENGES}/${id}`} style={{ textDecoration: 'none' }}>
-      <Card p="md">
-        {coverImageUrl && <Image src={coverImageUrl} alt={title} />}
-        <Group gap="sm">
-          <Badge variant="default">{category}</Badge>
-          <Badge variant="default">{difficulty}</Badge>
-        </Group>
-        <Stack>
-          <Title component="h2" order={2}>
-            {title}
-          </Title>
-          <Text c="var(--mantine-color-dark-2)">{description}</Text>
-        </Stack>
-        <Group justify="between">
-          <Group gap="sm">
-            <IconUsersGroup size={24} />
-            <Text c="var(--mantine-color-dark-2)">{participantsCount}</Text>
+    <Stack
+      p="md"
+      gap="sm"
+      bg="var(--mantine-color-dark-8)"
+      style={{ borderRadius: 'var(--mantine-radius-md)', border: '1px solid var(--mantine-color-dark-6)' }}
+    >
+      {coverImageUrl && <Image src={coverImageUrl} alt={title} radius="md" />}
+      <Link href={`${route}/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+        <Stack gap={8}>
+          <Group gap={8}>
+            <Badge color="var(--mantine-color-brand-6)" radius="xl" size="sm" variant="filled">
+              {category}
+            </Badge>
+            <Badge color="var(--mantine-color-dark-6)" radius="xl" size="sm" variant="filled">
+              {difficulty}
+            </Badge>
           </Group>
-          {likesCountSlot}
+          <Text fw={600} fz="md" c="var(--mantine-color-dark-0)">
+            {title}
+          </Text>
+          <Text c="var(--mantine-color-dark-4)" size="sm">
+            {description}
+          </Text>
+        </Stack>
+      </Link>
+      <Group gap={8}>
+        <Group gap={4}>
+          <IconUsers size={16} color="var(--mantine-color-dark-4)" />
+          <Text c="var(--mantine-color-dark-4)" size="xs">
+            {participantsCount} участника
+          </Text>
         </Group>
-      </Card>
-    </Link>
+
+        {likesCountSlot}
+      </Group>
+    </Stack>
   );
 };

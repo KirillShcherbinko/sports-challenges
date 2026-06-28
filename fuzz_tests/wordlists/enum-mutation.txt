@@ -1,0 +1,14 @@
+InvalidValue
+  Beginner  
+BEGINNER
+beginner
+BEGINNER
+<script>alert(1)</script>
+' OR '1'='1
+../../../etc/passwd
+not-an-enum
+123
+0
+-1
+null
+undefined

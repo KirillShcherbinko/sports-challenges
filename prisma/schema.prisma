@@ -78,7 +78,6 @@ model Profile {
   profileChallenges ProfileChallenge[]
   challengeLikes    ChallengeLike[]
   challengeComments ChallengeComment[]
-  achievements      ProfileAchievement[]
 
   @@map("profiles")
 }
@@ -168,6 +167,7 @@ model ChallengeLike {
 }
 
 model ChallengeComment {
+  id          String    @id @default(uuid()) @db.Uuid
   challengeId String    @map("challenge_id") @db.Uuid
   profileId   String    @map("profile_id") @db.Uuid
   challenge   Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
@@ -176,28 +176,5 @@ model ChallengeComment {
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
-  @@id([challengeId, profileId])
   @@map("challenge_comments")
-}
-
-model Achievement {
-  id                  String               @id @default(uuid()) @db.Uuid
-  title               String
-  description         String
-  iconUrl             String?              @map("icon_url")
-  createdAt           DateTime             @default(now()) @map("created_at")
-  profileAchievements ProfileAchievement[]
-
-  @@map("achievements")
-}
-
-model ProfileAchievement {
-  profileId     String      @map("profile_id") @db.Uuid
-  achievementId String      @map("achievement_id") @db.Uuid
-  profile       Profile     @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
-  earnedAt      DateTime    @default(now()) @map("earned_at")
-
-  @@id([profileId, achievementId])
-  @@map("profile_achievements")
 }
